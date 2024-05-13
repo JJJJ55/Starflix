@@ -2,28 +2,24 @@
 import mainTitle from '@/assets/img/main_title.png';
 import mainSubTitle from '@/assets/img/main_subtitle.png';
 import smallLogo from '@/assets/img/smallLogo.png';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const movePage = (val) => {
+  router.push({ name: 'loginRegist', params: { type: val } });
+};
 </script>
 
 <template>
   <div class="content">
-    <header><img class="logo" :src="smallLogo" alt="" /></header>
-    <img
-      class="titleImg img-fluid"
-      :src="mainTitle"
-      alt="title1"
-      width="50%"
-      height="20%"
-    />
-    <img
-      class="img-fluid"
-      :src="mainSubTitle"
-      alt="title2"
-      width="40%"
-      height="20%"
-    />
+    <header>
+      <img class="logo" :src="smallLogo" alt="smallLogo" />
+    </header>
+    <img class="titleImg img-fluid" :src="mainTitle" alt="title1" width="40%" />
+    <img class="sub img-fluid" :src="mainSubTitle" alt="title2" width="25%" />
     <div class="btnBox container row sm-12 md-6 lg-6">
-      <button>로그인</button>
-      <button>회원가입</button>
+      <button @click="movePage('login')">로그인</button>
+      <button @click="movePage('regist')">회원가입</button>
     </div>
   </div>
 </template>
@@ -40,6 +36,8 @@ header {
 .logo {
   display: block;
   margin-left: 50px;
+  width: 10%;
+  min-width: 100px;
 }
 
 .content {
@@ -51,14 +49,19 @@ header {
   background-image: url('@/assets/img/main_Img.png');
   background-repeat: none;
   background-position: center center;
+  overflow: auto;
 }
 
 .titleImg {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  min-width: 300px;
+}
+.sub {
+  min-width: 250px;
 }
 
 .btnBox {
-  margin-top: 80px;
+  margin-top: 50px;
   width: 60%;
   display: flex;
   justify-content: space-around;
