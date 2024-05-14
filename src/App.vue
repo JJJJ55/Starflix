@@ -3,15 +3,17 @@ import SplashView from './views/LoginBefore/SplashView.vue';
 import MainView from './views/LoginBefore/MainView.vue';
 import LoginView from './views/LoginBefore/LoginView.vue';
 import RegistView from './views/LoginBefore/RegistView.vue';
+import HomeView from './views/LoginAfter/HomeView.vue';
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <template>
   <div id="content" class="container-fluid">
     <!-- <SplashView /> -->
-    <!-- <MainView />
-    <LoginView />-->
-    <RouterView :key="$route.fullPath" />
+    <!-- <MainView /> -->
+    <!-- <LoginView /> -->
+    <HomeView />
+    <!-- <RouterView :key="$route.fullPath" /> -->
   </div>
 </template>
 
