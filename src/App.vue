@@ -4,6 +4,8 @@ import MainView from './views/LoginBefore/MainView.vue';
 import LoginView from './views/LoginBefore/LoginView.vue';
 import RegistView from './views/LoginBefore/RegistView.vue';
 import HomeView from './views/LoginAfter/HomeView.vue';
+import BoardView from './views/Board/BoardView.vue';
+import BoardCRUD from './views/Board/BoardCRUD.vue';
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
@@ -12,7 +14,9 @@ import { RouterLink, RouterView } from 'vue-router';
     <!-- <SplashView /> -->
     <!-- <MainView /> -->
     <!-- <LoginView /> -->
-    <HomeView />
+    <!-- <HomeView /> -->
+    <!-- <BoardView /> -->
+    <BoardCRUD />
     <!-- <RouterView :key="$route.fullPath" /> -->
   </div>
 </template>
