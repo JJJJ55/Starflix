@@ -7,18 +7,18 @@ import searchIcon from '@/assets/img/searchIcon.png';
 <template>
   <header class="container-fluid">
     <div class="row headerDiv">
-      <div class="col-sm-12 col-md-1 col-lg-1 imgBox">
+      <div class="col-sm-12 col-md-2 col-lg-2 imgBox">
         <img class="logo" :src="smallLogo" alt="smallLogo" />
       </div>
-      <nav class="col-sm-10 col-md-10 col-lg-8">
+      <nav class="col-sm-10 col-md-9 col-lg-8">
         <ul class="navMenu row">
-          <li class="col-12 col-sm-3">별명소 지도</li>
-          <li class="col-12 col-sm-3">내가 찜한 곳</li>
-          <li class="col-12 col-sm-3">유저 커뮤니티</li>
-          <li class="col-12 col-sm-3">마이페이지</li>
+          <li class="col-12 col-sm-3"><span>별명소 지도</span></li>
+          <li class="col-12 col-sm-3"><span>내가 찜한 곳</span></li>
+          <li class="col-12 col-sm-3"><span>유저 커뮤니티</span></li>
+          <li class="col-12 col-sm-3"><span>마이페이지</span></li>
         </ul>
       </nav>
-      <div class="col-sm-1 col-md-1 col-lg-3 searchBox">
+      <div class="col-sm-1 col-md-1 col-lg-2 searchBox">
         <img :src="searchIcon" alt="검색" />
       </div>
     </div>
@@ -36,6 +36,9 @@ import searchIcon from '@/assets/img/searchIcon.png';
     width: 50px;
     position: absolute;
     right: 0px;
+  }
+  .logo {
+    margin-top: 20px !important;
   }
 }
 header {
@@ -58,8 +61,8 @@ header {
 }
 .logo {
   display: block;
-  margin-left: 50px;
-  width: 10%;
+  /* margin-left: 50px; */
+  width: 150px;
   min-width: 100px;
   border: 1px solid red;
   margin: 0 auto;
@@ -69,7 +72,7 @@ header {
   font-size: 20px;
   list-style: none;
   display: flex;
-  line-height: 40px;
+  line-height: 50px;
   font-weight: bold;
   margin: 0;
   padding: 0;
@@ -77,8 +80,12 @@ header {
 .navMenu > li {
   text-align: center;
 }
+.navMenu > li > span {
+  cursor: pointer;
+}
 .searchBox {
   text-align: right;
   padding-right: 40px;
+  line-height: 50px;
 }
 </style>

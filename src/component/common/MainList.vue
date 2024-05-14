@@ -1,21 +1,26 @@
 <script setup>
 import MainListItem from './MainListItem.vue';
+
+defineProps({
+  title: String,
+});
 </script>
 
 <template>
-  <h1>제목</h1>
-  <div class="row">
+  <h2>{{ title }}</h2>
+  <div class="wrap">
     <MainListItem class="" />
   </div>
 </template>
 
 <style scoped>
-h1 {
+h2 {
   font-weight: bold;
   color: white;
 }
-.row {
+.wrap {
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
 }
 </style>
