@@ -2,10 +2,11 @@
 defineProps({
   title: String,
 });
+const test = 10;
 </script>
 
 <template>
-  <div>{{ title }}</div>
+  <div v-for="t in test">테스트</div>
 </template>
 
 <style scoped>

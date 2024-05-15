@@ -5,6 +5,7 @@ const props = defineProps({
   type: String,
 });
 const router = useRouter();
+const route = useRoute();
 // const type = route.param.type; //폼 타입
 const type = props.type;
 

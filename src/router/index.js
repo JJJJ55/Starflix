@@ -68,17 +68,17 @@ const router = createRouter({
       component: MyPageView,
       children: [
         {
-          path: 'userInfo',
+          path: ':type',
           name: 'userInfo',
           component: MyInfo,
         },
         {
-          path: 'myPlaces',
+          path: ':type',
           name: 'myPlaces',
           component: MyPlace,
         },
         {
-          path: 'myReviews',
+          path: ':type',
           name: 'myReviews',
           component: MyReview,
         },

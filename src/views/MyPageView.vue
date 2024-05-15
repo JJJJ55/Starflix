@@ -10,12 +10,19 @@ const test = 10;
 const route = useRoute();
 const router = useRouter();
 
-const activeMenu = ref('userInfo');
+const type = route.params.type;
+const activeMenu = ref(type);
 
 function setActiveMenu(menu) {
-  router.push({ name: menu });
+  router.push({ name: menu, params: { type: menu } });
   activeMenu.value = menu;
 }
+// const activeMenu = ref('userInfo'); //라우팅은 먹지만 위 메뉴 스타일이 안변함
+
+// function setActiveMenu(menu) {
+//   router.push({ name: menu });
+//   activeMenu.value = menu;
+// }
 </script>
 
 <template>
