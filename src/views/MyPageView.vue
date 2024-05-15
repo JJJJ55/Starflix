@@ -3,13 +3,17 @@ import Header from '@/component/common/Header.vue';
 import MyInfo from '@/component/MyPage/MyInfo.vue';
 import MyReview from '@/component/MyPage/MyReview.vue';
 import MyPlace from '@/component/MyPage/MyPlace.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
 const test = 10;
+const route = useRoute();
+const router = useRouter();
 
-const activeMenu = ref('');
+const activeMenu = ref('userInfo');
 
 function setActiveMenu(menu) {
-  console.log('클릭');
+  router.push({ name: menu });
   activeMenu.value = menu;
 }
 </script>
@@ -29,9 +33,6 @@ function setActiveMenu(menu) {
     </section>
     <section class="container-fluid">
       <ul class="myMenu">
-        <!-- <li>회원 정보 관리</li>
-        <li>등록한 별 명소</li>
-        <li>등록한 명보 리뷰</li> -->
         <li
           :class="{ active: activeMenu === 'userInfo' }"
           @click="setActiveMenu('userInfo')"
@@ -52,9 +53,10 @@ function setActiveMenu(menu) {
         </li>
       </ul>
       <div class="hr"></div>
-      <!-- <MyInfo /> -->
-      <!-- <MyPlace /> -->
-      <MyReview v-for="t in test" :title="'이곳보다 좋은 곳은 없습니다.'" />
+      <RouterView />
+      <!-- <MyInfo />
+      <MyPlace />
+      <MyReview v-for="t in test" :title="'이곳보다 좋은 곳은 없습니다.'" /> -->
     </section>
   </div>
 </template>

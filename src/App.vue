@@ -20,8 +20,9 @@ import { RouterLink, RouterView } from 'vue-router';
     <!-- <BoardView /> -->
     <!-- <BoardCRUD /> -->
     <!-- <MyPickView /> -->
-    <MyPageView />
+    <!-- <MyPageView /> -->
     <!-- <RouterView :key="$route.fullPath" /> -->
+    <RouterView />
   </div>
 </template>
 
