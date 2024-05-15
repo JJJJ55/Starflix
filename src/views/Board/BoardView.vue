@@ -62,7 +62,8 @@ const test = 10;
     height: 250px !important;
   }
   .titleBox {
-    top: 120px !important;
+    width: 100% !important;
+    top: 80px !important;
     left: 0px !important;
   }
   table {

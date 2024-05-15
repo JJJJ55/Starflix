@@ -41,13 +41,19 @@ const test = 10;
           placeholder="내용을 입력하세요"
         ></textarea>
       </div>
-      <div class="btnArea">
-        <div class="btns">
-          <Btn class="col-sm-3" :sty="'redBtn'" :text="'좋아요'" />
-          <Btn class="col-sm-3" :sty="'redBtn'" :text="'등록'" />
-          <Btn class="col-sm-3" :sty="'blackBtn'" :text="'삭제'" />
-          <Btn class="col-sm-3" :sty="'blackBtn'" :text="'이전'" />
+      <!-- <div class="btnArea container-fruid">
+        <div class="btns col">
+          <Btn class="col-12 col-sm-1" :sty="'redBtn'" :text="'좋아요'" />
+          <Btn class="col-12 col-sm-1" :sty="'redBtn'" :text="'등록'" />
+          <Btn class="col-12 col-sm-1" :sty="'blackBtn'" :text="'삭제'" />
+          <Btn class="col-12 col-sm-1" :sty="'blackBtn'" :text="'이전'" />
         </div>
+      </div> -->
+      <div class="btnArea">
+        <Btn :sty="'redBtn'" :text="'좋아요'" />
+        <Btn :sty="'redBtn'" :text="'등록'" />
+        <Btn :sty="'blackBtn'" :text="'삭제'" />
+        <Btn :sty="'blackBtn'" :text="'이전'" />
       </div>
     </section>
   </div>
@@ -62,11 +68,15 @@ const test = 10;
     height: 250px !important;
   }
   .titleBox {
-    top: 120px !important;
+    width: 100% !important;
+    top: 80px !important;
     left: 0px !important;
   }
   table {
     font-size: 10px !important;
+  }
+  .btnArea {
+    flex-direction: column;
   }
 }
 .content {
@@ -155,11 +165,12 @@ section {
 }
 .btnArea {
   width: 80%;
-  min-width: 400px;
   margin: 0 auto 50px;
   border: 1px solid white;
+  display: flex;
+  justify-content: end;
 }
 .btns {
-  float: right;
+  border: 3px solid blue;
 }
 </style>

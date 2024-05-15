@@ -10,11 +10,18 @@ defineProps({
 </template>
 
 <style scoped>
+@media (max-width: 790px) {
+  .redBtn,
+  .blackBtn {
+    width: 100% !important;
+  }
+}
 .redBtn {
   color: white;
   background-color: #d30000;
   width: 120px;
   height: 55px;
+  margin-right: 20px;
 }
 .blackBtn {
   color: white;
@@ -22,5 +29,6 @@ defineProps({
   border: 1px solid white;
   width: 120px;
   height: 55px;
+  margin-right: 20px;
 }
 </style>
