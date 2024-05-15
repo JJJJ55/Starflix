@@ -6,6 +6,8 @@ import RegistView from './views/LoginBefore/RegistView.vue';
 import HomeView from './views/LoginAfter/HomeView.vue';
 import BoardView from './views/Board/BoardView.vue';
 import BoardCRUD from './views/Board/BoardCRUD.vue';
+import MyPickView from './views/Pick/MyPickView.vue';
+import MyPageView from './views/MyPageView.vue';
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
@@ -16,7 +18,9 @@ import { RouterLink, RouterView } from 'vue-router';
     <!-- <LoginView /> -->
     <!-- <HomeView /> -->
     <!-- <BoardView /> -->
-    <BoardCRUD />
+    <!-- <BoardCRUD /> -->
+    <!-- <MyPickView /> -->
+    <MyPageView />
     <!-- <RouterView :key="$route.fullPath" /> -->
   </div>
 </template>
