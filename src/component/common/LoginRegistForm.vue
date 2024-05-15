@@ -15,19 +15,39 @@ const movePage = () => {
 
 <template>
   <form>
-    <h1 class="formTitle">{{ type === 'login' ? '로그인' : '회원가입' }}</h1>
-    <input v-if="type === 'regist'" type="text" placeholder="사용자 이름" />
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
+    <h1 class="formTitle" v-if="type !== 'Info'">
+      {{ type === 'login' ? '로그인' : '회원가입' }}
+    </h1>
+    <input
+      v-if="type === 'regist' || type === 'Info'"
+      type="text"
+      placeholder="사용자 이름"
+    />
+    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+      >경고문구</span
+    >
     <input :class="type" type="text" placeholder="이메일 주소" />
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
+    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+      >경고문구</span
+    >
     <input :class="type" type="text" placeholder="비밀번호" />
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
-    <input v-if="type === 'regist'" type="text" placeholder="비밀번호 재입력" />
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
+    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+      >경고문구</span
+    >
+    <input
+      v-if="type === 'regist' || type === 'Info'"
+      type="text"
+      placeholder="비밀번호 재입력"
+    />
+    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+      >경고문구</span
+    >
     <input v-if="type === 'regist'" type="text" placeholder="핸드폰 번호" />
     <span v-if="type === 'regist'" class="warning">경고문구</span>
     <div></div>
-    <button>{{ type === 'login' ? '로그인' : '회원가입' }}</button>
+    <button v-if="type !== 'Info'">
+      {{ type === 'login' ? '로그인' : '회원가입' }}
+    </button>
     <div v-if="type === 'login'" class="helpMsg">도움이 필요하신가요?</div>
     <a v-if="type === 'login'" class="registMsg" @click="movePage">
       스타플릭스 회원이 아닌가요? <b>지금 가입하세요.</b>
