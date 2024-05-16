@@ -1,7 +1,15 @@
 <script setup></script>
 
 <template>
-  <div></div>
+  <div class="contentDiv"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.contentDiv {
+  width: 200px;
+  height: 40px;
+  border: 1px solid red;
+  position: absolute;
+  right: 50px;
+}
+</style>
