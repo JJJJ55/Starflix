@@ -14,6 +14,7 @@ defineProps({
   .redBtn,
   .blackBtn {
     width: 100% !important;
+    margin-right: 0px !important;
   }
 }
 .redBtn {
