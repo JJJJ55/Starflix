@@ -1,6 +1,7 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
 import InputBox from '@/component/common/InputBox.vue';
+import Btn from '@/component/common/Btn.vue';
 import { ref } from 'vue';
 
 const test = 10;
@@ -49,6 +50,9 @@ const test = 10;
           </tr>
         </tbody>
       </table>
+      <div class="btnArea">
+        <Btn :text="'글쓰기'" :sty="'redBtn'" />
+      </div>
     </section>
   </div>
 </template>
@@ -147,5 +151,12 @@ section {
   width: 400px;
   text-align: left;
   padding-left: 20px;
+}
+.btnArea {
+  width: 80%;
+  margin: 20px auto 50px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: end;
 }
 </style>
