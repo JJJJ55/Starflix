@@ -8,7 +8,7 @@
 </template>
 
 <style scoped>
-@media (max-width: 925px) {
+@media (max-width: 910px) {
   .input {
     margin-top: 0px !important;
   }
