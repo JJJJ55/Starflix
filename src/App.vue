@@ -7,6 +7,7 @@ import HomeView from './views/LoginAfter/HomeView.vue';
 import BoardView from './views/Board/BoardView.vue';
 import MyPickView from './views/Pick/MyPickView.vue';
 import MyPageView from './views/MyPageView.vue';
+import MapView from './views/MapView.vue';
 import TostUi from './component/board/TostUi.vue';
 import { RouterLink, RouterView } from 'vue-router';
 </script>
@@ -21,10 +22,12 @@ import { RouterLink, RouterView } from 'vue-router';
     <!-- <BoardCRUD /> -->
     <!-- <MyPickView /> -->
     <!-- <MyPageView /> -->
-    <RouterView :key="$route.fullPath" />
+    <!-- 아래꺼임 -->
+    <!-- <RouterView :key="$route.fullPath" /> -->
     <!-- <RouterView :key="$route.path" /> -->
     <!-- <RouterView /> -->
     <!-- <TostUi /> -->
+    <MapView />
   </div>
 </template>
 
