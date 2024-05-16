@@ -58,7 +58,7 @@ function setActiveMenu(menu) {
           :class="{ active: activeMenu === 'myReviews' }"
           @click="setActiveMenu('myReviews')"
         >
-          등록한 명보 리뷰
+          등록한 명소 리뷰
         </li>
       </ul>
       <div class="hr"></div>

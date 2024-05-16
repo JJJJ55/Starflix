@@ -1,54 +1,7 @@
 <script setup>
 import Btn from '@/component/common/Btn.vue';
-// import Editor from '@/component/board/Editor.vue';
+import Editor from '@/component/board/Editor.vue';
 import { useRouter } from 'vue-router';
-
-// 여기부터 토스트
-import { onMounted, ref, defineProps, defineEmits } from 'vue';
-import Editor from '@toast-ui/editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: false,
-    default: '',
-  },
-});
-
-const emit = defineEmits(['update:modelValue']);
-const editorRef = ref(null);
-let editorValid = null;
-const testHtml = ref('');
-const text = ref('');
-
-//마운트될때 Editor 생성
-onMounted(() => {
-  editorValid = new Editor({
-    el: editorRef.value,
-    height: '500px',
-    //'wysiwyg', 'markdown' 택 1
-    initialEditType: 'wysiwyg',
-    events: {
-      change: () => emit('update:modelValue', editorValid.getMarkdown()),
-    },
-  });
-});
-
-//작성한 내용 불러와서 html 적용
-const testValid = () => {
-  if (editorValid !== null) {
-    testHtml.value = editorValid.getHTML();
-  }
-};
-const addBoard = () => {
-  if (editorValid !== null) {
-    text.value = editorValid.getHTML();
-  }
-  console.log(text.value);
-};
-
-// 여기까지 토스트
 
 const router = useRouter();
 const movePage = (val) => {
@@ -65,16 +18,15 @@ const movePage = (val) => {
       </div>
       <!-- 에디터 적용 전 원래 textarea -->
       <!-- <textarea class="bContent" placeholder="내용을 입력하세요"></textarea> -->
-      <div class="bContent">
-        <div class="textBox" ref="editorRef" />
-        <!-- <button @click="testValid">버튼</button> -->
-        <!-- <div v-html="testHtml"></div> -->
-      </div>
+      <!-- <div class="bContent">
+        <Editor />
+      </div> -->
+      <Editor class="textBox" />
     </div>
-    <div class="btnArea">
-      <Btn :sty="'redBtn'" :text="'등록'" @click="addBoard" />
+    <!-- <div class="btnArea">
+      <Btn :sty="'redBtn'" :text="'등록'" />
       <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('list')" />
-    </div>
+    </div> -->
   </section>
 </template>
 
@@ -161,18 +113,16 @@ section {
 .bContent {
   width: 80%;
   min-width: 300px;
-  height: 500px;
+  height: 600px;
   background-color: #333333;
   border-radius: 10px;
   border: none;
   padding: 10px;
   margin: 0 auto;
   color: white;
-  text-align: start;
 }
 
 .textBox {
-  height: 480px !important;
-  color: white !important;
+  position: relative;
 }
 </style>

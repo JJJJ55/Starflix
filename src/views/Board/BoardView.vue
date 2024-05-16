@@ -6,7 +6,6 @@ import Weather from '@/component/common/Weather.vue';
 import List from '@/component/board/List.vue';
 import Write from '@/component/board/Write.vue';
 import Read from '@/component/board/Read.vue';
-import Test from '@/component/board/Test.vue';
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 
@@ -31,8 +30,7 @@ const test = 10;
     <!-- <List /> -->
     <!-- <Write /> -->
     <!-- <Read /> -->
-    <Test />
-    <!-- <RouterView /> -->
+    <RouterView />
   </div>
 </template>
 
