@@ -7,6 +7,9 @@ import VueDevTools from 'vite-plugin-vue-devtools';
 // https://vitejs.dev/config/
 export default defineConfig({
   //esline 에러 화면에 표시안되고 터미널에만 표시
+  optimizeDeps: {
+    include: ['quill'],
+  },
   devServer: {
     client: {
       overlay: false,
