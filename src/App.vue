@@ -30,7 +30,7 @@ import { RouterLink, RouterView } from 'vue-router';
 #content {
   padding: 0;
   min-height: 100vh;
-  background-color: black;
+  /* background-color: black; */
   font-family: '프리텐더';
 }
 </style>
