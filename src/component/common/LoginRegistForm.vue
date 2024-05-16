@@ -43,8 +43,6 @@ const movePage = () => {
     <span v-if="type === 'regist' || type === 'Info'" class="warning"
       >경고문구</span
     >
-    <input v-if="type === 'regist'" type="text" placeholder="핸드폰 번호" />
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
     <div></div>
     <button v-if="type !== 'Info'">
       {{ type === 'login' ? '로그인' : '회원가입' }}
