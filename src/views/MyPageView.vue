@@ -3,6 +3,7 @@ import Header from '@/component/common/Header.vue';
 import MyInfo from '@/component/MyPage/MyInfo.vue';
 import MyReview from '@/component/MyPage/MyReview.vue';
 import MyPlace from '@/component/MyPage/MyPlace.vue';
+import Weather from '@/component/common/Weather.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
@@ -29,6 +30,7 @@ function setActiveMenu(menu) {
   <div class="content">
     <Header />
     <section class="PageTitle container-fruid">
+      <Weather />
       <div class="titleBox row">
         <div class="col-12 col-sm-7">
           <h1 class="title">마이 페이지</h1>

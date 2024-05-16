@@ -2,6 +2,7 @@
 import Header from '@/component/common/Header.vue';
 import InputBox from '@/component/common/InputBox.vue';
 import PickItem from '@/component/pick/PickItem.vue';
+import Weather from '@/component/common/Weather.vue';
 
 import { ref } from 'vue';
 const test = 10;
@@ -11,6 +12,7 @@ const test = 10;
   <div class="content">
     <Header />
     <section class="PageTitle container-fruid">
+      <Weather />
       <div class="titleBox row">
         <div class="col-12 col-sm-7">
           <h1 class="title">나의 찜리스트</h1>

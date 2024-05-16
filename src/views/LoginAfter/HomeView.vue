@@ -1,7 +1,10 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
 import MainList from '@/component/common/MainList.vue';
+import MainBanner from '@/component/common/MainBanner.vue';
+import Weather from '@/component/common/Weather.vue';
 import { ref } from 'vue';
+import WeatherVue from '@/component/common/Weather.vue';
 
 const sub1 = 'BEST 별자리 명소';
 const sub2 = ref('OOO님의 지역명소');
@@ -11,11 +14,14 @@ const sub2 = ref('OOO님의 지역명소');
   <div class="content">
     <Header />
     <section class="PageTitle">
+      <Weather />
       <div class="titleBox">
         <h1 class="ImgTitle">화악산 별빛공원</h1>
         <button class="titleInfo">상세정보</button>
       </div>
     </section>
+    <!-- 아래 메인배너 컴포넌트화는 나중에 하기로 -->
+    <!-- <MainBanner />  -->
     <section class="container-fluid">
       <MainList :title="sub1" />
     </section>
