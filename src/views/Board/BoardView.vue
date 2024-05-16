@@ -3,6 +3,10 @@ import Header from '@/component/common/Header.vue';
 import InputBox from '@/component/common/InputBox.vue';
 import Btn from '@/component/common/Btn.vue';
 import Weather from '@/component/common/Weather.vue';
+import List from '@/component/board/List.vue';
+import Write from '@/component/board/Write.vue';
+import Read from '@/component/board/Read.vue';
+import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 
 const test = 10;
@@ -23,39 +27,10 @@ const test = 10;
         <InputBox class="col-12 col-sm-5" />
       </div>
     </section>
-    <section class="container-fluid">
-      <table class="boardTitle">
-        <tr>
-          <th class="t1">글번호</th>
-          <th class="t2">제목</th>
-          <th class="t3">작성자</th>
-          <th class="t4">조회수</th>
-          <th class="t5">좋아요</th>
-        </tr>
-      </table>
-      <div class="hr"></div>
-      <table class="board">
-        <tr>
-          <th class="t1"></th>
-          <th class="t2"></th>
-          <th class="t3"></th>
-          <th class="t4"></th>
-          <th class="t5"></th>
-        </tr>
-        <tbody>
-          <tr v-for="t in test">
-            <td class="t1">1</td>
-            <td class="t2">제목</td>
-            <td class="t3">작성자</td>
-            <td class="t4">100</td>
-            <td class="t5">100</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="btnArea">
-        <Btn :text="'글쓰기'" :sty="'redBtn'" />
-      </div>
-    </section>
+    <!-- <List /> -->
+    <!-- <Write /> -->
+    <!-- <Read /> -->
+    <RouterView />
   </div>
 </template>
 
@@ -65,20 +40,33 @@ const test = 10;
     background-size: 300% !important;
   }
   .PageTitle {
-    height: 250px !important;
+    height: 280px !important;
+  }
+  .text {
+    font-size: 12px !important;
   }
   .titleBox {
     width: 100% !important;
-    top: 80px !important;
+    top: 120px !important;
     left: 0px !important;
   }
   table {
     font-size: 10px !important;
   }
 }
+
+@media (max-width: 910px) {
+  .PageTitle {
+    height: 300px !important;
+  }
+  .titleBox {
+    /* width: 100% !important; */
+    top: 155px !important;
+    left: 0px !important;
+  }
+}
 .content {
   min-height: 100vh;
-  /* background-image: url('@/assets/img/homeImg.png'); */
   background-image: url('@/assets/img/boardImg.png');
   background-repeat: no-repeat;
   background-size: 100%;
@@ -113,52 +101,60 @@ section {
 
 /*  */
 
-.boardTitle {
-  color: white;
-  margin: 0 auto;
-  width: 80%;
+.boardArea {
+  width: 100%;
   text-align: center;
+  margin: 0 auto 20px;
+  border: 1px solid red;
 }
-.hr {
-  width: 90%;
-  margin: 10px auto 0px;
-  border-bottom: 5px double #fff;
-}
-
-.board {
-  color: white;
+.boardArea > div {
   margin: 0 auto;
-  width: 80%;
+  width: 100%;
+  border: 1px solid yellow;
+}
+
+.bTitle {
+  width: 65%;
+  min-width: 220px;
+  height: 45px;
+  background-color: #333333;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+  color: white;
+}
+.bWriter {
+  width: 13%;
+  min-width: 80px;
+  height: 45px;
+  margin-left: 2%;
   text-align: center;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white;
 }
-
-.board > tbody > tr {
-  border-bottom: 1px solid #fff;
-  height: 40px;
-}
-
-/* tr {
-  height: 40px;
-} */
-
-.t1,
-.t4,
-.t5 {
-  width: 100px;
-}
-.t3 {
-  width: 150px;
-}
-.t2 {
-  width: 400px;
-  text-align: left;
-  padding-left: 20px;
+.bContent {
+  width: 80%;
+  min-width: 300px;
+  height: 313px;
+  background-color: #333333;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  color: white;
 }
 .btnArea {
   width: 80%;
-  margin: 20px auto 50px;
+  margin: 0 auto 50px;
   border: 1px solid white;
   display: flex;
   justify-content: end;
+}
+.btns {
+  border: 3px solid blue;
 }
 </style>

@@ -9,7 +9,9 @@ import HomeView from '@/views/LoginAfter/HomeView.vue';
 
 // 커뮤니티
 import BoardView from '@/views/Board/BoardView.vue';
-import BoardCRUD from '@/views/Board/BoardCRUD.vue';
+import List from '@/component/board/List.vue';
+import Write from '@/component/board/Write.vue';
+import Read from '@/component/board/Read.vue';
 
 // 찜리스트
 import MyPickView from '@/views/Pick/MyPickView.vue';
@@ -54,7 +56,25 @@ const router = createRouter({
       //일반 게시판리스트
       path: '/board',
       name: 'boardList',
+      redirect: '/board/list',
       component: BoardView,
+      children: [
+        {
+          path: 'list',
+          name: 'list',
+          component: List,
+        },
+        {
+          path: 'write',
+          name: 'write',
+          component: Write,
+        },
+        {
+          path: 'read',
+          name: 'read',
+          component: Read,
+        },
+      ],
     },
     {
       // 찜리스트
