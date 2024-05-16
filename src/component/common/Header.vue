@@ -2,20 +2,39 @@
 import homeImg from '@/assets/img/homeImg.png';
 import smallLogo from '@/assets/img/smallLogo.png';
 import searchIcon from '@/assets/img/searchIcon.png';
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
+
+const movePage = (val) => {
+  router.push({ name: val });
+};
 </script>
 
 <template>
   <header class="container-fluid">
     <div class="row headerDiv">
       <div class="col-sm-12 col-md-2 col-lg-2 imgBox">
-        <img class="logo" :src="smallLogo" alt="smallLogo" />
+        <img
+          class="logo"
+          :src="smallLogo"
+          alt="smallLogo"
+          @click="movePage('home')"
+        />
       </div>
       <nav class="col-sm-10 col-md-9 col-lg-8">
         <ul class="navMenu row">
           <li class="col-12 col-sm-3"><span>별명소 지도</span></li>
-          <li class="col-12 col-sm-3"><span>내가 찜한 곳</span></li>
-          <li class="col-12 col-sm-3"><span>유저 커뮤니티</span></li>
-          <li class="col-12 col-sm-3"><span>마이페이지</span></li>
+          <li class="col-12 col-sm-3" @click="movePage('pick')">
+            <span>내가 찜한 곳</span>
+          </li>
+          <li class="col-12 col-sm-3" @click="movePage('boardList')">
+            <span>유저 커뮤니티</span>
+          </li>
+          <li class="col-12 col-sm-3" @click="movePage('mypage')">
+            <span>마이페이지</span>
+          </li>
         </ul>
       </nav>
       <div class="col-sm-1 col-md-1 col-lg-2 searchBox">
@@ -66,6 +85,7 @@ header {
   min-width: 100px;
   border: 1px solid red;
   margin: 0 auto;
+  cursor: pointer;
 }
 .navMenu {
   color: white;

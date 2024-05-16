@@ -65,6 +65,7 @@ const router = createRouter({
     {
       path: '/mypage',
       name: 'mypage',
+      redirect: '/mypage/userInfo',
       component: MyPageView,
       children: [
         {
