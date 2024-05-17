@@ -23,11 +23,11 @@ import { RouterLink, RouterView } from 'vue-router';
     <!-- <MyPickView /> -->
     <!-- <MyPageView /> -->
     <!-- 아래꺼임 -->
-    <!-- <RouterView :key="$route.fullPath" /> -->
+    <RouterView :key="$route.fullPath" />
     <!-- <RouterView :key="$route.path" /> -->
     <!-- <RouterView /> -->
     <!-- <TostUi /> -->
-    <MapView />
+    <!-- <MapView /> -->
   </div>
 </template>
 

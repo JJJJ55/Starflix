@@ -25,7 +25,9 @@ const movePage = (val) => {
       </div>
       <nav class="col-sm-10 col-md-9 col-lg-8">
         <ul class="navMenu row">
-          <li class="col-12 col-sm-3"><span>별명소 지도</span></li>
+          <li class="col-12 col-sm-3" @click="movePage('map')">
+            <span>별명소 지도</span>
+          </li>
           <li class="col-12 col-sm-3" @click="movePage('pick')">
             <span>내가 찜한 곳</span>
           </li>

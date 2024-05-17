@@ -1,0 +1,87 @@
+<script setup>
+import { useRoute, useRouter } from 'vue-router';
+import { RouterView } from 'vue-router';
+import { ref } from 'vue';
+
+const route = useRoute();
+const router = useRouter();
+
+const type = route.params.type;
+const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
+
+console.log(type);
+
+function setActiveMenu(menu) {
+  // 메뉴함수
+  router.push({ name: menu, params: { type: menu } });
+  activeMenu.value = menu;
+}
+</script>
+
+<template>
+  <div class="menuBox">
+    <ul class="myMenu">
+      <li
+        :class="{ active: activeMenu === 'mapHome' }"
+        @click="setActiveMenu('mapHome')"
+      >
+        홈
+      </li>
+      <li
+        :class="{ active: activeMenu === 'placeInfo' }"
+        @click="setActiveMenu('placeInfo')"
+      >
+        명소 정보
+      </li>
+      <li
+        :class="{ active: activeMenu === 'placeAround' }"
+        @click="setActiveMenu('placeAround')"
+      >
+        주변 정보
+      </li>
+      <li
+        :class="{ active: activeMenu === 'placeReview' }"
+        @click="setActiveMenu('placeReview')"
+      >
+        명소 리뷰
+      </li>
+    </ul>
+    <!-- <Maphome /> -->
+    <!-- <PlaceInfo /> -->
+    <!-- <Around /> -->
+    <!-- <Review /> -->
+    <!-- <ReviewList /> -->
+    <RouterView />
+  </div>
+</template>
+
+<style scoped>
+.menuBox {
+  width: 100%;
+  height: 100%;
+  border: 3px solid green;
+  margin-top: 30px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.myMenu {
+  width: 95%;
+  margin: 0 auto;
+  list-style: none;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  border: 1px solid red;
+}
+.myMenu > li {
+  margin-right: 30px;
+  cursor: pointer;
+  color: #757575;
+}
+.active {
+  color: white !important;
+  border-bottom: 4px solid #d30000;
+}
+</style>

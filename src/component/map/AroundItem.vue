@@ -1,24 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-const test = ref(10);
+const route = useRoute();
+
+const contentId = route.params.content;
+console.log(contentId);
 </script>
 
 <template>
-  <span v-for="t in test">
+  <div class="Item">
     <div class="Img">
-      <div class="title">제목</div>
+      <div class="title">{{ contentId }}</div>
     </div>
-  </span>
+  </div>
 </template>
 
 <style scoped>
+.Item {
+  margin-top: 20px;
+}
 .Img {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #d30000;
-  margin-right: 20px;
   position: relative;
+  width: 100%;
+  height: 100px;
+  border: 1px solid blue;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 .Img:hover .title {
@@ -32,10 +38,16 @@ const test = ref(10);
   background-color: #d30000;
   text-align: center;
   color: white;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: bold;
   line-height: 30px;
   transition: opacity 0.3s ease; /* 투명도 변경 시 애니메이션 효과 추가 */
   opacity: 0; /* 초기에는 숨김 */
+}
+.btns {
+  /* width: 300px; */
+  border: 1px solid orange;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -6,6 +6,16 @@ import SplashView from '@/views/LoginBefore/SplashView.vue';
 // 홈화면
 import HomeView from '@/views/LoginAfter/HomeView.vue';
 // 별명소 지도
+import MapView from '@/views/MapView.vue';
+import AddPlace from '@/component/map/AddPlace.vue';
+import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
+import Around from '@/component/map/Around.vue';
+import AroundItem from '@/component/map/AroundItem.vue';
+import Maphome from '@/component/map/Maphome.vue';
+import PlaceInfo from '@/component/map/PlaceInfo.vue';
+import Review from '@/component/map/Review.vue';
+import ReviewList from '@/component/map/ReviewList.vue';
+import ReadReview from '@/component/map/ReadReview.vue';
 
 // 커뮤니티
 import BoardView from '@/views/Board/BoardView.vue';
@@ -83,6 +93,7 @@ const router = createRouter({
       component: MyPickView,
     },
     {
+      //마이페이지
       path: '/mypage',
       name: 'mypage',
       redirect: '/mypage/userInfo',
@@ -102,6 +113,105 @@ const router = createRouter({
           path: ':type',
           name: 'myReviews',
           component: MyReview,
+        },
+      ],
+    },
+    {
+      path: '/map',
+      name: 'map',
+      redirect: '/map/mapInfo',
+      component: MapView,
+      children: [
+        {
+          path: ':root',
+          name: 'mapInfo',
+          redirect: '/map/mapInfo/mapHome',
+          component: MapInfoDiv,
+          children: [
+            {
+              path: ':type',
+              name: 'mapHome',
+              component: Maphome,
+            },
+            {
+              path: ':type',
+              name: 'placeInfo',
+              component: PlaceInfo,
+            },
+            {
+              path: ':type',
+              name: 'Review',
+              component: Review,
+            },
+            {
+              path: ':type',
+              name: 'placeReview',
+              component: ReviewList,
+            },
+            {
+              path: ':type',
+              name: 'placeAround',
+              redirect: '/map/mapInfo/placeAround/tour',
+              component: Around,
+              children: [
+                {
+                  path: ':content',
+                  name: 'tour',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'culture',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'festival',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'travel',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'Leisure',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'sleep',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'shop',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'food',
+                  component: AroundItem,
+                },
+                {
+                  path: ':content',
+                  name: 'camp',
+                  component: AroundItem,
+                },
+              ],
+            },
+            {
+              path: ':type/:id',
+              name: 'readReview',
+              component: ReadReview,
+            },
+          ],
+        },
+        {
+          path: ':root',
+          name: 'addplace',
+          component: AddPlace,
         },
       ],
     },
