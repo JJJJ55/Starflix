@@ -4,8 +4,18 @@ import smallLogo from '@/assets/img/smallLogo.png';
 import searchIcon from '@/assets/img/searchIcon.png';
 import { useRoute, useRouter } from 'vue-router';
 
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+
 const route = useRoute();
 const router = useRouter();
+const memberStore = useUserStore();
+const { logout } = memberStore;
+
+const userLogout = () => {
+  logout();
+  router.replace('/main');
+};
 
 const movePage = (val) => {
   if (val === 'mypage') {
@@ -46,7 +56,7 @@ const movePage = (val) => {
         </ul>
       </nav>
       <div class="col-sm-1 col-md-1 col-lg-2 searchBox">
-        <img :src="searchIcon" alt="검색" />
+        <img :src="searchIcon" alt="검색" @click="userLogout" />
       </div>
     </div>
   </header>
