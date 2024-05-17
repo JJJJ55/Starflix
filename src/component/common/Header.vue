@@ -8,7 +8,13 @@ const route = useRoute();
 const router = useRouter();
 
 const movePage = (val) => {
-  router.push({ name: val });
+  if (val === 'mypage') {
+    router.push({ name: val, query: { type: 'userInfo' } });
+  } else if (val === 'map') {
+    router.push({ name: val, query: { type: 'mapHome' } });
+  } else {
+    router.push({ name: val });
+  }
 };
 </script>
 

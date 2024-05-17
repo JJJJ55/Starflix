@@ -6,15 +6,20 @@ import { ref } from 'vue';
 const route = useRoute();
 const router = useRouter();
 
-const type = route.params.type;
+const type = route.query.type;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
 
 console.log(type);
 
 function setActiveMenu(menu) {
   // 메뉴함수
-  router.push({ name: menu, params: { type: menu } });
-  activeMenu.value = menu;
+  if (menu === 'placeAround') {
+    router.push({ name: menu, query: { type: menu, content: 'tour' } });
+    activeMenu.value = menu;
+  } else {
+    router.push({ name: menu, query: { type: menu } });
+    activeMenu.value = menu;
+  }
 }
 </script>
 

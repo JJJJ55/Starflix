@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const contentId = route.params.content;
+const contentId = route.query.content;
 console.log(contentId);
 </script>
 

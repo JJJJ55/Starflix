@@ -7,12 +7,13 @@ const router = useRouter();
 
 const test = 20; //주변정보 더미데이터
 
-const type = route.params.content;
-const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
+const type = route.query.type;
+const content = route.query.content;
+const activeMenu = ref(content); // 메뉴 클릭시 효과 변수
 
 function setActiveMenu(menu) {
   // 메뉴함수
-  router.push({ name: menu, params: { content: menu } });
+  router.push({ name: menu, query: { type: type, content: menu } });
   activeMenu.value = menu;
 }
 </script>

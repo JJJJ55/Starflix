@@ -7,7 +7,7 @@ const route = useRoute();
 const router = useRouter();
 
 const movePage = (val) => {
-  router.push({ name: 'readReview', params: { type: 'readReview', id: val } });
+  router.push({ name: 'readReview', query: { type: 'readReview', id: val } });
 };
 
 const test = 20; //주변정보 더미데이터

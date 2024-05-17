@@ -98,19 +98,36 @@ const router = createRouter({
       name: 'mypage',
       redirect: '/mypage/userInfo',
       component: MyPageView,
+      // children: [
+      //   {
+      //     path: ':type',
+      //     name: 'userInfo',
+      //     component: MyInfo,
+      //   },
+      //   {
+      //     path: ':type',
+      //     name: 'myPlaces',
+      //     component: MyPlace,
+      //   },
+      //   {
+      //     path: ':type',
+      //     name: 'myReviews',
+      //     component: MyReview,
+      //   },
+      // ],
       children: [
         {
-          path: ':type',
+          path: 'userInfo',
           name: 'userInfo',
           component: MyInfo,
         },
         {
-          path: ':type',
+          path: 'myPlaces',
           name: 'myPlaces',
           component: MyPlace,
         },
         {
-          path: ':type',
+          path: 'myReviews',
           name: 'myReviews',
           component: MyReview,
         },
@@ -123,93 +140,93 @@ const router = createRouter({
       component: MapView,
       children: [
         {
-          path: ':root',
+          path: 'mapInfo',
           name: 'mapInfo',
           redirect: '/map/mapInfo/mapHome',
           component: MapInfoDiv,
           children: [
             {
-              path: ':type',
+              path: 'mapHome',
               name: 'mapHome',
               component: Maphome,
             },
             {
-              path: ':type',
+              path: 'placeInfo',
               name: 'placeInfo',
               component: PlaceInfo,
             },
             {
-              path: ':type',
+              path: 'Review',
               name: 'Review',
               component: Review,
             },
             {
-              path: ':type',
+              path: 'placeReview',
               name: 'placeReview',
               component: ReviewList,
             },
             {
-              path: ':type',
+              path: 'placeAround',
               name: 'placeAround',
               redirect: '/map/mapInfo/placeAround/tour',
               component: Around,
               children: [
                 {
-                  path: ':content',
+                  path: 'tour',
                   name: 'tour',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'culture',
                   name: 'culture',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'festival',
                   name: 'festival',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'travel',
                   name: 'travel',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'Leisure',
                   name: 'Leisure',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'sleep',
                   name: 'sleep',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'shop',
                   name: 'shop',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'food',
                   name: 'food',
                   component: AroundItem,
                 },
                 {
-                  path: ':content',
+                  path: 'camp',
                   name: 'camp',
                   component: AroundItem,
                 },
               ],
             },
             {
-              path: ':type/:id',
+              path: 'readReview',
               name: 'readReview',
               component: ReadReview,
             },
           ],
         },
         {
-          path: ':root',
+          path: 'addplace',
           name: 'addplace',
           component: AddPlace,
         },

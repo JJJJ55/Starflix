@@ -22,7 +22,7 @@ const route = useRoute();
 const router = useRouter();
 
 const movePage = (val) => {
-  router.push({ name: val, params: { root: val } });
+  router.push({ name: val, query: { root: val } });
 };
 
 const options = ref([
