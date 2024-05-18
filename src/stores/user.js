@@ -25,7 +25,7 @@ export const useUserStore = defineStore('userStore', () => {
           isLogin.value = true; // 로그인 성공
           isLoginError.value = false; // 로그인 실패
           isValidToken.value = true; // 토큰 발급 유무
-          sessionStorage.setItem('accessToken', ac);
+          sessionStorage.setItem('accessToken', `Bearer ${ac}`);
         }
       },
       (error) => {
