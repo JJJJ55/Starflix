@@ -15,7 +15,7 @@ const type = props.type;
 const memberStore = useUserStore();
 
 const { isLogin, isLoginError } = storeToRefs(memberStore);
-const { login, getUserInfo } = memberStore;
+const { login, getUserInfo, regist } = memberStore;
 
 const user = ref({
   userId: '',
@@ -36,6 +36,10 @@ const userlogin = async () => {
   }
 };
 
+const userRegist = async () => {
+  await regist(user.value);
+};
+
 const onSubmit = () => {
   if (type === 'login') {
     //로그인
@@ -44,8 +48,9 @@ const onSubmit = () => {
     userlogin();
   } else if (type === 'regist') {
     //회원가입
-    console.log(user.value);
-    console.log('회원가입');
+    // console.log(user.value);
+    // console.log('회원가입');
+    userRegist();
   }
 };
 

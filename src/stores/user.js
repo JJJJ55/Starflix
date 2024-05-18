@@ -3,7 +3,17 @@ import { useRouter } from 'vue-router';
 import { defineStore } from 'pinia';
 import { jwtDecode } from 'jwt-decode';
 
-import { userLogin, findById, tokenRegeneration, userlogout } from '@/api/user';
+import {
+  userLogin,
+  findById,
+  tokenRegeneration,
+  userlogout,
+  userInsert,
+  userUpdate,
+  userDelete,
+  jjimDelete,
+  jjimList,
+} from '@/api/user';
 import { httpStatusCode } from '@/util/http-status';
 
 export const useUserStore = defineStore('userStore', () => {
@@ -122,6 +132,23 @@ export const useUserStore = defineStore('userStore', () => {
     );
   };
 
+  const regist = async (user) => {
+    await userInsert(
+      user,
+      (resp) => {
+        if (resp.status === httpStatusCode.OK) {
+          console.log('가입성공');
+          router.replace({ name: 'main' });
+        } else {
+          console.log('가입실패');
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   return {
     isLogin,
     isLoginError,
@@ -131,5 +158,6 @@ export const useUserStore = defineStore('userStore', () => {
     getUserInfo,
     tokenRegenerate,
     logout,
+    regist,
   };
 });
