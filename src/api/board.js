@@ -15,11 +15,11 @@ async function readBoard(bno, success, fail) {
     sessionStorage.getItem('accessToken');
   await local.get(`/boards/${bno}`).then(success).catch(fail);
 }
-async function updateBoard(bno, success, fail) {
+async function updateBoard(board, success, fail) {
   // 게시글 수정
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
-  await local.put(`/boards/${bno}`).then(success).catch(fail);
+  await local.put(`/boards/${board.bno}`, board).then(success).catch(fail);
 }
 async function deleteBoard(bno, success, fail) {
   // 게시글 삭제
