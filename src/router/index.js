@@ -22,6 +22,7 @@ import BoardView from '@/views/Board/BoardView.vue';
 import List from '@/component/board/List.vue';
 import Write from '@/component/board/Write.vue';
 import Read from '@/component/board/Read.vue';
+import Modify from '@/component/board/Modify.vue';
 
 // 찜리스트
 import MyPickView from '@/views/Pick/MyPickView.vue';
@@ -83,6 +84,11 @@ const router = createRouter({
           path: 'read',
           name: 'read',
           component: Read,
+        },
+        {
+          path: 'modify',
+          name: 'modify',
+          component: Modify,
         },
       ],
     },
