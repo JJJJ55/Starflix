@@ -3,6 +3,18 @@ import Btn from '@/component/common/Btn.vue';
 // import Editor from '@/component/board/Editor.vue';
 import { useRouter } from 'vue-router';
 
+import { useUserStore } from '@/stores/user';
+import { useBoardStore } from '@/stores/boardStore';
+
+const boardStore = useBoardStore();
+const memberStore = useUserStore();
+const { userInfo } = memberStore;
+const { write } = boardStore;
+
+const boardWrite = async () => {
+  await write(board.value);
+};
+
 // 여기부터 토스트
 import { onMounted, ref, defineProps, defineEmits } from 'vue';
 import Editor from '@toast-ui/editor';
@@ -21,6 +33,13 @@ const editorRef = ref(null);
 let editorValid = null;
 const testHtml = ref('');
 const text = ref('');
+
+const board = ref({
+  // 추가
+  title: '',
+  writer: userInfo.userId,
+  content: '',
+});
 
 //마운트될때 Editor 생성
 onMounted(() => {
@@ -43,9 +62,12 @@ const testValid = () => {
 };
 const addBoard = () => {
   if (editorValid !== null) {
-    text.value = editorValid.getHTML();
+    // text.value = editorValid.getHTML();
+    board.value.content = editorValid.getHTML();
   }
-  console.log(text.value);
+  // console.log(text.value);
+
+  boardWrite();
 };
 
 // 여기까지 토스트
@@ -60,8 +82,19 @@ const movePage = (val) => {
   <section class="container-fluid">
     <div class="boardArea">
       <div>
-        <input type="text" class="bTitle" placeholder="제목을 입력하세요" />
-        <input type="text" class="bWriter" placeholder="작성자" readonly />
+        <input
+          type="text"
+          class="bTitle"
+          placeholder="제목을 입력하세요"
+          v-model="board.title"
+        />
+        <input
+          type="text"
+          class="bWriter"
+          placeholder="작성자"
+          v-model="userInfo.userId"
+          readonly
+        />
       </div>
       <!-- 에디터 적용 전 원래 textarea -->
       <!-- <textarea class="bContent" placeholder="내용을 입력하세요"></textarea> -->
@@ -156,7 +189,6 @@ section {
   border: none;
   padding-left: 10px;
   padding-right: 10px;
-  color: white;
 }
 .bContent {
   width: 80%;

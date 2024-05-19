@@ -2,10 +2,22 @@
 import Btn from '@/component/common/Btn.vue';
 import ListItem from '@/component/board/ListItem.vue';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+import { storeToRefs } from 'pinia';
+import { useBoardStore } from '@/stores/boardStore';
 
 const test = 10;
 const router = useRouter();
+
+const boardStore = useBoardStore();
+const { boardList } = storeToRefs(boardStore);
+const { blist } = boardStore;
+
+onMounted(() => {
+  blist('');
+});
+
 const movePage = (val) => {
   router.push({ name: val });
 };
@@ -23,7 +35,7 @@ const movePage = (val) => {
       </tr>
     </table>
     <div class="hr"></div>
-    <div class="noList" v-if="test == 0">작성된 글이 없습니다.</div>
+    <div class="noList" v-if="boardList.length == 0">작성된 글이 없습니다.</div>
     <table v-else class="board">
       <tr>
         <th class="t1"></th>
@@ -42,7 +54,7 @@ const movePage = (val) => {
           <td class="t5">100</td>
         </tr>
       </tbody> -->
-      <ListItem :test="test" />
+      <ListItem :test="boardList" />
     </table>
     <div class="btnArea">
       <Btn :text="'글쓰기'" :sty="'redBtn'" @click="movePage('write')" />

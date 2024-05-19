@@ -1,10 +1,57 @@
 <script setup>
 import Btn from '@/component/common/Btn.vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
+import { useBoardStore } from '@/stores/boardStore';
+
+const boardStore = useBoardStore();
+const memberStore = useUserStore();
+const { board, likeFlag, unlikeFlag } = storeToRefs(boardStore);
+const { userInfo } = memberStore;
+const { read, delBoard, checkLike, like, unlike } = boardStore;
+
+const route = useRoute();
 const router = useRouter();
+
+const likeText = ref('좋아요');
+
+const bno = route.query.bno; // 내가 읽은 글의 bno
+const boardInfo = ref({});
+onMounted(async () => {
+  console.log('받을 글 ' + bno);
+  await read(bno);
+  boardInfo.value = board.value;
+  await checkLike(bno, userInfo.userId);
+  if (likeFlag.value) {
+    likeText.value = '해제';
+  }
+});
 const movePage = (val) => {
   router.push({ name: val });
+};
+const deleteBoard = () => {
+  const flag = confirm('정말로 삭제하시겠습니까?');
+  if (flag) {
+    delBoard(bno);
+  }
+};
+
+const btnAction = () => {
+  console.log('동작');
+  if (likeFlag.value) {
+    unlike(bno, userInfo.userId);
+    likeFlag.value = !likeFlag.value;
+    unlikeFlag.value = !unlikeFlag.value;
+    likeText.value = '좋아요';
+  } else {
+    like(bno, userInfo.userId);
+    likeFlag.value = !likeFlag.value;
+    unlikeFlag.value = !unlikeFlag.value;
+    likeText.value = '해제';
+  }
 };
 </script>
 
@@ -12,15 +59,44 @@ const movePage = (val) => {
   <section class="container-fluid">
     <div class="boardArea">
       <div>
-        <input type="text" class="bTitle" placeholder="제목을 입력하세요" />
-        <input type="text" class="bWriter" placeholder="작성자" readonly />
+        <input
+          type="text"
+          class="bTitle"
+          placeholder="제목을 입력하세요"
+          v-model="boardInfo.title"
+          readonly
+        />
+        <input
+          type="text"
+          class="bWriter"
+          placeholder="작성자"
+          readonly
+          v-model="boardInfo.writer"
+        />
       </div>
-      <textarea class="bContent" placeholder="내용을 입력하세요"></textarea>
+      <div
+        class="bContent"
+        placeholder="내용을 입력하세요"
+        v-html="boardInfo.content"
+      ></div>
     </div>
     <div class="btnArea">
-      <Btn :sty="'redBtn'" :text="'좋아요'" />
-      <Btn :sty="'redBtn'" :text="'수정'" />
-      <Btn :sty="'blackBtn'" :text="'삭제'" />
+      <Btn
+        :sty="{ redBtn: unlikeFlag, blackBtn: likeFlag }"
+        :text="likeText"
+        @click="btnAction"
+      />
+      <Btn
+        :sty="'redBtn'"
+        :text="'수정'"
+        v-if="userInfo.userId === boardInfo.writer"
+      />
+      <Btn
+        :sty="'blackBtn'"
+        :text="'삭제'"
+        v-if="userInfo.userId === boardInfo.writer"
+        @click="deleteBoard"
+      />
       <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('list')" />
     </div>
   </section>
@@ -75,7 +151,7 @@ section {
   margin: 0 auto 20px;
   border: 1px solid red;
 }
-.boardArea > div {
+.boardArea + div {
   margin: 0 auto;
   width: 100%;
   border: 1px solid yellow;
@@ -103,7 +179,6 @@ section {
   border: none;
   padding-left: 10px;
   padding-right: 10px;
-  color: white;
 }
 .bContent {
   width: 80%;
@@ -114,6 +189,8 @@ section {
   border: none;
   padding: 10px;
   color: white;
+  margin: 0 auto;
+  text-align: start;
 }
 .btnArea {
   width: 80%;
