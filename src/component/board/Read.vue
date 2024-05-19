@@ -1,5 +1,6 @@
 <script setup>
 import Btn from '@/component/common/Btn.vue';
+import commentList from '../comment/commentList.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -30,7 +31,11 @@ onMounted(async () => {
   }
 });
 const movePage = (val) => {
-  router.push({ name: val });
+  if (val === 'modify') {
+    router.push({ name: val, query: { bno: bno } });
+  } else {
+    router.push({ name: val });
+  }
 };
 const deleteBoard = () => {
   const flag = confirm('정말로 삭제하시겠습니까?');
@@ -90,6 +95,7 @@ const btnAction = () => {
         :sty="'redBtn'"
         :text="'수정'"
         v-if="userInfo.userId === boardInfo.writer"
+        @click="movePage('modify')"
       />
       <Btn
         :sty="'blackBtn'"
@@ -100,6 +106,7 @@ const btnAction = () => {
       <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('list')" />
     </div>
   </section>
+  <commentList />
 </template>
 
 <style scoped>
