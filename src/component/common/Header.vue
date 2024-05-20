@@ -11,10 +11,10 @@ const route = useRoute();
 const router = useRouter();
 const memberStore = useUserStore();
 const { logout } = memberStore;
+const { userInfo } = storeToRefs(memberStore);
 
 const userLogout = () => {
-  logout();
-  router.replace('/main');
+  logout(userInfo.value.userId);
 };
 
 const movePage = (val) => {
