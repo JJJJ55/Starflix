@@ -23,7 +23,11 @@ const route = useRoute();
 const router = useRouter();
 
 const movePage = (val) => {
-  router.push({ name: val, query: { root: val } });
+  if (val === 'map') {
+    router.push({ name: val, query: { type: 'mapHome' } });
+  } else {
+    router.push({ name: val, query: { root: val } });
+  }
 };
 
 const options = ref([
@@ -69,7 +73,7 @@ function setActiveMenu(menu) {
           </div>
           <div class="Area">
             <Btn :sty="'redBtn'" :text="'추가'" @click="movePage('addplace')" />
-            <Btn :sty="'blackBtn'" :text="'이전'" />
+            <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('map')" />
           </div>
         </div>
       </div>
