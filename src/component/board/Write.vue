@@ -7,6 +7,7 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,6 +20,7 @@ const boardStore = useBoardStore();
 const memberStore = useUserStore();
 const { userInfo } = memberStore;
 const { write } = boardStore;
+const router = useRouter();
 
 const board = ref({
   title: '',
