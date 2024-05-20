@@ -6,8 +6,16 @@ import Weather from '@/component/common/Weather.vue';
 import { ref } from 'vue';
 import WeatherVue from '@/component/common/Weather.vue';
 
+import { useUserStore } from '@/stores/user';
+import { useMapStore } from '@/stores/mapStore';
+import { storeToRefs } from 'pinia';
+const memberStore = useUserStore();
+const mapStore = useMapStore();
+const { userInfo } = memberStore;
+const { bestList, placeList } = storeToRefs(mapStore);
+
 const sub1 = 'BEST 별자리 명소';
-const sub2 = ref('OOO님의 지역명소');
+const sub2 = ref(userInfo.userName + '님의 지역명소');
 </script>
 
 <template>
@@ -22,11 +30,11 @@ const sub2 = ref('OOO님의 지역명소');
     </section>
     <!-- 아래 메인배너 컴포넌트화는 나중에 하기로 -->
     <!-- <MainBanner />  -->
-    <section class="container-fluid">
-      <MainList :title="sub1" />
+    <section class="list container-fluid">
+      <MainList :title="sub1" :data="bestList" />
     </section>
-    <section class="container-fluid">
-      <MainList :title="sub2" />
+    <section class="list container-fluid">
+      <MainList :title="sub2" :data="placeList" />
     </section>
   </div>
 </template>

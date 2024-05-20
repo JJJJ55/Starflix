@@ -1,13 +1,23 @@
 <script setup>
 import { ref } from 'vue';
 
-const test = ref(10);
+defineProps({
+  params: Object,
+});
+
+const movePage = (idx) => {
+  console.log(idx);
+};
 </script>
 
 <template>
-  <span v-for="t in test">
-    <div class="Img">
-      <div class="title">제목</div>
+  <span v-for="p in params" :key="p.idx">
+    <div
+      class="Img"
+      :style="{ backgroundImage: `url(${p.img})` }"
+      @click="movePage(p.idx)"
+    >
+      <div class="title">{{ p.title }}</div>
     </div>
   </span>
 </template>
@@ -20,6 +30,9 @@ const test = ref(10);
   margin-right: 20px;
   position: relative;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 .Img:hover .title {
   opacity: 1; /* 마우스를 올렸을 때 보이도록 변경 */
