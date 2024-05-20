@@ -69,7 +69,9 @@ const Cdelete = (val) => {
 </script>
 
 <template>
-  <div v-if="commentList.length === 0">작성된 댓글이 없습니다.</div>
+  <div class="noComment" v-if="commentList.length === 0">
+    작성된 댓글이 없습니다.
+  </div>
   <div class="mainDiv" v-for="(c, index) in commentList" :key="c.cno">
     <div class="commentDiv">
       <span>{{ c.writer }}</span>
@@ -99,10 +101,17 @@ const Cdelete = (val) => {
 </template>
 
 <style scoped>
+.noComment {
+  width: 80%;
+  border: 1px solid #d30000;
+  margin: 0 auto;
+  color: white;
+}
 section {
   /* margin-top: 15px; */
   width: 80%;
   margin: 15px auto 0;
+  border: 1px solid #d30000;
 }
 .commentDiv {
   border-bottom: 1px solid white;
