@@ -47,13 +47,13 @@ const router = createRouter({
       component: MainView,
     },
     {
-      path: '/main/:type',
-      name: 'loginRegist',
+      path: '/login',
+      name: 'login',
       component: LoginView,
     },
     {
-      path: '/main/:type',
-      name: 'loginRegist',
+      path: '/regist',
+      name: 'regist',
       component: LoginView,
     },
     // 여기까지 로그인 전

@@ -1,10 +1,14 @@
 <script setup>
 import LoginRegistForm from '@/component/common/LoginRegistForm.vue';
+import { onMounted, onUpdated } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
 const type = route.params.type;
+onUpdated(() => {
+  console.log(type);
+});
 </script>
 
 <template>

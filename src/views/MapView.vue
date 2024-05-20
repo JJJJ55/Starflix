@@ -14,6 +14,7 @@ import Write from '@/component/board/Write.vue';
 import Read from '@/component/board/Read.vue';
 import AddPlace from '@/component/map/AddPlace.vue';
 import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
+import mapVue from '@/component/kakaoMap/mapVue.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
@@ -57,7 +58,8 @@ function setActiveMenu(menu) {
           <SelectBox :options="options" @onKeySelect="changeKey" />
           <InputBox class="inputBox" />
         </div>
-        <div class="map"></div>
+        <!-- <div class="map"></div> -->
+        <mapVue class="map" />
         <div class="Info">
           <div>
             <h1 class="InfoTitle">잔국 별자리 명소 검색</h1>
@@ -65,7 +67,7 @@ function setActiveMenu(menu) {
               사용자가 임의로 별 명소를 등록 및 공유할 수 있습니다.
             </p>
           </div>
-          <div class="btnArea">
+          <div class="Area">
             <Btn :sty="'redBtn'" :text="'추가'" @click="movePage('addplace')" />
             <Btn :sty="'blackBtn'" :text="'이전'" />
           </div>
@@ -113,7 +115,7 @@ function setActiveMenu(menu) {
   .content {
     background-size: 300% !important;
   }
-  .btnArea {
+  .Area {
     margin: 10px;
     width: 40% !important;
     height: fit-content;
@@ -130,7 +132,7 @@ function setActiveMenu(menu) {
   .InfoText {
     font-size: 12px !important;
   }
-  .btnArea {
+  .Area {
     width: 80% !important;
     height: fit-content;
   }
@@ -146,15 +148,20 @@ function setActiveMenu(menu) {
   .mainContent {
     flex-direction: column;
   }
+  .Area {
+    flex-direction: row !important;
+  }
   .menuBox {
     margin: 0 auto;
   }
 }
-@media (max-width: 580px) {
-  .myMenu {
-    font-size: 14px !important;
+@media (max-width: 1324px) {
+  .Area {
+    display: flex;
+    flex-direction: column;
   }
 }
+
 .content {
   min-height: 100vh;
   background-image: url('@/assets/img/mapImg.png');
@@ -189,8 +196,8 @@ function setActiveMenu(menu) {
 }
 
 .map {
-  width: 100%;
-  height: 500px;
+  width: 100% !important;
+  height: 500px !important;
   border: 1px solid orange;
   margin: 20px 0;
 }
@@ -207,8 +214,8 @@ function setActiveMenu(menu) {
 .InfoText {
   color: white;
 }
-.btnArea {
-  width: fit-content;
+.Area {
+  position: relative;
 }
 
 /* 오른쪽 */

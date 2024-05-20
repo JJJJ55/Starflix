@@ -6,7 +6,10 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const movePage = (val) => {
-  router.push({ name: 'loginRegist', params: { type: val } });
+  if (val === 'login') {
+    router.push({ name: 'login', query: { type: val } });
+  } else if (val === 'regist')
+    router.push({ name: 'regist', query: { type: val } });
 };
 </script>
 
