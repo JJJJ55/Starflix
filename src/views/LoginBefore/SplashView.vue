@@ -1,12 +1,29 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+
+// 지도 정보 받아오기
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+
+const mapStore = useMapStore();
+const { bestList, placeList } = storeToRefs(mapStore);
+const { best, maplist } = mapStore;
+
+// 날씨 정보 받아오기
 
 const router = useRouter();
 
-onMounted(() => {
+const param = ref({
+  type: 'addr',
+  keyword: '서울',
+});
+
+onMounted(async () => {
+  await maplist(param.value); // 기본 대전
+  await best();
   setTimeout(() => {
-    router.push({ name: 'main' });
+    router.push({ name: 'home' });
     console.log('이동');
   }, 2000);
 });

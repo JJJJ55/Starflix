@@ -14,11 +14,20 @@ async function onPrivate(idx, success, fail) {
     sessionStorage.getItem('accessToken');
   await local.put(`/star-places/${idx}/private`).then(success).catch(fail);
 }
-async function listPlace(param, success, fail) {
-  // 명소 검색(게시글 참고)
+async function listPlace1(success, fail) {
+  // 명소 검색(전체)
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
   await local.get(`/star-places`).then(success).catch(fail);
+}
+async function listPlace2(param, success, fail) {
+  // 명소 검색(조건 검색)
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local
+    .get(`/star-places?type=${param.type}&keyword=${param.keyword}`)
+    .then(success)
+    .catch(fail);
 }
 async function addPlace(param, success, fail) {
   // 명소 등록
@@ -54,13 +63,22 @@ async function aroundCamp(idx, success, fail) {
   await local.get(`/star-places/${idx}/camping`).then(success).catch(fail);
 }
 
+async function bestPlace(success, fail) {
+  // 주변 검색(캠핑)
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local.get(`/star-places/best`).then(success).catch(fail);
+}
+
 export {
   onPublic,
   onPrivate,
-  listPlace,
+  listPlace1,
+  listPlace2,
   addPlace,
   infoPlace,
   deletePlace,
   aroundPlace,
   aroundCamp,
+  bestPlace,
 };

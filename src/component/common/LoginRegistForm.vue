@@ -57,8 +57,7 @@ const userlogin = async () => {
   console.log('가져온 토큰 ' + token);
   if (isLogin.value) {
     getUserInfo(token);
-    router.replace('/home');
-    console.log('erere');
+    router.replace({ name: 'splash' });
   }
 };
 

@@ -127,7 +127,7 @@ export const useUserStore = defineStore(
 
             sessionStorage.removeItem('accessToken');
             sessionStorage.removeItem('refreshToken');
-            router.replace({ name: 'splash' });
+            router.replace({ name: 'main' });
           } else {
             console.error('유저 정보 없음!!!!');
           }
