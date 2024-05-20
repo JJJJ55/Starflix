@@ -1,78 +1,125 @@
 <script setup>
 import Btn from '@/component/common/Btn.vue';
-// import Editor from '@/component/board/Editor.vue';
-import { useRouter } from 'vue-router';
-
-import { useUserStore } from '@/stores/user';
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
+import { ref, onMounted } from 'vue';
+import Editor from '@toast-ui/editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { v4 as uuidv4 } from 'uuid';
 import { useBoardStore } from '@/stores/boardStore';
+import { useUserStore } from '@/stores/user';
+
+const storage = getStorage(); // getStorage() 함수를 호출하여 Storage 인스턴스를 가져와 변수에 할당
 
 const boardStore = useBoardStore();
 const memberStore = useUserStore();
 const { userInfo } = memberStore;
 const { write } = boardStore;
 
-const boardWrite = async () => {
-  await write(board.value);
-};
-
-// 여기부터 토스트
-import { onMounted, ref, defineProps, defineEmits } from 'vue';
-import Editor from '@toast-ui/editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
-
-const props = defineProps({
-  modelValue: {
-    type: String,
-    required: false,
-    default: '',
-  },
-});
-
-const emit = defineEmits(['update:modelValue']);
-const editorRef = ref(null);
-let editorValid = null;
-const testHtml = ref('');
-const text = ref('');
-
 const board = ref({
-  // 추가
   title: '',
   writer: userInfo.userId,
   content: '',
 });
 
-//마운트될때 Editor 생성
+let editorValid = null;
+const editorRef = ref(null);
+const uploading = ref(false);
+
+const boardWrite = async () => {
+  await write(board.value);
+};
+
+// 이미지를 최대 300px로 조절하는 함수
+const resizeImage = async (blob) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const img = new Image();
+  img.src = URL.createObjectURL(blob);
+
+  await new Promise((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = reject;
+  });
+
+  const maxWidth = 500;
+
+  let width = img.width;
+  let height = img.height;
+
+  if (width > maxWidth) {
+    height *= maxWidth / width;
+    width = maxWidth;
+  }
+
+  canvas.width = width;
+  canvas.height = height;
+
+  ctx.drawImage(img, 0, 0, width, height);
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob);
+    }, 'image/jpeg');
+  });
+};
+
 onMounted(() => {
   editorValid = new Editor({
     el: editorRef.value,
     height: '500px',
-    //'wysiwyg', 'markdown' 택 1
     initialEditType: 'wysiwyg',
-    events: {
-      change: () => emit('update:modelValue', editorValid.getMarkdown()),
+    hooks: {
+      // 이미지 삽입 시 발생하는 이벤트
+      addImageBlobHook: async (blob, callback) => {
+        const uuid = uuidv4(); // UUID 생성
+        const fileName = `${uuid}-${blob.name}`; // UUID와 파일 이름을 결합하여 유일한 파일 이름 생성
+
+        // 이미지를 최대 500px로 조절
+        const resizedBlob = await resizeImage(blob);
+
+        const storageRefValue = storageRef(storage, `uploads/${fileName}`);
+        const uploadTask = uploadBytesResumable(storageRefValue, resizedBlob);
+
+        uploading.value = true;
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done for ${fileName}`);
+          },
+          (error) => {
+            console.error(`업로드 실패(${fileName}):`, error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(
+              `${fileName} 파일이 성공적으로 업로드되었습니다.`,
+              downloadURL
+            );
+
+            // Firebase에서 가져온 URL을 사용하여 이미지 삽입
+            callback(downloadURL, blob.name);
+
+            uploading.value = false;
+          }
+        );
+      },
     },
   });
 });
 
-//작성한 내용 불러와서 html 적용
-const testValid = () => {
-  if (editorValid !== null) {
-    testHtml.value = editorValid.getHTML();
-  }
-};
 const addBoard = () => {
-  if (editorValid !== null) {
-    // text.value = editorValid.getHTML();
-    board.value.content = editorValid.getHTML();
-  }
-  // console.log(text.value);
-
+  board.value.content = editorValid.getHTML();
   boardWrite();
 };
 
-// 여기까지 토스트
-
-const router = useRouter();
 const movePage = (val) => {
   router.push({ name: val });
 };
@@ -97,8 +144,13 @@ const movePage = (val) => {
         />
       </div>
       <div class="bContent">
-        <img class="loding" src="../../assets/img/loding.gif" alt="로딩" />
-        <div class="textBox" ref="editorRef" />
+        <img
+          class="loading"
+          v-show="uploading"
+          src="../../assets/img/loding.gif"
+          alt="로딩"
+        />
+        <div class="textBox" ref="editorRef"></div>
       </div>
     </div>
     <div class="btnArea">
@@ -123,7 +175,7 @@ const movePage = (val) => {
   background-position: top;
   overflow: auto;
 }
-.loding {
+.loading {
   position: absolute;
   top: 50%;
   left: 50%;

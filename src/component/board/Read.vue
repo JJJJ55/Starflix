@@ -58,6 +58,13 @@ const btnAction = () => {
     likeText.value = '해제';
   }
 };
+onMounted(() => {
+  const images = document.querySelectorAll('.bContent p img');
+  images.forEach((img) => {
+    img.style.maxWidth = '200px';
+    img.style.height = 'auto';
+  });
+});
 </script>
 
 <template>
@@ -110,6 +117,11 @@ const btnAction = () => {
 </template>
 
 <style scoped>
+@media (max-width: 820px) {
+  .bContent {
+    width: 100% !important;
+  }
+}
 @media (max-width: 790px) {
   .btnArea {
     flex-direction: column;
@@ -190,14 +202,21 @@ section {
 .bContent {
   width: 80%;
   min-width: 300px;
-  height: 313px;
+  min-height: 313px;
+  height: 100%;
   background-color: #333333;
   border-radius: 10px;
   border: none;
   padding: 10px;
   color: white;
   margin: 0 auto;
-  text-align: start;
+  overflow: auto;
+  /* text-align: start; */
+}
+/* 토스트 UI 에디터에서 생성되는 이미지의 스타일을 수정 */
+.tui-editor-contents img {
+  max-width: 100%; /* 이미지의 최대 너비를 부모 요소의 너비에 맞게 설정 */
+  height: auto; /* 비율 유지를 위해 height 속성을 auto로 설정 */
 }
 .btnArea {
   width: 80%;
