@@ -9,6 +9,7 @@ import router from './router';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@/util/firebase';
 
 import { quillEditor } from 'vue3-quill';
 
