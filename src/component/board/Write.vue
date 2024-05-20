@@ -96,12 +96,9 @@ const movePage = (val) => {
           readonly
         />
       </div>
-      <!-- 에디터 적용 전 원래 textarea -->
-      <!-- <textarea class="bContent" placeholder="내용을 입력하세요"></textarea> -->
       <div class="bContent">
+        <img class="loding" src="../../assets/img/loding.gif" alt="로딩" />
         <div class="textBox" ref="editorRef" />
-        <!-- <button @click="testValid">버튼</button> -->
-        <!-- <div v-html="testHtml"></div> -->
       </div>
     </div>
     <div class="btnArea">
@@ -125,6 +122,13 @@ const movePage = (val) => {
   background-size: 100%;
   background-position: top;
   overflow: auto;
+}
+.loding {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
 }
 .PageTitle {
   height: 350px;
@@ -191,6 +195,7 @@ section {
   padding-right: 10px;
 }
 .bContent {
+  position: relative;
   width: 80%;
   min-width: 300px;
   height: 500px;
