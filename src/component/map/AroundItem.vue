@@ -2,24 +2,16 @@
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const contentId = ref(route.query.content);
-watch(
-  () => route.query.content,
-  (newValue, oldValue) => {
-    // URL의 type 파라미터가 변경되면 호출되는 로직을 여기에 구현합니다.
-    // newValue에는 변경된 값이, oldValue에는 이전 값이 전달됩니다.
-    contentId.value = newValue;
-    console.log('URL의 type이 변경되었습니다.', newValue);
-  }
-);
-// const contentId = route.query.content;
-console.log(contentId);
+
+defineProps({
+  data: Object,
+});
 </script>
 
 <template>
   <div class="Item">
-    <div class="Img">
-      <div class="title">{{ contentId }}</div>
+    <div class="Img" :style="{ backgroundImage: `url(${data.img})` }">
+      <div class="title">{{ data.title }}</div>
     </div>
   </div>
 </template>
@@ -35,6 +27,9 @@ console.log(contentId);
   border: 1px solid blue;
   margin-bottom: 20px;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 .Img:hover .title {
   opacity: 1; /* 마우스를 올렸을 때 보이도록 변경 */
@@ -52,6 +47,9 @@ console.log(contentId);
   line-height: 30px;
   transition: opacity 0.3s ease; /* 투명도 변경 시 애니메이션 효과 추가 */
   opacity: 0; /* 초기에는 숨김 */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .btns {
   /* width: 300px; */

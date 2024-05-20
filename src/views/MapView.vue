@@ -15,16 +15,20 @@ import Read from '@/component/board/Read.vue';
 import AddPlace from '@/component/map/AddPlace.vue';
 import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
 import mapVue from '@/component/kakaoMap/mapVue.vue';
+import AddPlaceMap from '@/component/kakaoMap/AddPlaceMap.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
 
+// import '../component/kakaoMap/geoCoding';
+
 const route = useRoute();
 const router = useRouter();
+const mode = route.query.type;
 
 const movePage = (val) => {
-  if (val === 'map') {
-    router.push({ name: val, query: { type: 'mapHome' } });
+  if (val === 'pre') {
+    router.go(-1);
   } else {
     router.push({ name: val, query: { root: val } });
   }
@@ -64,6 +68,8 @@ function setActiveMenu(menu) {
         </div>
         <!-- <div class="map"></div> -->
         <mapVue class="map" />
+        <!-- <AddPlaceMap class="map" /> -->
+        <!-- <div id="map" class="map"></div> -->
         <div class="Info">
           <div>
             <h1 class="InfoTitle">잔국 별자리 명소 검색</h1>
@@ -73,7 +79,7 @@ function setActiveMenu(menu) {
           </div>
           <div class="Area">
             <Btn :sty="'redBtn'" :text="'추가'" @click="movePage('addplace')" />
-            <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('map')" />
+            <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('pre')" />
           </div>
         </div>
       </div>
@@ -193,6 +199,7 @@ function setActiveMenu(menu) {
   width: fit-content;
   border: 1px solid red;
   display: flex;
+  margin-bottom: 20px;
 }
 
 .inputBox {
@@ -200,13 +207,14 @@ function setActiveMenu(menu) {
 }
 
 .map {
-  width: 100% !important;
-  height: 500px !important;
+  width: 100%;
+  height: 500px;
   border: 1px solid orange;
   margin: 20px 0;
 }
 
 .Info {
+  margin-top: 20px;
   border: 1px solid yellow;
   display: flex;
   justify-content: space-between;

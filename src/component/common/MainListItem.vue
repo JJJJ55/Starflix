@@ -1,12 +1,14 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
 defineProps({
   params: Object,
 });
 
 const movePage = (idx) => {
-  console.log(idx);
+  router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: idx } });
 };
 </script>
 

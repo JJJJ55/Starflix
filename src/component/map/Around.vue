@@ -1,20 +1,45 @@
 <script setup>
 import AroundItem from '@/component/map/AroundItem.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+
+const mapStore = useMapStore();
+const { aroundList } = storeToRefs(mapStore);
+const { travel, camp } = mapStore;
 const route = useRoute();
 const router = useRouter();
+const contentId = ref(route.query.contentId);
 
-const test = 20; //주변정보 더미데이터
+onMounted(async () => {
+  if (contentId.value === '40') {
+    await camp(idx);
+  } else {
+    await travel(idx, contentId.value);
+  }
+});
+
+watch(
+  () => contentId.value,
+  (newValue, oldValue) => {
+    contentId.value = newValue;
+    if (newValue == '40') {
+      camp(idx);
+    } else {
+      travel(idx, newValue);
+    }
+  }
+);
 
 const type = route.query.type;
-const content = route.query.content;
-const activeMenu = ref(content); // 메뉴 클릭시 효과 변수
+const idx = route.query.idx;
+const activeMenu = ref(contentId); // 메뉴 클릭시 효과 변수
 
-function setActiveMenu(menu) {
+function setActiveMenu(menu, id) {
   // 메뉴함수
-  router.push({ name: menu, query: { type: type, content: menu } });
-  activeMenu.value = menu;
+  router.push({ name: menu, query: { type: type, idx, contentId: id } });
+  activeMenu.value = id;
 }
 </script>
 
@@ -22,63 +47,68 @@ function setActiveMenu(menu) {
   <section class="mapContent">
     <ul class="aroundMenu">
       <li
-        :class="{ active: activeMenu === 'tour' }"
-        @click="setActiveMenu('tour')"
+        :class="{ active: activeMenu === '12' }"
+        @click="setActiveMenu('tour', '12')"
       >
         관광
       </li>
       <li
-        :class="{ active: activeMenu === 'culture' }"
-        @click="setActiveMenu('culture')"
+        :class="{ active: activeMenu === '14' }"
+        @click="setActiveMenu('culture', '14')"
       >
         문화
       </li>
       <li
-        :class="{ active: activeMenu === 'festival' }"
-        @click="setActiveMenu('festival')"
+        :class="{ active: activeMenu === '15' }"
+        @click="setActiveMenu('festival', '15')"
       >
         축제
       </li>
       <li
-        :class="{ active: activeMenu === 'travel' }"
-        @click="setActiveMenu('travel')"
+        :class="{ active: activeMenu === '25' }"
+        @click="setActiveMenu('travel', '25')"
       >
         여행
       </li>
       <li
-        :class="{ active: activeMenu === 'Leisure' }"
-        @click="setActiveMenu('Leisure')"
+        :class="{ active: activeMenu === '28' }"
+        @click="setActiveMenu('Leisure', '28')"
       >
         레포츠
       </li>
       <li
-        :class="{ active: activeMenu === 'sleep' }"
-        @click="setActiveMenu('sleep')"
+        :class="{ active: activeMenu === '32' }"
+        @click="setActiveMenu('sleep', '32')"
       >
         숙박
       </li>
       <li
-        :class="{ active: activeMenu === 'shop' }"
-        @click="setActiveMenu('shop')"
+        :class="{ active: activeMenu === '38' }"
+        @click="setActiveMenu('shop', '38')"
       >
         쇼핑
       </li>
       <li
-        :class="{ active: activeMenu === 'food' }"
-        @click="setActiveMenu('food')"
+        :class="{ active: activeMenu === '39' }"
+        @click="setActiveMenu('food', '39')"
       >
         음식
       </li>
       <li
-        :class="{ active: activeMenu === 'camp' }"
-        @click="setActiveMenu('camp')"
+        :class="{ active: activeMenu === '40' }"
+        @click="setActiveMenu('camp', '40')"
       >
         캠핑
       </li>
     </ul>
     <div class="aroundDiv container-fluid">
       <div class="wrap row">
-        <AroundItem class="col-6 col-sm-2" v-for="t in test" />
+        <AroundItem
+          class="col-6 col-sm-2"
+          v-for="around in aroundList"
+          :key="around.idx"
+          :data="around"
+        />
       </div>
     </div>
   </section>

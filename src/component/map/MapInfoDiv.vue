@@ -7,6 +7,7 @@ const route = useRoute();
 const router = useRouter();
 
 const type = route.query.type;
+const idx = route.query.idx;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
 
 console.log(type);
@@ -14,10 +15,10 @@ console.log(type);
 function setActiveMenu(menu) {
   // 메뉴함수
   if (menu === 'placeAround') {
-    router.push({ name: menu, query: { type: menu, content: 'tour' } });
+    router.push({ name: menu, query: { type: menu, idx, contentId: '12' } });
     activeMenu.value = menu;
   } else {
-    router.push({ name: menu, query: { type: menu } });
+    router.push({ name: menu, query: { type: menu, idx } });
     activeMenu.value = menu;
   }
 }
@@ -26,12 +27,6 @@ function setActiveMenu(menu) {
 <template>
   <div class="menuBox">
     <ul class="myMenu">
-      <li
-        :class="{ active: activeMenu === 'mapHome' }"
-        @click="setActiveMenu('mapHome')"
-      >
-        홈
-      </li>
       <li
         :class="{ active: activeMenu === 'placeInfo' }"
         @click="setActiveMenu('placeInfo')"

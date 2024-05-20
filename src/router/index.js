@@ -104,23 +104,6 @@ const router = createRouter({
       name: 'mypage',
       redirect: '/mypage/userInfo',
       component: MyPageView,
-      // children: [
-      //   {
-      //     path: ':type',
-      //     name: 'userInfo',
-      //     component: MyInfo,
-      //   },
-      //   {
-      //     path: ':type',
-      //     name: 'myPlaces',
-      //     component: MyPlace,
-      //   },
-      //   {
-      //     path: ':type',
-      //     name: 'myReviews',
-      //     component: MyReview,
-      //   },
-      // ],
       children: [
         {
           path: 'userInfo',
@@ -142,20 +125,20 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
-      redirect: '/map/mapInfo',
+      redirect: '/map/mapHome',
       component: MapView,
       children: [
         {
+          path: 'mapHome',
+          name: 'mapHome',
+          component: Maphome,
+        },
+        {
           path: 'mapInfo',
           name: 'mapInfo',
-          redirect: '/map/mapInfo/mapHome',
+          redirect: '/map/mapInfo/placeInfo',
           component: MapInfoDiv,
           children: [
-            {
-              path: 'mapHome',
-              name: 'mapHome',
-              component: Maphome,
-            },
             {
               path: 'placeInfo',
               name: 'placeInfo',

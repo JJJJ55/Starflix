@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { defineStore } from 'pinia';
 import {
@@ -23,7 +23,20 @@ export const useMapStore = defineStore(
 
     const placeList = ref([]);
     const bestList = ref([]);
+    const aroundList = ref([]);
     const place = ref(null);
+    const myLocation = ref(null);
+    //아래는 flag로 true값은 오로지 3개 중 하나만 가질 수 있음
+    const isSearch = ref(false); //검색했을 때 리스트를 보여줄 것
+    const isResult = ref(false); //검색리스트에서 상세보기하면 보여줄 것
+    const isAround = ref(false); //주변정보 리스트를 보여줄 것
+
+    watch(
+      () => aroundList.value,
+      (nv, ov) => {
+        console.log('값 변경 : ', nv + ' ' + ov);
+      }
+    );
 
     const maplist = async (param) => {
       // 이거 파라미터 들어가야함
@@ -131,7 +144,8 @@ export const useMapStore = defineStore(
         param,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
-            console.log('성공');
+            aroundList.value = resp.data;
+            console.log(param.type + '성공');
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
             console.log('실행 중 에러');
@@ -150,7 +164,8 @@ export const useMapStore = defineStore(
         idx,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
-            console.log('성공');
+            aroundList.value = resp.data;
+            console.log('캠프성공');
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
             console.log('실행 중 에러');
@@ -224,6 +239,11 @@ export const useMapStore = defineStore(
       placeList,
       bestList,
       place,
+      aroundList,
+      myLocation,
+      isSearch,
+      isResult,
+      isAround,
       maplist,
       add,
       info,

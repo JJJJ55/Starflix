@@ -1,9 +1,11 @@
 <script setup>
 import Btn from '../common/Btn.vue';
+import { useRoute, useRouter } from 'vue-router';
+const movePage = () => {};
 </script>
 
 <template>
-  <div class="Item">
+  <div class="Item" @click="movePage()">
     <div class="Img">
       <div class="title">제목</div>
     </div>

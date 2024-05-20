@@ -2,6 +2,11 @@
 import AroundItem from '@/component/map/AroundItem.vue';
 import Btn from '@/component/common/Btn.vue';
 import { useRoute, useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+
+const mapStore = useMapStore();
+const { place } = mapStore;
 
 // 여기부터 토스트
 import { onMounted, ref, defineProps, defineEmits } from 'vue';
@@ -56,8 +61,8 @@ const router = useRouter();
 
 <template>
   <section class="mapContent">
-    <h1 class="title">삼성화재 유성캠퍼스</h1>
-    <h5 class="text">대전 유성구 동서대로 98-39</h5>
+    <h1 class="title">{{ place.placeInfo.title }}</h1>
+    <h5 class="text">{{ place.placeInfo.addr }}</h5>
     <div class="textBox">
       <input class="rTitle" type="text" placeholder="제목을 입력하세요" />
       <div class="rContent">
@@ -113,7 +118,7 @@ const router = useRouter();
   text-align: center;
 }
 .rTitle {
-  width: 80%;
+  width: 90%;
   min-width: 220px;
   height: 45px;
   background-color: #333333;
@@ -126,7 +131,7 @@ const router = useRouter();
   color: white;
 }
 .rContent {
-  width: 80%;
+  width: 90%;
   min-width: 200px;
   height: 520px;
   background-color: #333333;
