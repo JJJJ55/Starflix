@@ -22,6 +22,7 @@ export const useUserStore = defineStore(
     const isLogin = ref(false);
     const isLoginError = ref(false);
     const userInfo = ref(null);
+    const newInfo = ref(null);
     const isValidToken = ref(false);
 
     const login = async (loginUser) => {
@@ -31,11 +32,13 @@ export const useUserStore = defineStore(
           if (resp.status === httpStatusCode.CREATE) {
             console.log('로그인 성공');
             let ac = resp.data['access-token'];
+            let fc = resp.data['refresh-token'];
             console.log('토큰 ' + ac);
             isLogin.value = true; // 로그인 성공
             isLoginError.value = false; // 로그인 실패
             isValidToken.value = true; // 토큰 발급 유무
             sessionStorage.setItem('accessToken', `Bearer ${ac}`);
+            sessionStorage.setItem('refreshToken', `Bearer ${fc}`);
           }
         },
         (error) => {
@@ -112,10 +115,10 @@ export const useUserStore = defineStore(
         }
       );
     };
-    const logout = async () => {
+    const logout = async (id) => {
       console.log('로그아웃 아이디 : ' + userInfo.value.userId);
       await userlogout(
-        userInfo.value.userId,
+        id,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             isLogin.value = false;
@@ -124,6 +127,7 @@ export const useUserStore = defineStore(
 
             sessionStorage.removeItem('accessToken');
             sessionStorage.removeItem('refreshToken');
+            router.replace({ name: 'splash' });
           } else {
             console.error('유저 정보 없음!!!!');
           }
@@ -140,12 +144,15 @@ export const useUserStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('가입성공');
+            alert('환영합니다. 로그인 후 이용 가능합니다.');
             router.replace({ name: 'main' });
           } else {
+            alert('오류가 발생했습니다. 잠시 후 다시 이용해주세요.');
             console.log('가입실패');
           }
         },
         (error) => {
+          alert('오류가 발생했습니다. 잠시 후 다시 이용해주세요.');
           console.log(error);
         }
       );
@@ -157,7 +164,9 @@ export const useUserStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('회원정보 수정');
-            router.replace({ name: 'main' });
+            alert('수정되었습니다.');
+            getUserInfo(sessionStorage.getItem('accessToken'));
+            router.replace({ name: 'mypage' });
           } else {
             console.log('실패');
           }
@@ -173,8 +182,9 @@ export const useUserStore = defineStore(
         id,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
-            console.log('회원탈퇴');
-            router.replace({ name: 'main' });
+            console.log('성공');
+            alert('저희 서비스를 이용해주셔서 감사합니다.');
+            logout(id);
           } else {
             console.log('실패');
           }
@@ -190,6 +200,7 @@ export const useUserStore = defineStore(
       isLoginError,
       userInfo,
       isValidToken,
+      newInfo,
       login,
       getUserInfo,
       tokenRegenerate,

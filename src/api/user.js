@@ -29,16 +29,20 @@ async function userlogout(id, success, fail) {
 }
 
 async function userInsert(user, success, fail) {
-  //회원정보 수정
+  //회원가입
   await local.post(`/users`, user).then(success).catch(fail);
 }
 
 async function userUpdate(user, success, fail) {
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
   //회원정보 수정
   await local.put(`/users/${user.userId}`, user).then(success).catch(fail);
 }
 
 async function userDelete(userid, success, fail) {
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
   // 회원정보 삭제
   await local.delete(`/users/${userid}`).then(success).catch(fail);
 }
