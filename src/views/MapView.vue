@@ -16,6 +16,7 @@ import AddPlace from '@/component/map/AddPlace.vue';
 import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
 import mapVue from '@/component/kakaoMap/mapVue.vue';
 import AddPlaceMap from '@/component/kakaoMap/AddPlaceMap.vue';
+import mapTest from '@/component/kakaoMap/mapTest.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterView } from 'vue-router';
 import { ref } from 'vue';
@@ -67,8 +68,9 @@ function setActiveMenu(menu) {
           <InputBox class="inputBox" />
         </div>
         <!-- <div class="map"></div> -->
-        <mapVue class="map" />
+        <!-- <mapVue class="map" /> -->
         <!-- <AddPlaceMap class="map" /> -->
+        <mapTest class="map" />
         <!-- <div id="map" class="map"></div> -->
         <div class="Info">
           <div>
@@ -208,8 +210,8 @@ function setActiveMenu(menu) {
 
 .map {
   width: 100%;
-  height: 500px;
-  border: 1px solid orange;
+  min-height: 500px;
+  border: 3px solid orange;
   margin: 20px 0;
 }
 
