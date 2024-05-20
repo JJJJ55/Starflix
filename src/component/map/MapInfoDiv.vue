@@ -61,6 +61,16 @@ function setActiveMenu(menu) {
 </template>
 
 <style scoped>
+@media (max-width: 1147px) {
+  .myMenu {
+    font-size: 20px !important;
+  }
+}
+@media (max-width: 480px) {
+  .myMenu {
+    font-size: 16px !important;
+  }
+}
 .menuBox {
   width: 100%;
   height: 100%;

@@ -1,9 +1,18 @@
 <script setup>
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-
 const route = useRoute();
-
-const contentId = route.query.content;
+const contentId = ref(route.query.content);
+watch(
+  () => route.query.content,
+  (newValue, oldValue) => {
+    // URL의 type 파라미터가 변경되면 호출되는 로직을 여기에 구현합니다.
+    // newValue에는 변경된 값이, oldValue에는 이전 값이 전달됩니다.
+    contentId.value = newValue;
+    console.log('URL의 type이 변경되었습니다.', newValue);
+  }
+);
+// const contentId = route.query.content;
 console.log(contentId);
 </script>
 
