@@ -21,6 +21,7 @@
     "vue": "^3.4.21",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^4.3.0",
+    "vue3-kakao-maps": "^2.3.9",
     "vue3-quill": "^0.3.1"
   },
   "devDependencies": {
