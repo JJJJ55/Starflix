@@ -2,16 +2,15 @@
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const props = defineProps({
-  type: String,
   info: Object,
 });
 const router = useRouter();
 const route = useRoute();
 // const type = route.param.type; //폼 타입
-const type = props.type;
+const type = ref(route.query.type);
 
 const memberStore = useUserStore();
 
@@ -26,8 +25,21 @@ const user = ref({
   userEmail: '',
 });
 
+watch(
+  //동적라우팅 화면전환 안되는 부분 watch로 해결
+  () => route.query.type,
+  (nv, ov) => {
+    console.log('??' + ov, nv);
+    type.value = nv;
+  },
+  {
+    immediate: true,
+  }
+);
+
 onMounted(() => {
   console.log('등장');
+  console.log(props.type);
   console.log(props.info);
   if (props.info != null) {
     user.value.userName = props.info.userName;
@@ -59,7 +71,7 @@ const changeInfo = () => {
 };
 
 const onSubmit = () => {
-  if (type === 'login') {
+  if (type.value === 'login') {
     //로그인
     // console.log(user.value);
     // console.log('로그인');
@@ -78,24 +90,24 @@ const onSubmit = () => {
 };
 
 const movePage = () => {
-  router.push({ name: 'loginRegist', params: { type: 'regist' } });
+  router.push({ name: 'regist', query: { type: 'regist' } });
 };
 </script>
 
 <template>
   <form>
-    <h1 class="formTitle" v-if="type !== 'Info'">
+    <h1 class="formTitle" v-if="type !== 'userInfo'">
       {{ type === 'login' ? '로그인' : '회원가입' }}
     </h1>
-    <span v-if="type === 'Info'" class="inputTitle">사용자 이름</span>
+    <span v-if="type === 'userInfo'" class="inputTitle">사용자 이름</span>
     <input
-      v-if="type === 'regist' || type === 'Info'"
+      v-if="type === 'regist' || type === 'userInfo'"
       type="text"
       placeholder="사용자 이름"
       v-model="user.userName"
       @change="changeInfo()"
     />
-    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
       >경고문구</span
     >
     <input
@@ -105,39 +117,39 @@ const movePage = () => {
       placeholder="아이디"
       v-model="user.userId"
     />
-    <span v-if="type === 'Info'" class="inputTitle">이메일 주소</span>
+    <span v-if="type === 'userInfo'" class="inputTitle">이메일 주소</span>
     <span v-if="type === 'regist'" class="warning">경고문구</span>
     <input
-      v-if="type === 'regist' || type === 'Info'"
+      v-if="type === 'regist' || type === 'userInfo'"
       type="text"
       placeholder="이메일 주소"
       v-model="user.userEmail"
     />
-    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
       >경고문구</span
     >
-    <span v-if="type === 'Info'" class="inputTitle">비밀번호</span>
+    <span v-if="type === 'userInfo'" class="inputTitle">비밀번호</span>
     <input
       :class="type"
       type="text"
       placeholder="비밀번호"
       v-model="user.userPw"
     />
-    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
       >경고문구</span
     >
-    <span v-if="type === 'Info'" class="inputTitle">비밀번호 재입력</span>
+    <span v-if="type === 'userInfo'" class="inputTitle">비밀번호 재입력</span>
     <input
-      v-if="type === 'regist' || type === 'Info'"
+      v-if="type === 'regist' || type === 'userInfo'"
       type="text"
       placeholder="비밀번호 재입력"
       v-model="user.CheckPw"
     />
-    <span v-if="type === 'regist' || type === 'Info'" class="warning"
+    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
       >경고문구</span
     >
     <div></div>
-    <button v-if="type !== 'Info'" @click.prevent="onSubmit">
+    <button v-if="type !== 'userInfo'" @click.prevent="onSubmit">
       {{ type === 'login' ? '로그인' : '회원가입' }}
     </button>
     <div v-if="type === 'login'" class="helpMsg">도움이 필요하신가요?</div>
