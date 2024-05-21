@@ -34,6 +34,8 @@ import MyInfo from '@/component/MyPage/MyInfo.vue';
 import MyPlace from '@/component/MyPage/MyPlace.vue';
 import MyReview from '@/component/MyPage/MyReview.vue';
 
+import modal from '@/views/LoginAfter/modal.vue';
+
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 import { useUserStore } from '@/stores/user';
@@ -117,6 +119,11 @@ const isArrowResult = (val) => {
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/modal',
+      name: 'modal',
+      component: modal,
+    },
     {
       path: '/',
       name: 'splash',
