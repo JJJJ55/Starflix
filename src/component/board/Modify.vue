@@ -132,6 +132,12 @@ const movePage = (val) => {
         />
       </div>
       <div class="bContent">
+        <img
+          class="loading"
+          v-show="uploading"
+          src="../../assets/img/loding.gif"
+          alt="로딩"
+        />
         <!-- Toast UI Editor를 담을 요소 -->
         <div class="textBox" ref="editorRef" />
       </div>
@@ -153,6 +159,16 @@ import { useBoardStore } from '@/stores/boardStore';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+
+const storage = getStorage();
+
 const boardStore = useBoardStore();
 const memberStore = useUserStore();
 const { board } = storeToRefs(boardStore);
@@ -162,8 +178,46 @@ const { modify } = boardStore;
 const route = useRoute();
 const bno = route.query.bno;
 
+let editorValid = null;
+const uploading = ref(false);
+
 const boardModify = async () => {
   await modify(boardInfo.value);
+};
+
+// 이미지를 최대 300px로 조절하는 함수
+const resizeImage = async (blob) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  const img = new Image();
+  img.src = URL.createObjectURL(blob);
+
+  await new Promise((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = reject;
+  });
+
+  const maxWidth = 500;
+
+  let width = img.width;
+  let height = img.height;
+
+  if (width > maxWidth) {
+    height *= maxWidth / width;
+    width = maxWidth;
+  }
+
+  canvas.width = width;
+  canvas.height = height;
+
+  ctx.drawImage(img, 0, 0, width, height);
+
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob);
+    }, 'image/jpeg');
+  });
 };
 
 const editorRef = ref(null);
@@ -186,6 +240,44 @@ onMounted(() => {
     el: editorRef.value,
     height: '500px',
     initialEditType: 'wysiwyg',
+    hooks: {
+      // 이미지 삽입 시 발생하는 이벤트
+      addImageBlobHook: async (blob, callback) => {
+        const uuid = uuidv4(); // UUID 생성
+        const fileName = `${uuid}-${blob.name}`; // UUID와 파일 이름을 결합하여 유일한 파일 이름 생성
+
+        // 이미지를 최대 500px로 조절
+        const resizedBlob = await resizeImage(blob);
+
+        const storageRefValue = storageRef(storage, `uploads/${fileName}`);
+        const uploadTask = uploadBytesResumable(storageRefValue, resizedBlob);
+
+        uploading.value = true;
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done for ${fileName}`);
+          },
+          (error) => {
+            console.error(`업로드 실패(${fileName}):`, error);
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            console.log(
+              `${fileName} 파일이 성공적으로 업로드되었습니다.`,
+              downloadURL
+            );
+
+            // Firebase에서 가져온 URL을 사용하여 이미지 삽입
+            callback(downloadURL, blob.name);
+
+            uploading.value = false;
+          }
+        );
+      },
+    },
   });
   boardInfo.value = board.value;
 
@@ -216,6 +308,13 @@ const addBoard = () => {
   .btnArea {
     flex-direction: column;
   }
+}
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
 }
 
 .content {
@@ -291,6 +390,7 @@ section {
   padding-right: 10px;
 }
 .bContent {
+  position: relative;
   width: 80%;
   min-width: 300px;
   height: 500px;
