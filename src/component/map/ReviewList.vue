@@ -2,25 +2,31 @@
 import AroundItem from '@/component/map/AroundItem.vue';
 import PickItem from '../pick/PickItem.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useUserStore } from '@/stores/user';
+import { useMapStore } from '@/stores/mapStore';
+import { useReviewStore } from '@/stores/review';
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const reviewStore = useReviewStore();
+const mapStore = useMapStore();
+const { place } = storeToRefs(mapStore);
+const { userInfo } = storeToRefs(userStore);
+const { reviewList } = storeToRefs(reviewStore);
+const { placeReview } = reviewStore;
 const route = useRoute();
 const router = useRouter();
+
+onMounted(async () => {
+  await placeReview(place.value.placeInfo.idx);
+});
 
 const movePage = (val) => {
   router.push({ name: 'readReview', query: { type: 'readReview', id: val } });
 };
 
-const test = 20; //주변정보 더미데이터
-const pick = 10;
-
 const type = route.params.type;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
-
-function setActiveMenu(menu) {
-  // 메뉴함수
-  // router.push({ name: menu, params: { type: menu } });
-  activeMenu.value = menu;
-}
 </script>
 
 <template>
@@ -36,10 +42,10 @@ function setActiveMenu(menu) {
     </div>
     <div class="aroundDiv">
       <table class="titleTable">
-        <tr class="contentTable" v-for="(t, index) in test">
-          <td class="c1 clickTitle" @click="movePage(index)">제목</td>
-          <td class="c2" style="text-align: center">작성자</td>
-          <td class="c3" style="text-align: center">날짜</td>
+        <tr class="contentTable" v-for="r in reviewList">
+          <td class="c1 clickTitle" @click="movePage(r.rno)">{{ r.title }}</td>
+          <td class="c2" style="text-align: center">{{ r.writer }}</td>
+          <td class="c3" style="text-align: center">{{ r.register_time }}</td>
         </tr>
       </table>
     </div>

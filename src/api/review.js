@@ -2,11 +2,17 @@ import { localAxios } from '@/util/http-commons';
 
 const local = localAxios();
 
-async function listReview(param, response, error) {
-  //리뷰 검색 (명소 or 유저아이디)
+async function listReviewPlace(idx, response, error) {
+  //리뷰 검색 (명소)
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
-  await local.get(`/reviews`, param).then(response).catch(error);
+  await local.get(`/reviews?starPlace=${idx}`).then(response).catch(error);
+}
+async function listReviewUser(id, response, error) {
+  //리뷰 검색 (유저아이디)
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local.get(`/reviews?userId=${id}`).then(response).catch(error);
 }
 
 async function writeReview(param, response, error) {
@@ -30,4 +36,10 @@ async function deleteReview(rno, response, error) {
   await local.delete(`comments/${rno}`).then(response).catch(error);
 }
 
-export { listReview, writeReview, modifyReview, deleteReview };
+export {
+  listReviewPlace,
+  listReviewUser,
+  writeReview,
+  modifyReview,
+  deleteReview,
+};

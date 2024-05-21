@@ -1,12 +1,21 @@
 <script setup>
-defineProps({
-  title: String,
+import { onMounted } from 'vue';
+import { useUserStore } from '@/stores/user';
+import { useReviewStore } from '@/stores/review';
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const reivewStore = useReviewStore();
+const { userInfo } = storeToRefs(userStore);
+const { reviewList } = storeToRefs(reivewStore);
+const { userReview } = reivewStore;
+
+onMounted(async () => {
+  await userReview(userInfo.value.userId);
 });
-const test = 10;
 </script>
 
 <template>
-  <div v-for="t in test">테스트</div>
+  <div v-for="r in reviewList">{{ r.title }}</div>
 </template>
 
 <style scoped>
