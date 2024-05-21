@@ -39,6 +39,45 @@ import { useMapStore } from '@/stores/mapStore';
 import { useUserStore } from '@/stores/user';
 import { useBoardStore } from '@/stores/boardStore';
 
+const loginBefore = async (to, from, next) => {
+  const userStore = useUserStore();
+  const { isLogin } = storeToRefs(userStore);
+  if (!isLogin.value) {
+    alert('로그인 후 이용 가능합니다.');
+    next({ name: 'main' });
+  } else {
+    next();
+  }
+};
+const loginAfter = async (to, from, next) => {
+  const userStore = useUserStore();
+  const { isLogin } = storeToRefs(userStore);
+  if (isLogin.value) {
+    alert('잘못된 접근입니다.');
+    next({ name: 'home' });
+  } else {
+    next();
+  }
+};
+
+const OnlyAuthUser = async (to, from, next) => {
+  const userStore = useUserStore();
+  const { userInfo, isValidToken } = storeToRefs(userStore);
+  const { getUserInfo } = userStore;
+
+  let token = sessionStorage.getItem('accessToken');
+
+  if (userInfo.value != null && token) {
+    await getUserInfo(token);
+  }
+  if (!isValidToken.value || userInfo.value === null) {
+    alert('로그인 후 이용가능합니다.');
+    next({ name: 'main' });
+  } else {
+    next();
+  }
+};
+
 const isArrowAround = (val) => {
   const mapStore = useMapStore();
   const { isAround } = storeToRefs(mapStore);
@@ -81,21 +120,43 @@ const router = createRouter({
     {
       path: '/',
       name: 'splash',
+      beforeEnter: (to, from, next) => {
+        const userStore = useUserStore();
+        const { isLogin } = storeToRefs(userStore);
+
+        if (!isLogin.value) {
+          next({ name: 'main' });
+        } else {
+          next();
+        }
+      },
       component: SplashView,
     },
     {
-      path: '/main',
+      path: '/',
       name: 'main',
+      beforeEnter: (to, from, next) => {
+        const userStore = useUserStore();
+        const { isLogin } = storeToRefs(userStore);
+
+        if (isLogin.value) {
+          next({ name: 'splash' });
+        } else {
+          next();
+        }
+      },
       component: MainView,
     },
     {
       path: '/login',
       name: 'login',
+      beforeEnter: loginAfter,
       component: LoginView,
     },
     {
       path: '/regist',
       name: 'regist',
+      beforeEnter: loginAfter,
       component: LoginView,
     },
 
@@ -103,11 +164,13 @@ const router = createRouter({
     {
       path: '/addPlace',
       name: 'addPlace',
+      beforeEnter: OnlyAuthUser,
       component: AddPlaceView,
     },
     {
       path: '/home',
       name: 'home',
+      beforeEnter: OnlyAuthUser,
       component: HomeView,
     },
     {
@@ -120,21 +183,25 @@ const router = createRouter({
         {
           path: 'list',
           name: 'list',
+          beforeEnter: OnlyAuthUser,
           component: List,
         },
         {
           path: 'write',
           name: 'write',
+          beforeEnter: OnlyAuthUser,
           component: Write,
         },
         {
           path: 'read',
           name: 'read',
+          beforeEnter: OnlyAuthUser,
           component: Read,
         },
         {
           path: 'modify',
           name: 'modify',
+          beforeEnter: OnlyAuthUser,
           component: Modify,
         },
       ],
@@ -143,6 +210,7 @@ const router = createRouter({
       // 찜리스트
       path: '/pick',
       name: 'pick',
+      beforeEnter: OnlyAuthUser,
       component: MyPickView,
     },
     {
@@ -155,16 +223,19 @@ const router = createRouter({
         {
           path: 'userInfo',
           name: 'userInfo',
+          beforeEnter: OnlyAuthUser,
           component: MyInfo,
         },
         {
           path: 'myPlaces',
           name: 'myPlaces',
+          beforeEnter: OnlyAuthUser,
           component: MyPlace,
         },
         {
           path: 'myReviews',
           name: 'myReviews',
+          beforeEnter: OnlyAuthUser,
           component: MyReview,
         },
       ],
@@ -180,6 +251,7 @@ const router = createRouter({
           name: 'mapHome',
           component: Maphome,
           beforeEnter: (to, from, next) => {
+            OnlyAuthUser();
             // 페이지 이동 전에 수행할 작업
             isArrowResult(true);
             isArrowSearch(false);
@@ -198,16 +270,19 @@ const router = createRouter({
             {
               path: 'placeInfo',
               name: 'placeInfo',
+              beforeEnter: OnlyAuthUser,
               component: PlaceInfo,
             },
             {
               path: 'Review',
               name: 'Review',
+              beforeEnter: OnlyAuthUser,
               component: Review,
             },
             {
               path: 'placeReview',
               name: 'placeReview',
+              beforeEnter: OnlyAuthUser,
               component: ReviewList,
             },
             {
@@ -215,6 +290,7 @@ const router = createRouter({
               name: 'placeAround',
               redirect: '/map/mapInfo/placeAround/tour',
               beforeEnter: (to, from, next) => {
+                OnlyAuthUser();
                 // 페이지 이동 전에 수행할 작업
                 isArrowAround(true);
                 console.log('주변관광');
@@ -227,46 +303,55 @@ const router = createRouter({
                 {
                   path: 'tour',
                   name: 'tour',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'culture',
                   name: 'culture',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'festival',
                   name: 'festival',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'travel',
                   name: 'travel',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'Leisure',
                   name: 'Leisure',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'sleep',
                   name: 'sleep',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'shop',
                   name: 'shop',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'food',
                   name: 'food',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
                 {
                   path: 'camp',
                   name: 'camp',
+                  beforeEnter: OnlyAuthUser,
                   component: AroundItem,
                 },
               ],
@@ -274,6 +359,7 @@ const router = createRouter({
             {
               path: 'readReview',
               name: 'readReview',
+              beforeEnter: OnlyAuthUser,
               component: ReadReview,
             },
           ],
@@ -286,6 +372,22 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+// 라우터 전 각 네비게이션마다 실행됩니다.
+router.beforeEach((to, from, next) => {
+  if (!to.matched.length) {
+    // 일치하는 라우트가 없으면
+    alert('페이지를 찾을 수 없습니다.'); // 경고 메시지 표시
+    // 이전 페이지로 돌아가기
+    if (from.name) {
+      next({ name: from.name });
+    } else {
+      next('/'); // 이전 페이지가 없는 경우 홈 페이지로 이동합니다.
+    }
+  } else {
+    next(); // 다음으로 진행
+  }
 });
 
 export default router;

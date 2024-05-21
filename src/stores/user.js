@@ -60,8 +60,6 @@ export const useUserStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             userInfo.value = resp.data.userInfo;
-            // sessionStorage.setItem('userInfo', userInfo.value);
-            // 새로고침하면 피니아 날아가니까 지피티든 뭐든 설정해야함. 지금 생각한건 세션스토리지에 담기 위가 그거임
           } else {
             console.log('유저 정보 없음');
           }
@@ -84,14 +82,14 @@ export const useUserStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.CREATE) {
             let ac = resp.data;
-            sessionStorage.setItem('accessToken', accessToken);
+            sessionStorage.setItem('accessToken', `Bearer ${ac}`);
             isValidToken.value = true;
           }
         },
         async (error) => {
           if (error.response.status === httpStatusCode.UNAUTHORIZED) {
             //이거 아마 500일듯
-            await logout(
+            await userlogout(
               userInfo.value.userid,
               (response) => {
                 if (response.status === httpStatusCode.OK) {
@@ -103,7 +101,7 @@ export const useUserStore = defineStore(
                 isLogin.value = false;
                 userInfo.value = null;
                 isValidToken.value = false;
-                router.push({ name: '/main' });
+                router.push({ name: 'main' });
               },
               (error) => {
                 console.error(error);
@@ -115,10 +113,10 @@ export const useUserStore = defineStore(
         }
       );
     };
-    const logout = async (id) => {
+    const logout = async () => {
       console.log('로그아웃 아이디 : ' + userInfo.value.userId);
       await userlogout(
-        id,
+        userInfo.value.userid,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             isLogin.value = false;

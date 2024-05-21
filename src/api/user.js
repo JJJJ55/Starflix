@@ -16,16 +16,14 @@ async function findById(userid, success, fail) {
 
 async function tokenRegeneration(user, success, fail) {
   // ac 재발급
+  local.defaults.headers['refreshToken'] =
+    sessionStorage.getItem('refreshToken');
   await local.post(`users/refresh`, user).then(success).catch(fail);
 }
 
 async function userlogout(id, success, fail) {
   // 로그아웃
-  const params = {
-    userId: id,
-  };
-  // await local.get(`/user/logout?userId=${id}`).then(success).catch(fail);
-  await local.get(`/users/logout`, { params }).then(success).catch(fail);
+  await local.get(`/users/logout?userId=${id}`).then(success).catch(fail);
 }
 
 async function userInsert(user, success, fail) {
