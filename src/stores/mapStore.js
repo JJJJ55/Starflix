@@ -21,11 +21,15 @@ export const useMapStore = defineStore(
   () => {
     const router = useRouter();
 
-    const placeList = ref([]);
-    const bestList = ref([]);
-    const aroundList = ref([]);
-    const place = ref(null);
-    const myLocation = ref(null);
+    const placeList = ref([]); //처음 사용자 접속 지역 명소들 객체
+    const bestList = ref([]); //베스트 정보 객체
+    const aroundList = ref([]); //주변정보 객체
+    const searchList = ref([]); //검색정보 객체
+    const place = ref(null); //상세정보
+    const myLocation = ref(null); //내 위치
+
+    const mapInfo = ref({});
+
     //아래는 flag로 true값은 오로지 3개 중 하나만 가질 수 있음
     const isSearch = ref(false); //검색했을 때 리스트를 보여줄 것
     const isResult = ref(false); //검색리스트에서 상세보기하면 보여줄 것
@@ -37,6 +41,24 @@ export const useMapStore = defineStore(
         console.log('값 변경 : ', nv + ' ' + ov);
       }
     );
+
+    const searchPlace = async (param) => {
+      await listPlace2(
+        param,
+        (resp) => {
+          if (resp.status === httpStatusCode.OK) {
+            searchList.value = resp.data;
+            console.log('성공');
+          } else {
+            console.log('실행 중 에러');
+          }
+        },
+        (error) => {
+          console.log('실패');
+          console.log(error);
+        }
+      );
+    };
 
     const maplist = async (param) => {
       // 이거 파라미터 들어가야함
@@ -240,10 +262,13 @@ export const useMapStore = defineStore(
       bestList,
       place,
       aroundList,
+      searchList,
       myLocation,
+      mapInfo,
       isSearch,
       isResult,
       isAround,
+      searchPlace,
       maplist,
       add,
       info,

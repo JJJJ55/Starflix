@@ -1,13 +1,16 @@
 <script setup>
 import AroundItem from '@/component/map/AroundItem.vue';
-import PickItem from '../pick/PickItem.vue';
+import SearchItem from '../pick/SearchItem.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
+
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+const mapStore = useMapStore();
+const { searchList, isSearch, isAround, isResult } = storeToRefs(mapStore);
+
 const route = useRoute();
 const router = useRouter();
-
-const test = 20; //주변정보 더미데이터
-const pick = 10;
 
 const type = route.params.type;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
@@ -29,7 +32,16 @@ function setActiveMenu(menu) {
     <div class="aroundDiv container-fluid">
       <h2 class="title">검 색 결 과</h2>
       <div class="wrap row">
-        <PickItem v-for="t in test" class="col-12 col-sm-6 col-md-4" />
+        <div v-if="searchList.length == 0" class="text">
+          검색 결과가 없습니다.
+        </div>
+        <template v-else>
+          <SearchItem
+            v-for="s in searchList"
+            class="col-12 col-sm-6 col-md-4"
+            :data="s"
+          />
+        </template>
       </div>
     </div>
   </section>

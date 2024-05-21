@@ -21,7 +21,7 @@ async function Pick(param, success, fail) {
     .catch(fail);
 }
 async function pickList(id, success, fail) {
-  // 명소 찜
+  // 명소 찜 리스트
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
   await local.get(`jjims?userId=${id}`).then(success).catch(fail);

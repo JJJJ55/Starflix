@@ -1,8 +1,21 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+const keyword = ref('');
+
+const emit = defineEmits(['onKeyWord']);
+const onKey = () => {
+  emit('onKeyWord', keyword.value);
+};
+</script>
 
 <template>
   <div class="input">
-    <input type="text" placeholder="검색어를 입력해주세요" />
+    <input
+      type="text"
+      placeholder="검색어를 입력해주세요"
+      v-model="keyword"
+      @change="onKey"
+    />
     <img src="@/assets/img/inputSearch.png" alt="검색" />
   </div>
 </template>

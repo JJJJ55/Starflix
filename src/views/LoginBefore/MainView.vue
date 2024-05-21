@@ -8,7 +8,7 @@ import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 
 const mapStore = useMapStore();
-const { myLocation } = storeToRefs(mapStore);
+const { myLocation, mapInfo } = storeToRefs(mapStore);
 
 const router = useRouter();
 const location = ref(null);
@@ -21,6 +21,7 @@ onMounted(() => {
           latitude,
           longitude,
         };
+        mapInfo.value = myLocation.value;
         console.log(latitude, longitude);
         // Google Maps Geocoding API를 호출하여 위도와 경도를 주소로 변환
         fetch(

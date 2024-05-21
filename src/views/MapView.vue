@@ -24,8 +24,11 @@ import { onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 const mapStore = useMapStore();
-const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
-const { info } = mapStore;
+const { searchList, mapInfo, place, isSearch, isAround, isResult } =
+  storeToRefs(mapStore);
+const { info, searchPlace } = mapStore;
+
+import { listPlace2 } from '@/api/map';
 
 // import '../component/kakaoMap/geoCoding';
 
@@ -47,11 +50,47 @@ const options = ref([
   { value: 'keyword', text: '검색어' },
 ]);
 
-const searchParam = ref(''); //검색조건
-
+const Param1 = ref(''); //검색조건
+const Param2 = ref(''); //검색어
 const changeKey = (val) => {
   // 검색조건 함수
-  searchParam.value = val;
+  Param1.value = val;
+  console.log(Param1.value);
+};
+
+// const changeKeyWord = (val) => {
+//   Param2.value = val;
+//   console.log(Param2.value);
+// };
+const k = ref('');
+
+const search = ref([]);
+const handleEnter = async () => {
+  if (Param1.value == '') {
+    alert('검색조건을 입력해주세요.');
+  } else {
+    const param = ref({
+      type: Param1.value,
+      keyword: k.value,
+    });
+    console.log('넘기는 데이터 : ' + param.value);
+    await listPlace2(
+      param.value,
+      (resp) => {
+        if (resp.status === 200) {
+          searchList.value = resp.data;
+          if (searchList.value.length >= 1) {
+            mapInfo.value.latitude = searchList.value[0].lati;
+            mapInfo.value.longitude = searchList.value[0].longj;
+          }
+          console.log(search.value);
+        }
+      },
+      (error) => {
+        alert('에러가 발생했습니다. 잠시후 다시 시도해주세요.');
+      }
+    );
+  }
 };
 
 const type = route.params.type;
@@ -71,8 +110,24 @@ function setActiveMenu(menu) {
       <div class="mapBox">
         <div class="seaechBox">
           <SelectBox :options="options" @onKeySelect="changeKey" />
-          <InputBox class="inputBox" />
+          <div class="input">
+            <input
+              type="text"
+              placeholder="검색어를 입력해주세요"
+              v-model="k"
+              @keydown.enter="handleEnter"
+            />
+            <img src="@/assets/img/inputSearch.png" alt="검색" />
+          </div>
         </div>
+        <!-- <div class="seaechBox">
+          <SelectBox :options="options" @onKeySelect="changeKey" />
+          <InputBox
+            class="inputBox"
+            @onKeyWord="changeKeyWord"
+            @keydown.enter="handleEnter"
+          />
+        </div> -->
         <!-- <div class="map"></div> -->
         <mapVue class="map" />
         <!-- <AddPlaceMap class="map" /> -->
@@ -80,7 +135,7 @@ function setActiveMenu(menu) {
         <!-- <div id="map" class="map"></div> -->
         <div class="Info">
           <div>
-            <h1 class="InfoTitle">잔국 별자리 명소 검색</h1>
+            <h1 class="InfoTitle">전국 별자리 명소 검색</h1>
             <p class="InfoText">
               사용자가 임의로 별 명소를 등록 및 공유할 수 있습니다.
             </p>
@@ -179,6 +234,32 @@ function setActiveMenu(menu) {
     flex-direction: column;
   }
 }
+
+@media (max-width: 910px) {
+  .input {
+    margin-top: 0px !important;
+  }
+}
+.input {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding-left: 10px;
+  width: 330px;
+  height: 40px;
+  background-color: #fff;
+  border: none;
+  margin-left: 10px;
+}
+input {
+  width: 90%;
+  border: none;
+  outline: none;
+}
+img {
+  cursor: pointer;
+}
+/* 여기까지 인풋 */
 
 .content {
   min-height: 100vh;

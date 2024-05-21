@@ -11,8 +11,6 @@ const pickStore = usePickStore();
 const useStore = useUserStore();
 const mapStore = useMapStore();
 
-const { userInfo } = storeToRefs(useStore);
-const { delPick } = pickStore;
 const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
 const { info } = mapStore;
 
@@ -23,38 +21,19 @@ defineProps({
 const route = useRoute();
 const router = useRouter();
 const movePage = async (val) => {
-  console.log(val + ' 이 넘어갑니다. pick Item');
-  await info(val);
+  console.log(val + ' 이 넘어갑니다. search Item');
+  // await info(val);
   isSearch.value = true;
   isResult.value = false;
   isAround.value = false;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: val } });
 };
-
-const deleteJjim = async (val) => {
-  console.log('삭제시도');
-  await delPick(val, userInfo.value.userId);
-};
 </script>
 
 <template>
-  <div class="Item">
+  <div class="Item" @click="movePage(data.idx)">
     <div class="Img" :style="{ backgroundImage: `url(${data.img})` }">
       <div class="title">{{ data.title }}</div>
-    </div>
-    <div class="btns">
-      <Btn
-        :sty="'redBtn'"
-        style="margin: 0"
-        :text="'상세보기'"
-        @click="movePage(data.starPlace)"
-      />
-      <Btn
-        :sty="'blackBtn'"
-        style="margin: 0"
-        :text="'삭제하기'"
-        @click="deleteJjim(data.starPlace)"
-      />
     </div>
   </div>
 </template>
@@ -90,11 +69,5 @@ const deleteJjim = async (val) => {
   line-height: 50px;
   transition: opacity 0.3s ease; /* 투명도 변경 시 애니메이션 효과 추가 */
   opacity: 0; /* 초기에는 숨김 */
-}
-.btns {
-  /* width: 300px; */
-  border: 1px solid orange;
-  display: flex;
-  justify-content: space-between;
 }
 </style>

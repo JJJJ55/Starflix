@@ -16,22 +16,32 @@ const {
   place,
   placeList,
   bestList,
+  searchList,
   aroundList,
+  mapInfo,
   isSearch,
   isResult,
   isAround,
 } = storeToRefs(mapStore);
 const coordinate = {
-  lat: 33.450701,
-  lng: 126.570667,
+  lat: myLocation.value.latitude,
+  lng: myLocation.value.longitude,
 };
+
+// const panTo = () => {
+//   if (map.value) {
+//     // 지도 중심을 부드럽게 이동시킵니다
+//     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+//     map.value.panTo(new kakao.maps.LatLng(mapInfo.latitude, mapInfo.longitude));
+//   }
+// };
 </script>
 
 <template>
   <!-- 검색결과 상세보기 -->
   <!-- <div style="color: white">erer</div>
   <div style="color: white">{{ idx }}</div> -->
-  <KakaoMap
+  <!-- <KakaoMap
     v-show="isSearch"
     :lat="place.placeInfo.lati"
     :lng="place.placeInfo.longj"
@@ -48,42 +58,56 @@ const coordinate = {
         v-for="a in aroundList"
         :lat="a.lati"
         :lng="a.longj"
+        :image="{
+          imageSrc: getImageUrl(a.type),
+          imageWidth: 32,
+          imageHeight: 32,
+          imageOption: {},
+        }"
       ></KakaoMapMarker>
     </template>
-  </KakaoMap>
-  <!-- 검색결과 주변리스트 -->
-  <!-- <KakaoMap
-    v-if="isAround"
-    :lat="coordinate.lat"
-    :lng="coordinate.lng"
-    :draggable="true"
-    :width="100 + '%'"
-  >
-    <KakaoMapMarker
-      v-for="a in aroundList"
-      :lat="a.lat"
-      :lng="a.lng"
-      :image="{
-        imageSrc: `@/assets/img/marker/${a.type}.png`,
-        imageWidth: 64,
-        imageHeight: 64,
-        imageOption: {},
-      }"
-    ></KakaoMapMarker>
   </KakaoMap> -->
-  <!-- 검색결과 리스트 -->
-  <!-- <KakaoMap
-    v-if="isResult"
+  <KakaoMap
+    v-show="isSearch"
     :lat="coordinate.lat"
     :lng="coordinate.lng"
     :draggable="true"
+    :level="10"
     :width="100 + '%'"
   >
     <KakaoMapMarker
       :lat="coordinate.lat"
       :lng="coordinate.lng"
     ></KakaoMapMarker>
-  </KakaoMap> -->
+    <template v-if="isAround">
+      <KakaoMapMarker
+        v-for="a in aroundList"
+        :lat="a.lati"
+        :lng="a.longj"
+        :image="{
+          imageSrc: getImageUrl(a.type),
+          imageWidth: 32,
+          imageHeight: 32,
+          imageOption: {},
+        }"
+      ></KakaoMapMarker>
+    </template>
+  </KakaoMap>
+  <!-- 검색결과 리스트 -->
+  <KakaoMap
+    v-if="isResult"
+    :lat="mapInfo.latitude"
+    :lng="mapInfo.longitude"
+    :draggable="true"
+    :level="8"
+    :width="100 + '%'"
+  >
+    <KakaoMapMarker
+      v-for="s in searchList"
+      :lat="s.lati"
+      :lng="s.longj"
+    ></KakaoMapMarker>
+  </KakaoMap>
 </template>
 
 <style scoped></style>

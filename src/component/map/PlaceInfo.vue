@@ -6,9 +6,15 @@ import { onMounted, ref } from 'vue';
 
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
+import { usePickStore } from '@/stores/pickStore';
+import { useUserStore } from '@/stores/user';
 const mapStore = useMapStore();
+const pickStore = usePickStore();
+const userStore = useUserStore();
 const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { userInfo } = storeToRefs(userStore);
 const { info } = mapStore;
+const { addPick } = pickStore;
 
 const route = useRoute();
 const router = useRouter();
@@ -21,6 +27,11 @@ onMounted(async () => {
   isResult.value = false;
   isAround.value = false;
 });
+
+const placePick = async (val) => {
+  await addPick(val, userInfo.value.userId);
+  alert('찜 목록에 추가되었습니다.');
+};
 
 const movePage = (val) => {
   router.push({ name: val, query: { type: val, idx } });
@@ -39,7 +50,11 @@ const movePage = (val) => {
         <p class="text">{{ place.placeInfo.addr }}</p>
       </div>
       <div class="btnArea">
-        <Btn :sty="'redBtn'" :text="'♥'" />
+        <Btn
+          :sty="'redBtn'"
+          :text="'♥'"
+          @click="placePick(place.placeInfo.idx)"
+        />
         <Btn :sty="'redBtn'" :text="'리뷰작성'" @click="movePage('Review')" />
       </div>
     </div>

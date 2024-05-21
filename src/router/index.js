@@ -48,6 +48,26 @@ const isArrowAround = (val) => {
     isAround.value = false;
   }
 };
+const isArrowSearch = (val) => {
+  const mapStore = useMapStore();
+  const { isSearch } = storeToRefs(mapStore);
+
+  if (val) {
+    isSearch.value = true;
+  } else {
+    isSearch.value = false;
+  }
+};
+const isArrowResult = (val) => {
+  const mapStore = useMapStore();
+  const { isResult } = storeToRefs(mapStore);
+
+  if (val) {
+    isResult.value = true;
+  } else {
+    isResult.value = false;
+  }
+};
 
 // const userStore = useUserStore();
 // const boardStore = useBoardStore();
@@ -153,6 +173,15 @@ const router = createRouter({
           path: 'mapHome',
           name: 'mapHome',
           component: Maphome,
+          beforeEnter: (to, from, next) => {
+            // 페이지 이동 전에 수행할 작업
+            isArrowResult(true);
+            isArrowSearch(false);
+            console.log('지도검색');
+
+            // 작업 완료 후 페이지 이동
+            next();
+          },
         },
         {
           path: 'mapInfo',

@@ -1,16 +1,21 @@
 <script setup>
 import AroundItem from '@/component/map/AroundItem.vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 
 const mapStore = useMapStore();
-const { aroundList } = storeToRefs(mapStore);
+const { aroundList, isAround } = storeToRefs(mapStore);
 const { travel, camp } = mapStore;
 const route = useRoute();
 const router = useRouter();
 const contentId = ref(route.query.contentId);
+
+onBeforeRouteLeave((to, from) => {
+  isAround.value = false;
+  console.log('떠납니다.');
+});
 
 onMounted(async () => {
   if (contentId.value === '40') {

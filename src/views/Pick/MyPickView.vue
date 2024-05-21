@@ -4,7 +4,22 @@ import InputBox from '@/component/common/InputBox.vue';
 import PickItem from '@/component/pick/PickItem.vue';
 import Weather from '@/component/common/Weather.vue';
 
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { usePickStore } from '@/stores/pickStore';
+import { useUserStore } from '@/stores/user';
+
+const pickStore = usePickStore();
+const useStore = useUserStore();
+
+const { Jjimlist } = storeToRefs(pickStore);
+const { userInfo } = storeToRefs(useStore);
+const { list } = pickStore;
+import { ref, onMounted } from 'vue';
+
+onMounted(async () => {
+  await list(userInfo.value.userId);
+});
+
 const test = 10;
 </script>
 
@@ -24,8 +39,15 @@ const test = 10;
       </div>
     </section>
     <section class="container-fluid">
-      <div class="conetntBox row">
-        <PickItem v-for="t in test" class="col-12 col-sm-6 col-md-3" />
+      <div v-if="Jjimlist.length == 0" class="text">
+        찜 목록이 존재하지 않습니다.
+      </div>
+      <div v-else class="conetntBox row">
+        <PickItem
+          v-for="j in Jjimlist"
+          class="col-12 col-sm-6 col-md-3"
+          :data="j"
+        />
       </div>
     </section>
   </div>

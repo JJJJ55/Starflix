@@ -166,7 +166,7 @@ export const useUserStore = defineStore(
             console.log('회원정보 수정');
             alert('수정되었습니다.');
             getUserInfo(sessionStorage.getItem('accessToken'));
-            router.replace({ name: 'mypage' });
+            router.replace({ name: 'mypage', query: { type: 'userInfo' } });
           } else {
             console.log('실패');
           }
