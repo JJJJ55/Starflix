@@ -3,12 +3,24 @@ import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 import { useRoute } from 'vue-router';
+import '../../assets/img/marker/12.png';
 const route = useRoute();
 const idx = route.query.idx;
 
+function getImageUrl(name) {
+  return new URL(`../../assets/img/marker/${name}.png`, import.meta.url).href;
+}
 const mapStore = useMapStore();
-const { place, placeList, bestList, aroundList, isSearch, isResult, isAround } =
-  storeToRefs(mapStore);
+const {
+  myLocation,
+  place,
+  placeList,
+  bestList,
+  aroundList,
+  isSearch,
+  isResult,
+  isAround,
+} = storeToRefs(mapStore);
 const coordinate = {
   lat: 33.450701,
   lng: 126.570667,
@@ -24,17 +36,24 @@ const coordinate = {
     :lat="place.placeInfo.lati"
     :lng="place.placeInfo.longj"
     :draggable="true"
-    :level="5"
+    :level="10"
     :width="100 + '%'"
   >
     <KakaoMapMarker
       :lat="place.placeInfo.lati"
       :lng="place.placeInfo.longj"
     ></KakaoMapMarker>
+    <template v-if="isAround">
+      <KakaoMapMarker
+        v-for="a in aroundList"
+        :lat="a.lati"
+        :lng="a.longj"
+      ></KakaoMapMarker>
+    </template>
   </KakaoMap>
   <!-- 검색결과 주변리스트 -->
-  <KakaoMap
-    v-show="isAround"
+  <!-- <KakaoMap
+    v-if="isAround"
     :lat="coordinate.lat"
     :lng="coordinate.lng"
     :draggable="true"
@@ -51,10 +70,10 @@ const coordinate = {
         imageOption: {},
       }"
     ></KakaoMapMarker>
-  </KakaoMap>
+  </KakaoMap> -->
   <!-- 검색결과 리스트 -->
-  <KakaoMap
-    v-show="isResult"
+  <!-- <KakaoMap
+    v-if="isResult"
     :lat="coordinate.lat"
     :lng="coordinate.lng"
     :draggable="true"
@@ -64,7 +83,7 @@ const coordinate = {
       :lat="coordinate.lat"
       :lng="coordinate.lng"
     ></KakaoMapMarker>
-  </KakaoMap>
+  </KakaoMap> -->
 </template>
 
 <style scoped></style>

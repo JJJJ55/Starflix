@@ -33,6 +33,27 @@ import MyInfo from '@/component/MyPage/MyInfo.vue';
 import MyPlace from '@/component/MyPage/MyPlace.vue';
 import MyReview from '@/component/MyPage/MyReview.vue';
 
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+import { useUserStore } from '@/stores/user';
+import { useBoardStore } from '@/stores/boardStore';
+
+const isArrowAround = (val) => {
+  const mapStore = useMapStore();
+  const { isAround } = storeToRefs(mapStore);
+
+  if (val) {
+    isAround.value = true;
+  } else {
+    isAround.value = false;
+  }
+};
+
+// const userStore = useUserStore();
+// const boardStore = useBoardStore();
+
+// const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -158,6 +179,14 @@ const router = createRouter({
               path: 'placeAround',
               name: 'placeAround',
               redirect: '/map/mapInfo/placeAround/tour',
+              beforeEnter: (to, from, next) => {
+                // 페이지 이동 전에 수행할 작업
+                isArrowAround(true);
+                console.log('주변관광');
+
+                // 작업 완료 후 페이지 이동
+                next();
+              },
               component: Around,
               children: [
                 {

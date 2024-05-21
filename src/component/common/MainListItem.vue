@@ -2,12 +2,24 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+const mapStore = useMapStore();
+const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { info } = mapStore;
+
 const router = useRouter();
 defineProps({
   params: Object,
 });
 
-const movePage = (idx) => {
+const movePage = async (idx) => {
+  console.log('페이지 이동 중');
+  // 상세정보 넘어가기
+  await info(idx);
+  isSearch.value = true;
+  isResult.value = false;
+  isAround.value = false;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: idx } });
 };
 </script>

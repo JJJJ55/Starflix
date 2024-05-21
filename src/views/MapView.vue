@@ -19,7 +19,13 @@ import AddPlaceMap from '@/component/kakaoMap/AddPlaceMap.vue';
 import mapTest from '@/component/kakaoMap/mapTest.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterView } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
+import { storeToRefs } from 'pinia';
+import { useMapStore } from '@/stores/mapStore';
+const mapStore = useMapStore();
+const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { info } = mapStore;
 
 // import '../component/kakaoMap/geoCoding';
 
@@ -68,9 +74,9 @@ function setActiveMenu(menu) {
           <InputBox class="inputBox" />
         </div>
         <!-- <div class="map"></div> -->
-        <!-- <mapVue class="map" /> -->
+        <mapVue class="map" />
         <!-- <AddPlaceMap class="map" /> -->
-        <mapTest class="map" />
+        <!-- <mapTest class="map" /> -->
         <!-- <div id="map" class="map"></div> -->
         <div class="Info">
           <div>

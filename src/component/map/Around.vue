@@ -47,55 +47,55 @@ function setActiveMenu(menu, id) {
   <section class="mapContent">
     <ul class="aroundMenu">
       <li
-        :class="{ active: activeMenu === '12' }"
+        :class="{ active12: activeMenu === '12' }"
         @click="setActiveMenu('tour', '12')"
       >
         관광
       </li>
       <li
-        :class="{ active: activeMenu === '14' }"
+        :class="{ active14: activeMenu === '14' }"
         @click="setActiveMenu('culture', '14')"
       >
         문화
       </li>
       <li
-        :class="{ active: activeMenu === '15' }"
+        :class="{ active15: activeMenu === '15' }"
         @click="setActiveMenu('festival', '15')"
       >
         축제
       </li>
       <li
-        :class="{ active: activeMenu === '25' }"
+        :class="{ active25: activeMenu === '25' }"
         @click="setActiveMenu('travel', '25')"
       >
         여행
       </li>
       <li
-        :class="{ active: activeMenu === '28' }"
+        :class="{ active28: activeMenu === '28' }"
         @click="setActiveMenu('Leisure', '28')"
       >
         레포츠
       </li>
       <li
-        :class="{ active: activeMenu === '32' }"
+        :class="{ active32: activeMenu === '32' }"
         @click="setActiveMenu('sleep', '32')"
       >
         숙박
       </li>
       <li
-        :class="{ active: activeMenu === '38' }"
+        :class="{ active38: activeMenu === '38' }"
         @click="setActiveMenu('shop', '38')"
       >
         쇼핑
       </li>
       <li
-        :class="{ active: activeMenu === '39' }"
+        :class="{ active39: activeMenu === '39' }"
         @click="setActiveMenu('food', '39')"
       >
         음식
       </li>
       <li
-        :class="{ active: activeMenu === '40' }"
+        :class="{ active40: activeMenu === '40' }"
         @click="setActiveMenu('camp', '40')"
       >
         캠핑
@@ -143,9 +143,41 @@ function setActiveMenu(menu, id) {
   cursor: pointer;
   color: #757575;
 }
-.active {
+.active12 {
   color: white !important;
-  border-bottom: 4px solid #d30000;
+  border-bottom: 4px solid #f3512c;
+}
+.active14 {
+  color: white !important;
+  border-bottom: 4px solid #7eb347;
+}
+.active15 {
+  color: white !important;
+  border-bottom: 4px solid #0888d0;
+}
+.active25 {
+  color: white !important;
+  border-bottom: 4px solid #2a3a87;
+}
+.active28 {
+  color: white !important;
+  border-bottom: 4px solid #fd8b69;
+}
+.active32 {
+  color: white !important;
+  border-bottom: 4px solid #ff7800;
+}
+.active38 {
+  color: white !important;
+  border-bottom: 4px solid #9b2cf9;
+}
+.active39 {
+  color: white !important;
+  border-bottom: 4px solid #ffce49;
+}
+.active40 {
+  color: white !important;
+  border-bottom: 4px solid #690b0b;
 }
 
 /* 주변 정보 */

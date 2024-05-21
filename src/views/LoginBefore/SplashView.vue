@@ -20,12 +20,16 @@ const param = ref({
 });
 
 onMounted(async () => {
-  await maplist(param.value); // 기본 대전
-  await best();
-  setTimeout(() => {
-    router.push({ name: 'home' });
-    console.log('이동');
-  }, 2000);
+  if (sessionStorage.getItem('accessToken') != null) {
+    await maplist(param.value); // 기본 대전
+    await best();
+    setTimeout(() => {
+      router.push({ name: 'home' });
+      console.log('이동');
+    }, 2000);
+  } else {
+    router.push({ name: 'main' });
+  }
 });
 </script>
 

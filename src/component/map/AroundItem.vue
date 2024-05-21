@@ -1,6 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+
+function getImageUrl(name) {
+  return new URL(`../../assets/img/${name}.jpg`, import.meta.url).href;
+}
 const route = useRoute();
 
 defineProps({
@@ -10,7 +14,10 @@ defineProps({
 
 <template>
   <div class="Item">
-    <div class="Img" :style="{ backgroundImage: `url(${data.img})` }">
+    <div v-if="data.img === ''" class="Img noImg">
+      <div class="title">{{ data.title }}</div>
+    </div>
+    <div v-else class="Img" :style="{ backgroundImage: `url(${data.img})` }">
       <div class="title">{{ data.title }}</div>
     </div>
   </div>
@@ -19,6 +26,12 @@ defineProps({
 <style scoped>
 .Item {
   margin-top: 20px;
+}
+.noImg {
+  background-image: url('@/assets/img/noImg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 .Img {
   position: relative;
