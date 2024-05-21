@@ -16,6 +16,7 @@ import PlaceInfo from '@/component/map/PlaceInfo.vue';
 import Review from '@/component/map/Review.vue';
 import ReviewList from '@/component/map/ReviewList.vue';
 import ReadReview from '@/component/map/ReadReview.vue';
+import AddPlaceView from '@/views/AddPlaceView.vue';
 
 // 커뮤니티
 import BoardView from '@/views/Board/BoardView.vue';
@@ -97,8 +98,13 @@ const router = createRouter({
       name: 'regist',
       component: LoginView,
     },
-    // 여기까지 로그인 전
 
+    // 여기까지 로그인 전
+    {
+      path: '/addPlace',
+      name: 'addPlace',
+      component: AddPlaceView,
+    },
     {
       path: '/home',
       name: 'home',
@@ -272,11 +278,11 @@ const router = createRouter({
             },
           ],
         },
-        {
-          path: 'addplace',
-          name: 'addplace',
-          component: AddPlace,
-        },
+        // {
+        //   path: 'addplace',
+        //   name: 'addplace',
+        //   component: AddPlace,
+        // },
       ],
     },
   ],

@@ -1,5 +1,7 @@
 <script setup>
+import { ref } from 'vue';
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
+import { isKakaoMapApiLoaded } from 'vue3-kakao-maps/@utils';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 import { useRoute } from 'vue-router';
@@ -22,6 +24,7 @@ const {
   isSearch,
   isResult,
   isAround,
+  isResultDetail,
 } = storeToRefs(mapStore);
 const coordinate = {
   lat: myLocation.value.latitude,
@@ -38,10 +41,10 @@ const coordinate = {
 </script>
 
 <template>
-  <!-- 검색결과 상세보기 -->
+  <!-- 찜 및 메인화면의 정보 결과 상세보기 -->
   <!-- <div style="color: white">erer</div>
   <div style="color: white">{{ idx }}</div> -->
-  <!-- <KakaoMap
+  <KakaoMap
     v-show="isSearch"
     :lat="place.placeInfo.lati"
     :lng="place.placeInfo.longj"
@@ -66,18 +69,20 @@ const coordinate = {
         }"
       ></KakaoMapMarker>
     </template>
-  </KakaoMap> -->
+  </KakaoMap>
+  <!-- 검색결과 리스트 -->
   <KakaoMap
-    v-show="isSearch"
-    :lat="coordinate.lat"
-    :lng="coordinate.lng"
+    v-if="isResult"
+    :lat="mapInfo.latitude"
+    :lng="mapInfo.longitude"
     :draggable="true"
-    :level="10"
+    :level="5"
     :width="100 + '%'"
   >
     <KakaoMapMarker
-      :lat="coordinate.lat"
-      :lng="coordinate.lng"
+      v-for="s in searchList"
+      :lat="s.lati"
+      :lng="s.longj"
     ></KakaoMapMarker>
     <template v-if="isAround">
       <KakaoMapMarker
@@ -93,20 +98,32 @@ const coordinate = {
       ></KakaoMapMarker>
     </template>
   </KakaoMap>
-  <!-- 검색결과 리스트 -->
+  <!-- 지도 검색 후 결과 -->
   <KakaoMap
-    v-if="isResult"
+    v-if="isResultDetail"
     :lat="mapInfo.latitude"
     :lng="mapInfo.longitude"
     :draggable="true"
-    :level="8"
+    :level="5"
     :width="100 + '%'"
   >
     <KakaoMapMarker
-      v-for="s in searchList"
-      :lat="s.lati"
-      :lng="s.longj"
+      :lat="mapInfo.latitude"
+      :lng="mapInfo.longitude"
     ></KakaoMapMarker>
+    <template v-if="isAround">
+      <KakaoMapMarker
+        v-for="a in aroundList"
+        :lat="a.lati"
+        :lng="a.longj"
+        :image="{
+          imageSrc: getImageUrl(a.type),
+          imageWidth: 32,
+          imageHeight: 32,
+          imageOption: {},
+        }"
+      ></KakaoMapMarker>
+    </template>
   </KakaoMap>
 </template>
 

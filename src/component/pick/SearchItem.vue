@@ -9,9 +9,10 @@ import { useUserStore } from '@/stores/user';
 
 const pickStore = usePickStore();
 const useStore = useUserStore();
-const mapStore = useMapStore();
 
-const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const mapStore = useMapStore();
+const { place, mapInfo, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 const { info } = mapStore;
 
 defineProps({
@@ -20,18 +21,21 @@ defineProps({
 
 const route = useRoute();
 const router = useRouter();
-const movePage = async (val) => {
+const movePage = async (val, lat, lon) => {
   console.log(val + ' 이 넘어갑니다. search Item');
-  // await info(val);
-  isSearch.value = true;
+  await info(val);
+  isSearch.value = false;
   isResult.value = false;
   isAround.value = false;
+  isResultDetail.value = true;
+  mapInfo.value.latitude = lat;
+  mapInfo.value.longtitude = lon;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: val } });
 };
 </script>
 
 <template>
-  <div class="Item" @click="movePage(data.idx)">
+  <div class="Item" @click="movePage(data.idx, data.lati, data.longj)">
     <div class="Img" :style="{ backgroundImage: `url(${data.img})` }">
       <div class="title">{{ data.title }}</div>
     </div>

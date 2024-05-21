@@ -2,18 +2,23 @@
 import AroundItem from '@/component/map/AroundItem.vue';
 import SearchItem from '../pick/SearchItem.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 const mapStore = useMapStore();
-const { searchList, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { searchList, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 
 const route = useRoute();
 const router = useRouter();
 
 const type = route.params.type;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
+
+onMounted(() => {
+  isResultDetail.value = false;
+});
 
 function setActiveMenu(menu) {
   // 메뉴함수

@@ -13,7 +13,8 @@ const mapStore = useMapStore();
 
 const { userInfo } = storeToRefs(useStore);
 const { delPick } = pickStore;
-const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { place, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 const { info } = mapStore;
 
 defineProps({
@@ -28,12 +29,14 @@ const movePage = async (val) => {
   isSearch.value = true;
   isResult.value = false;
   isAround.value = false;
+  isResultDetail.value = false;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: val } });
 };
 
 const deleteJjim = async (val) => {
   console.log('삭제시도');
   await delPick(val, userInfo.value.userId);
+  alert('찜 목록에서 삭제되었습니다.');
 };
 </script>
 

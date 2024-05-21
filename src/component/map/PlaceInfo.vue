@@ -11,26 +11,39 @@ import { useUserStore } from '@/stores/user';
 const mapStore = useMapStore();
 const pickStore = usePickStore();
 const userStore = useUserStore();
-const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { place, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 const { userInfo } = storeToRefs(userStore);
 const { info } = mapStore;
-const { addPick } = pickStore;
+const { addPick, delPick } = pickStore;
 
 const route = useRoute();
 const router = useRouter();
 
-const idx = route.query.idx;
+const pickCheck = ref(false);
 
+const idx = route.query.idx;
 onMounted(async () => {
   await info(idx);
-  isSearch.value = true;
-  isResult.value = false;
-  isAround.value = false;
+  // isSearch.value = true;
+  // isResult.value = false;
+  // isAround.value = false;
+  if (place.value.isJjim == 1) {
+    pickCheck.value = true;
+  }
+  console.log(place.value.isJjim + ' ' + pickCheck.value);
 });
 
 const placePick = async (val) => {
-  await addPick(val, userInfo.value.userId);
-  alert('찜 목록에 추가되었습니다.');
+  if (pickCheck.value) {
+    await delPick(val, userInfo.value.userId);
+    alert('찜 목록에서 삭제되었습니다.');
+    pickCheck.value = !pickCheck.value;
+  } else {
+    await addPick(val, userInfo.value.userId);
+    alert('찜 목록에 추가되었습니다.');
+    pickCheck.value = !pickCheck.value;
+  }
 };
 
 const movePage = (val) => {
@@ -48,10 +61,13 @@ const movePage = (val) => {
       <div class="textArea">
         <h2 class="title">{{ place.placeInfo.title }}</h2>
         <p class="text">{{ place.placeInfo.addr }}</p>
+        <p class="text" v-if="place.placeInfo.content !== '설명'">
+          {{ place.placeInfo.content }}
+        </p>
       </div>
       <div class="btnArea">
         <Btn
-          :sty="'redBtn'"
+          :sty="{ redBtn: !pickCheck, blackBtn: pickCheck }"
           :text="'♥'"
           @click="placePick(place.placeInfo.idx)"
         />

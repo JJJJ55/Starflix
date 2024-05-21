@@ -53,7 +53,7 @@ export const usePickStore = defineStore(
 
     const delPick = async (idx, id) => {
       const param = {
-        idx: idx,
+        starPlace: idx,
         userId: id,
       };
       console.log('넘어갈 데이터 : ' + param);
@@ -62,7 +62,6 @@ export const usePickStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('성공');
-            alert('삭제되었습니다.');
           } else {
             console.log('실행 중 에러');
           }
@@ -73,7 +72,6 @@ export const usePickStore = defineStore(
         }
       );
       await list(id);
-      router.push({ name: 'pick' });
     };
 
     return { Jjimlist, list, addPick, delPick };

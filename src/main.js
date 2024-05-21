@@ -24,6 +24,10 @@ app.use(router);
 
 app.use(quillEditor);
 
-useKakao('dac3f257356c454a8dc49e74570e3e2f');
+useKakao('dac3f257356c454a8dc49e74570e3e2f', [
+  'clusterer',
+  'services',
+  'drawing',
+]);
 
 app.mount('#app');

@@ -34,6 +34,7 @@ export const useMapStore = defineStore(
     const isSearch = ref(false); //검색했을 때 리스트를 보여줄 것
     const isResult = ref(false); //검색리스트에서 상세보기하면 보여줄 것
     const isAround = ref(false); //주변정보 리스트를 보여줄 것
+    const isResultDetail = ref(false);
 
     watch(
       () => aroundList.value,
@@ -104,7 +105,7 @@ export const useMapStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             alert('명소가 등록되었습니다.');
-            // router.replace({ name: 'map' });
+            router.replace({ name: 'home' });
             console.log('성공');
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
@@ -268,6 +269,7 @@ export const useMapStore = defineStore(
       isSearch,
       isResult,
       isAround,
+      isResultDetail,
       searchPlace,
       maplist,
       add,

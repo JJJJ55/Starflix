@@ -5,7 +5,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 const mapStore = useMapStore();
-const { place, isSearch, isAround, isResult } = storeToRefs(mapStore);
+const { place, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 const { info } = mapStore;
 
 const router = useRouter();
@@ -20,6 +21,7 @@ const movePage = async (idx) => {
   isSearch.value = true;
   isResult.value = false;
   isAround.value = false;
+  isResultDetail.value = false;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: idx } });
 };
 </script>

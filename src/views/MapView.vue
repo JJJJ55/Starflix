@@ -30,8 +30,6 @@ const { info, searchPlace } = mapStore;
 
 import { listPlace2 } from '@/api/map';
 
-// import '../component/kakaoMap/geoCoding';
-
 const route = useRoute();
 const router = useRouter();
 const mode = route.query.type;
@@ -141,7 +139,7 @@ function setActiveMenu(menu) {
             </p>
           </div>
           <div class="Area">
-            <Btn :sty="'redBtn'" :text="'추가'" @click="movePage('addplace')" />
+            <Btn :sty="'redBtn'" :text="'추가'" @click="movePage('addPlace')" />
             <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage('pre')" />
           </div>
         </div>

@@ -7,7 +7,7 @@ async function unPick(param, success, fail) {
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
   await local
-    .post(`jjims/unJjim?idx=${param.idx}&userId=${param.userId}`)
+    .post(`jjims/unJjim?starPlace=${param.starPlace}&userId=${param.userId}`)
     .then(success)
     .catch(fail);
 }
