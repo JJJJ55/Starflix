@@ -14,8 +14,15 @@ const memberStore = useUserStore();
 const mapStore = useMapStore();
 const { userInfo } = memberStore;
 const { info } = mapStore;
-const { bestList, placeList, isSearch, isAround, isResult, isResultDetail } =
-  storeToRefs(mapStore);
+const {
+  myAddress,
+  bestList,
+  placeList,
+  isSearch,
+  isAround,
+  isResult,
+  isResultDetail,
+} = storeToRefs(mapStore);
 
 const sub1 = 'BEST 별자리 명소';
 const sub2 = ref(userInfo.userName + '님의 지역명소');
@@ -51,7 +58,11 @@ const goInfo = async () => {
       <MainList :title="sub1" :data="bestList" />
     </section>
     <section class="list container-fluid">
-      <MainList :title="sub2" :data="placeList" />
+      <h5 v-if="placeList.length == 0">
+        접속하신 {{ myAddress.substring(0, 2) }} 지역의 명소가 존재하지
+        않습니다.
+      </h5>
+      <MainList v-else :title="sub2" :data="placeList" />
     </section>
   </div>
 </template>
@@ -115,5 +126,9 @@ section {
   height: 50px;
   display: flex;
   justify-content: space-around;
+}
+h5 {
+  font-weight: bold;
+  color: white;
 }
 </style>
