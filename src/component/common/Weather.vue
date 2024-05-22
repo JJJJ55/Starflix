@@ -5,7 +5,7 @@
       v-for="(weather, index) in weatherList[0]"
       :key="weather.region"
     >
-      <p ref="weatherText">
+      <div ref="weatherText">
         Today Weather : {{ weather.region }}
         <img
           v-if="weather.weatherState != 0"
@@ -20,7 +20,7 @@
           alt="rr"
           width="30px"
         />
-      </p>
+      </div>
     </div>
   </div>
   <div class="modal" v-if="showModal">
@@ -490,54 +490,49 @@ const asteOn = () => {
 };
 
 onMounted(() => {
-  // 자동 스크롤 애니메이션을 위한 스크롤링 함수 호출
   autoScroll();
 });
 
 function autoScroll() {
-  setInterval(() => {
-    const contentDiv = document.querySelector('.contentDiv');
-    if (contentDiv) {
-      // contentDiv의 스크롤 탑 위치를 가져옴
-      let scrollTop = contentDiv.scrollTop;
+  const contentDiv = document.querySelector('.contentDiv');
+  const scrollInterval = 2000; // 2초 간격으로 자동 스크롤링 실행
 
-      // contentDiv의 높이를 가져옴
-      const contentDivHeight = contentDiv.clientHeight;
+  function getMaxWeatherHeight(contentDiv) {
+    let maxWeatherHeight = 0;
+    const weatherItems = contentDiv.querySelectorAll('.weather');
+    weatherItems.forEach((item) => {
+      const height = item.clientHeight;
+      maxWeatherHeight = Math.max(maxWeatherHeight, height);
+    });
+    return maxWeatherHeight;
+  }
+  if (contentDiv) {
+    setInterval(() => {
+      const maxWeatherHeight = getMaxWeatherHeight(contentDiv);
+      const scrollTop = getNextScrollTop(contentDiv, maxWeatherHeight);
+      scrollToPosition(contentDiv, scrollTop);
+    }, scrollInterval);
+  }
+}
 
-      // contentDiv의 자식 요소 개수를 가져옴
-      const weatherItems = contentDiv.querySelectorAll('.weather');
+function getNextScrollTop(contentDiv, maxWeatherHeight) {
+  let scrollTop = contentDiv.scrollTop;
+  const weatherItemsCount = contentDiv.querySelectorAll('.weather').length;
+  const lastItemHeight = maxWeatherHeight;
 
-      // 모든 날씨 요소의 높이를 동일하게 맞춰줌
-      let maxWeatherHeight = 0;
-      weatherItems.forEach((item) => {
-        const height = item.clientHeight;
-        maxWeatherHeight = Math.max(maxWeatherHeight, height);
-      });
-      weatherItems.forEach((item) => {
-        item.style.height = `${maxWeatherHeight}px`;
-      });
+  if (scrollTop >= (weatherItemsCount - 1) * lastItemHeight - 10) {
+    scrollTop = 0;
+  } else {
+    scrollTop += lastItemHeight;
+  }
+  return scrollTop;
+}
 
-      // contentDiv의 자식 요소 개수를 가져옴
-      const weatherItemsCount = weatherItems.length;
-
-      // 현재 보여지는 마지막 자식 요소의 높이를 가져옴
-      const lastItemHeight = maxWeatherHeight;
-
-      // 마지막 자식 요소까지 스크롤될 때마다 스크롤 탑 위치를 0으로 초기화
-      if (scrollTop >= (weatherItemsCount - 1) * lastItemHeight) {
-        scrollTop = 0;
-      } else {
-        // 아니면 다음 자식 요소의 높이만큼 스크롤 탑 위치를 증가시킴
-        scrollTop += lastItemHeight;
-      }
-
-      // contentDiv에 애니메이션 효과를 주어 스크롤링 시각적으로 보여줌
-      contentDiv.scrollTo({
-        top: scrollTop,
-        behavior: 'smooth',
-      });
-    }
-  }, 2000); // 1초 간격으로 자동 스크롤링 실행
+function scrollToPosition(contentDiv, scrollTop) {
+  contentDiv.scrollTo({
+    top: scrollTop,
+    behavior: 'smooth',
+  });
 }
 
 const weatherIdx = ref(0);
@@ -665,7 +660,7 @@ li {
 }
 .contentDiv {
   width: 250px;
-  height: 40px;
+  height: 38px;
   border: 1px solid red;
   /* position: absolute; */
   /* right: 50px; */
@@ -674,7 +669,9 @@ li {
   background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
   overflow: hidden; /* 스크롤바를 보이지 않게 함 */
-  line-height: 40px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
 }
 
 .weather {
