@@ -5,17 +5,30 @@ import MainBanner from '@/component/common/MainBanner.vue';
 import Weather from '@/component/common/Weather.vue';
 import { ref } from 'vue';
 import WeatherVue from '@/component/common/Weather.vue';
-
+import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { useMapStore } from '@/stores/mapStore';
 import { storeToRefs } from 'pinia';
 const memberStore = useUserStore();
 const mapStore = useMapStore();
 const { userInfo } = memberStore;
-const { bestList, placeList } = storeToRefs(mapStore);
+const { info } = mapStore;
+const { bestList, placeList, isSearch, isAround, isResult, isResultDetail } =
+  storeToRefs(mapStore);
 
 const sub1 = 'BEST 별자리 명소';
 const sub2 = ref(userInfo.userName + '님의 지역명소');
+
+const router = useRouter();
+
+const goInfo = async () => {
+  await info(10);
+  isSearch.value = true;
+  isResult.value = false;
+  isAround.value = false;
+  isResultDetail.value = false;
+  router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: 10 } });
+};
 </script>
 
 <template>
@@ -25,7 +38,7 @@ const sub2 = ref(userInfo.userName + '님의 지역명소');
       <Weather />
       <div class="titleBox">
         <h1 class="ImgTitle">화악산 별빛공원</h1>
-        <button class="titleInfo">상세정보</button>
+        <button class="titleInfo" @click="goInfo">상세정보</button>
       </div>
     </section>
     <!-- 아래 메인배너 컴포넌트화는 나중에 하기로 -->
