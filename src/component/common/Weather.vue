@@ -6,7 +6,20 @@
       :key="weather.region"
     >
       <p ref="weatherText">
-        {{ weather.region }} 날씨 {{ weather.weatherState }}
+        Today Weather : {{ weather.region }}
+        <img
+          v-if="weather.weatherState != 0"
+          :src="getImageUrlSky(weather.weatherState)"
+          alt="rr"
+          width="30px"
+        />
+        <img
+          v-else
+          class="weatherIcon"
+          :src="getImageUrlSky(weather.rainyState)"
+          alt="rr"
+          width="30px"
+        />
       </p>
     </div>
   </div>
@@ -14,29 +27,335 @@
     <div class="modal-content">
       <span class="close" @click="closeModal">&times;</span>
       <ul>
-        <li>오늘날씨</li>
-        <li>내일날씨</li>
-        <li>모레날씨</li>
+        <li @click="weather(0)">오늘날씨</li>
+        <li @click="weather(1)">내일날씨</li>
+        <li @click="weather(2)">모레날씨</li>
         <li>금일 천문박명</li>
       </ul>
       <div class="weatherContent">
-        <div class="box w1">1</div>
-        <div class="box w2">2</div>
-        <div class="box w3">3</div>
-        <div class="box w4">4</div>
-        <div class="box w5">5</div>
-        <div class="box w6">6</div>
-        <div class="box w7">7</div>
-        <div class="box w8">8</div>
-        <div class="box w9">9</div>
-        <div class="box w10">10</div>
-        <div class="box w11">11</div>
-        <div class="box w12">12</div>
-        <div class="box w13">13</div>
-        <div class="box w14">14</div>
-        <div class="box w15">15</div>
-        <div class="box w16">16</div>
-        <div class="box w17">17</div>
+        <div class="box w1">
+          서울
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][0].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][0].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][0].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w2">
+          강원
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][16].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][16].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][16].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w3">
+          충북
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][9].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][9].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][9].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w4">
+          충남
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][10].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][10].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][10].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w5">
+          전북
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][11].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][11].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][11].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w6">
+          전남
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][12].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][12].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][12].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w7">
+          광주
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][4].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][4].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][4].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w8">
+          경남
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][14].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][14].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][14].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w9">
+          대구
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][2].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][2].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][2].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w10">
+          경북
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][13].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][13].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][13].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w11">
+          대전
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][5].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][5].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][5].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w12">
+          세종
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][7].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][7].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][7].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w13">
+          부산
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][1].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][1].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][1].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w14">
+          울산
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][6].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][6].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][6].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w15">
+          인천
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][3].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][3].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][3].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w16">
+          제주
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][15].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][15].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][15].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
+        <div class="box w17">
+          경기
+          <div class="weatherBox">
+            <img
+              v-if="weatherList[weatherIdx][8].weatherState != 0"
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][8].weatherState)"
+              alt="rr"
+              width="30px"
+            />
+            <img
+              v-else
+              class="weatherIcon"
+              :src="getImageUrlSky(weatherList[weatherIdx][8].rainyState)"
+              alt="rr"
+              width="30px"
+            />
+          </div>
+        </div>
       </div>
       <button @click="closeModal">닫기</button>
     </div>
@@ -59,6 +378,13 @@ const openModal = () => {
 const closeModal = () => {
   showModal.value = false;
 };
+
+function getImageUrlSky(name) {
+  return new URL(`../../assets/img/sky/${name}.png`, import.meta.url).href;
+}
+function getImageUrlRain(name) {
+  return new URL(`../../assets/img/pky/${name}.png`, import.meta.url).href;
+}
 
 onMounted(() => {
   // 자동 스크롤 애니메이션을 위한 스크롤링 함수 호출
@@ -110,9 +436,27 @@ function autoScroll() {
     }
   }, 2000); // 1초 간격으로 자동 스크롤링 실행
 }
+
+const weatherIdx = ref(0);
+
+const weather = (val) => {
+  weatherIdx.value = val;
+};
 </script>
 
 <style scoped>
+.weatherBox {
+  position: relative;
+  border: 1px solid red;
+  width: 100%;
+  height: 25px;
+}
+.weatherIcon {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+}
+
 ul {
   display: flex;
   list-style: none;
@@ -133,6 +477,8 @@ li {
   height: 50px;
   border: 1px solid black;
   position: absolute;
+  background-color: white;
+  text-align: center;
 }
 
 .w1 {
@@ -192,8 +538,8 @@ li {
   right: 40px;
 }
 .w15 {
-  bottom: 190px;
-  right: 20px;
+  top: 20px;
+  left: 30px;
 }
 .w16 {
   bottom: 0px;
@@ -204,14 +550,14 @@ li {
   left: 150px;
 }
 .contentDiv {
-  width: 200px;
+  width: 250px;
   height: 40px;
   border: 1px solid red;
   position: absolute;
   right: 50px;
   cursor: pointer;
   color: white;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
   overflow: hidden; /* 스크롤바를 보이지 않게 함 */
   line-height: 40px;
