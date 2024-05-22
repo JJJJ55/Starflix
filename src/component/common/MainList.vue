@@ -1,36 +1,3 @@
-<!-- <script setup>
-import MainListItem from './MainListItem.vue';
-import { ref } from 'vue';
-const props = defineProps({
-  title: String,
-  data: Object,
-});
-
-const info = ref([]);
-info.value = props.data;
-</script>
-
-<template>
-  <h2>{{ title }}</h2>
-  <div class="wrap">
-    <MainListItem class="" :params="info" />
-  </div>
-</template>
-
-<style scoped>
-h2 {
-  font-weight: bold;
-  color: white;
-}
-.wrap {
-  display: flex;
-  flex-direction: row;
-  overflow-y: auto;
-}
-.wrap::-webkit-scrollbar {
-  display: none;
-}
-</style> -->
 <template>
   <h2>{{ title }}</h2>
   <div class="wrap" ref="wrap">
