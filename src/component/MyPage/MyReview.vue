@@ -1,4 +1,5 @@
 <script setup>
+import Btn from '../common/Btn.vue';
 import { onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useReviewStore } from '@/stores/review';

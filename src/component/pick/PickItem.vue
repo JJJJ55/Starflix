@@ -49,10 +49,8 @@ const togglePublic = async (idx, flag) => {
   console.log(idx, flag);
   if (flag === 'Y') {
     await isPrivate(idx);
-    alert('비공개 처리되었습니다.');
   } else {
     await isPublic(idx);
-    alert('공개 처리되었습니다.');
   }
 };
 </script>

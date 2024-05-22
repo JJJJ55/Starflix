@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { asteInfo, weatherInfo, gptReview } from '@/api/etc';
+import { asteInfo, weatherInfo, gptReviews } from '@/api/etc';
 
 import { httpStatusCode } from '@/util/http-status';
 
@@ -40,7 +40,7 @@ export const useEtcStore = defineStore(
     };
 
     const gpt = async (idx) => {
-      await gptReview(
+      await gptReviews(
         idx,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {

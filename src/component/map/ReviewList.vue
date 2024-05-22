@@ -1,18 +1,23 @@
 <script setup>
+import Btn from '../common/Btn.vue';
 import AroundItem from '@/component/map/AroundItem.vue';
 import PickItem from '../pick/PickItem.vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import { useMapStore } from '@/stores/mapStore';
 import { useReviewStore } from '@/stores/review';
+import { useEtcStore } from '@/stores/etcStore';
 import { storeToRefs } from 'pinia';
 const userStore = useUserStore();
 const reviewStore = useReviewStore();
 const mapStore = useMapStore();
+const etcStore = useEtcStore();
 const { place } = storeToRefs(mapStore);
 const { userInfo } = storeToRefs(userStore);
 const { reviewList } = storeToRefs(reviewStore);
+const { gptReview } = storeToRefs(etcStore);
+const { gpt } = etcStore;
 const { placeReview, read } = reviewStore;
 const route = useRoute();
 const router = useRouter();
@@ -20,6 +25,10 @@ const router = useRouter();
 const idx = route.query.idx;
 onMounted(async () => {
   await placeReview(place.value.placeInfo.idx);
+});
+
+onBeforeRouteLeave(() => {
+  gptReview.value = null;
 });
 
 const movePage = async (val) => {
@@ -32,6 +41,12 @@ const movePage = async (val) => {
 
 const type = route.params.type;
 const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
+
+const gptFlag = ref(false);
+const gptOn = async () => {
+  await gpt(place.value.placeInfo.idx);
+  alert('분석이 완료되었습니다.');
+};
 </script>
 
 <template>
@@ -53,6 +68,20 @@ const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
           <td class="c3" style="text-align: center">{{ r.register_time }}</td>
         </tr>
       </table>
+    </div>
+    <div class="gptBox">
+      <div class="text" v-if="gptReview != null">
+        <p><span>평점 : </span>{{ gptReview.rate }}</p>
+        <p><span>요약 : </span>{{ gptReview.summary }}</p>
+        <p><span>Good : </span>{{ gptReview.pros }}</p>
+        <p><span>BAD : </span>{{ gptReview.cons }}</p>
+      </div>
+      <Btn
+        class="gptBtn"
+        :sty="'redBtn'"
+        :text="'GPT 리뷰분석'"
+        @click="gptOn"
+      />
     </div>
   </section>
 </template>
@@ -114,5 +143,17 @@ th {
   height: 50px;
   font-size: 20px;
   border-bottom: 1px solid white;
+}
+
+.text {
+  color: white;
+}
+.gptBox {
+  border: 1px solid red;
+  width: 90%;
+  margin: 20px auto;
+}
+.gptBtn {
+  margin-top: 20px;
 }
 </style>
