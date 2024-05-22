@@ -30,9 +30,9 @@
         <li @click="weather(0)">오늘날씨</li>
         <li @click="weather(1)">내일날씨</li>
         <li @click="weather(2)">모레날씨</li>
-        <li>금일 천문박명</li>
+        <li @click="asteOn">금일 천문박명</li>
       </ul>
-      <div class="weatherContent">
+      <div class="weatherContent" v-show="flag">
         <div class="box w1">
           서울
           <div class="weatherBox">
@@ -46,7 +46,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][0].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][0].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -65,7 +65,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][16].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][16].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -84,7 +84,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][9].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][9].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -103,7 +103,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][10].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][10].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -122,7 +122,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][11].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][11].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -141,7 +141,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][12].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][12].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -160,7 +160,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][4].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][4].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -179,7 +179,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][14].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][14].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -198,7 +198,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][2].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][2].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -217,7 +217,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][13].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][13].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -236,7 +236,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][5].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][5].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -255,7 +255,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][7].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][7].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -274,7 +274,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][1].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][1].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -293,7 +293,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][6].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][6].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -312,7 +312,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][3].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][3].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -331,7 +331,7 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][15].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][15].rainyState)"
               alt="rr"
               width="30px"
             />
@@ -350,10 +350,108 @@
             <img
               v-else
               class="weatherIcon"
-              :src="getImageUrlSky(weatherList[weatherIdx][8].rainyState)"
+              :src="getImageUrlRain(weatherList[weatherIdx][8].rainyState)"
               alt="rr"
               width="30px"
             />
+          </div>
+        </div>
+      </div>
+      <div class="asteContent" v-show="!flag">
+        <div class="box2 w1">
+          서울
+          <div class="weatherBox">
+            {{ asteList[0].aste.substring(0, 2) }}:{{
+              asteList[0].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w2">
+          강릉
+          <div class="weatherBox">
+            {{ asteList[5].aste.substring(0, 2) }}:{{
+              asteList[5].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w4">
+          홍성
+          <div class="weatherBox">
+            {{ asteList[4].aste.substring(0, 2) }}:{{
+              asteList[4].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w5">
+          전주
+          <div class="weatherBox">
+            {{ asteList[2].aste.substring(0, 2) }}:{{
+              asteList[2].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w6">
+          목포
+          <div class="weatherBox">
+            {{ asteList[10].aste.substring(0, 2) }}:{{
+              asteList[10].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w7">
+          광주
+          <div class="weatherBox">
+            {{ asteList[9].aste.substring(0, 2) }}:{{
+              asteList[9].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w9">
+          대구
+          <div class="weatherBox">
+            {{ asteList[6].aste.substring(0, 2) }}:{{
+              asteList[6].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w11">
+          대전
+          <div class="weatherBox">
+            {{ asteList[3].aste.substring(0, 2) }}:{{
+              asteList[3].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w13">
+          부산
+          <div class="weatherBox">
+            {{ asteList[8].aste.substring(0, 2) }}:{{
+              asteList[8].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w14">
+          울산
+          <div class="weatherBox">
+            {{ asteList[7].aste.substring(0, 2) }}:{{
+              asteList[7].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w15">
+          인천
+          <div class="weatherBox">
+            {{ asteList[1].aste.substring(0, 2) }}:{{
+              asteList[1].aste.substring(2, 4)
+            }}
+          </div>
+        </div>
+        <div class="box2 w16">
+          제주
+          <div class="weatherBox">
+            {{ asteList[11].aste.substring(0, 2) }}:{{
+              asteList[11].aste.substring(2, 4)
+            }}
           </div>
         </div>
       </div>
@@ -368,7 +466,7 @@ import { storeToRefs } from 'pinia';
 import { useEtcStore } from '@/stores/etcStore';
 const etcStore = useEtcStore();
 
-const { weatherList } = storeToRefs(etcStore);
+const { weatherList, asteList } = storeToRefs(etcStore);
 
 const showModal = ref(false);
 const openModal = () => {
@@ -385,6 +483,11 @@ function getImageUrlSky(name) {
 function getImageUrlRain(name) {
   return new URL(`../../assets/img/pky/${name}.png`, import.meta.url).href;
 }
+
+const flag = ref(true);
+const asteOn = () => {
+  flag.value = false;
+};
 
 onMounted(() => {
   // 자동 스크롤 애니메이션을 위한 스크롤링 함수 호출
@@ -441,6 +544,7 @@ const weatherIdx = ref(0);
 
 const weather = (val) => {
   weatherIdx.value = val;
+  flag.value = true;
 };
 </script>
 
@@ -474,6 +578,14 @@ li {
 }
 .box {
   width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  position: absolute;
+  background-color: white;
+  text-align: center;
+}
+.box2 {
+  width: 60px;
   height: 50px;
   border: 1px solid black;
   position: absolute;
@@ -606,6 +718,15 @@ li {
 }
 
 .weatherContent {
+  position: relative;
+  width: 100%;
+  border: 1px solid red;
+  background-image: url('../../assets/img/weather.png');
+  height: 500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.asteContent {
   position: relative;
   width: 100%;
   border: 1px solid red;
