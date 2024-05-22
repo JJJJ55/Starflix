@@ -1,7 +1,7 @@
 <script setup>
 import Btn from '@/component/common/Btn.vue';
 import ListItem from '@/component/board/ListItem.vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
 
 import { storeToRefs } from 'pinia';
@@ -9,17 +9,40 @@ import { useBoardStore } from '@/stores/boardStore';
 
 const test = 10;
 const router = useRouter();
+const route = useRoute();
+
+const idx = route.query.pg;
 
 const boardStore = useBoardStore();
 const { boardList } = storeToRefs(boardStore);
 const { blist } = boardStore;
 
-onMounted(() => {
-  blist('');
+onMounted(async () => {
+  await blist('', idx);
 });
 
 const movePage = (val) => {
   router.push({ name: val });
+};
+
+// 페이지네이션
+function range(start, end) {
+  const list = [];
+  for (let i = start; i <= end; i++) list.push(i);
+  return list;
+  //   return Array(end - start + 1)
+  //     .fill()
+  //     .map((val, i) => start + i);
+}
+
+const listPre = async (val) => {
+  await blist('', val - 1);
+};
+const listNext = async (val) => {
+  await blist('', val + 1);
+};
+const listPage = async (idx) => {
+  await blist('', idx);
 };
 </script>
 
@@ -54,8 +77,23 @@ const movePage = (val) => {
           <td class="t5">100</td>
         </tr>
       </tbody> -->
-      <ListItem :test="boardList" />
+      <ListItem :test="boardList.boardList" />
     </table>
+    <div class="pgDiv">
+      <template v-if="boardList.startPage > 1">
+        <button class="pgBtn2" @click="listPre(boardList.startPage)">
+          이전
+        </button> </template
+      >=1
+      <template v-for="p in range(boardList.startPage, boardList.endPage)">
+        <button class="pgBtn" @click="listPage(p)">{{ p }}</button>
+      </template>
+      <template v-if="boardList.endPage < boardList.totalPage">
+        <button class="pgBtn2" @click="listNext(boardList.endPage)">
+          다음
+        </button>
+      </template>
+    </div>
     <div class="btnArea">
       <Btn :text="'글쓰기'" :sty="'redBtn'" @click="movePage('write')" />
     </div>
@@ -121,5 +159,30 @@ const movePage = (val) => {
   border: 1px solid white;
   display: flex;
   justify-content: end;
+}
+.pgDiv {
+  width: 100%;
+  margin: 10px 0 10px;
+  border: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pgBtn {
+  width: 35px;
+  height: 35px;
+  font-size: 12px;
+  color: white;
+  background-color: #d30000;
+  border-radius: 10px;
+}
+.pgBtn2 {
+  width: 35px;
+  height: 35px;
+  font-size: 12px;
+  color: white;
+  background-color: #000;
+  border-radius: 10px;
+  border: 1px solid white;
 }
 </style>

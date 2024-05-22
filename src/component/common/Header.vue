@@ -22,6 +22,8 @@ const movePage = (val) => {
     router.push({ name: val, query: { type: 'userInfo' } });
   } else if (val === 'map') {
     router.push({ name: val, query: { type: 'mapHome' } });
+  } else if (val === 'boardList') {
+    router.push({ name: val, query: { pg: 1 } });
   } else {
     router.push({ name: val });
   }

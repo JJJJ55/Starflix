@@ -2,11 +2,11 @@ import { localAxios } from '@/util/http-commons';
 
 const local = localAxios();
 
-async function listBoard(param, success, fail) {
+async function listBoard(param, idx, success, fail) {
   // 게시글 목록
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
-  await local.get(`/boards`, param).then(success).catch(fail);
+  await local.get(`/boards?page=${idx}`, param, idx).then(success).catch(fail);
 }
 
 async function readBoard(bno, success, fail) {

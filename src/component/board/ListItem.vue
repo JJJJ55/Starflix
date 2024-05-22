@@ -1,7 +1,7 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 defineProps({
-  test: String,
+  test: Object,
 });
 
 const router = useRouter();

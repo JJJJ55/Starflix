@@ -24,15 +24,17 @@ export const useBoardStore = defineStore(
     const likeFlag = ref(false);
     const unlikeFlag = ref(true);
 
-    const blist = async (param) => {
+    const blist = async (param, idx) => {
       // 이거 파라미터 들어가야함
       if (param === '') {
         console.log('파라미터없음');
         await listBoard(
           param,
+          idx,
           (resp) => {
             if (resp.status === httpStatusCode.OK) {
               boardList.value = resp.data;
+              router.push({ name: 'boardList', query: { pg: idx } });
               console.log('성공');
             } else {
               console.log('실행 중 에러');
@@ -47,6 +49,7 @@ export const useBoardStore = defineStore(
         console.log('검색');
         await listBoard(
           param,
+          idx,
           (resp) => {
             if (resp.status === httpStatusCode.OK) {
               console.log('성공');
