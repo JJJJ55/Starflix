@@ -7,7 +7,7 @@ import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { RouterLink, RouterView } from 'vue-router';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 const test = 10;
 const route = useRoute();
 const router = useRouter();
@@ -26,6 +26,17 @@ console.log(type);
 //   router.push({ name: menu });
 //   activeMenu.value = menu;
 // }
+watch(
+  //동적라우팅 화면전환 안되는 부분 watch로 해결
+  () => route.query.type,
+  (nv, ov) => {
+    console.log('??' + ov, nv);
+    activeMenu.value = nv;
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 
 <template>
