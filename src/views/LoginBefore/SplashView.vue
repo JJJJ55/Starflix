@@ -4,13 +4,16 @@ import { useRouter } from 'vue-router';
 
 // 지도 정보 받아오기
 import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/user';
 import { useMapStore } from '@/stores/mapStore';
 import { useEtcStore } from '@/stores/etcStore';
 
 const mapStore = useMapStore();
 const etcStore = useEtcStore();
+const userStore = useUserStore();
 const { bestList, placeList } = storeToRefs(mapStore);
 const { weatherList, asteList } = storeToRefs(etcStore);
+const { logout } = userStore;
 const { weather, aste } = etcStore;
 const { best, maplist } = mapStore;
 
@@ -41,6 +44,7 @@ onMounted(async () => {
     // }, 2000);
     router.push({ name: 'home' });
   } else {
+    logout();
     router.push({ name: 'main' });
   }
 });
