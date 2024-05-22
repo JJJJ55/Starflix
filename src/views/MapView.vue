@@ -17,15 +17,25 @@ import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
 import mapVue from '@/component/kakaoMap/mapVue.vue';
 import AddPlaceMap from '@/component/kakaoMap/AddPlaceMap.vue';
 import mapTest from '@/component/kakaoMap/mapTest.vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { RouterView } from 'vue-router';
 import { onMounted, ref } from 'vue';
 
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 const mapStore = useMapStore();
-const { searchList, mapInfo, place, isSearch, isAround, isResult } =
-  storeToRefs(mapStore);
+const {
+  place,
+  aroundList,
+  searchList,
+  myLocation,
+  mapInfo,
+  userPlaceList,
+  isSearch,
+  isResult,
+  isAround,
+  isResultDetail,
+} = storeToRefs(mapStore);
 const { info, searchPlace } = mapStore;
 
 import { listPlace2 } from '@/api/map';
@@ -33,6 +43,16 @@ import { listPlace2 } from '@/api/map';
 const route = useRoute();
 const router = useRouter();
 const mode = route.query.type;
+
+onBeforeRouteLeave(() => {
+  alert('맵 나감');
+  //맵을 나가면 모든 기록들 초기화
+  place.value = null;
+  aroundList.value = null;
+  searchList.value = null;
+  mapInfo.value.latitude = myLocation.value.latitude; //맵을 나가면 얘는 내 기준으로 다시 설정
+  mapInfo.value.longitude = myLocation.value.longitude;
+});
 
 const movePage = (val) => {
   if (val === 'pre') {
@@ -45,7 +65,7 @@ const movePage = (val) => {
 const options = ref([
   { value: '', text: '검색조건' },
   { value: 'addr', text: '주소' },
-  { value: 'keyword', text: '검색어' },
+  { value: 'title', text: '검색어' },
 ]);
 
 const Param1 = ref(''); //검색조건
@@ -77,10 +97,12 @@ const handleEnter = async () => {
       (resp) => {
         if (resp.status === 200) {
           searchList.value = resp.data;
+          alert(mode);
           if (searchList.value.length >= 1) {
             mapInfo.value.latitude = searchList.value[0].lati;
             mapInfo.value.longitude = searchList.value[0].longj;
           }
+          router.push({ name: 'map', query: { type: 'mapHome' } });
           console.log(search.value);
         }
       },

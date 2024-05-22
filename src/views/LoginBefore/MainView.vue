@@ -17,11 +17,19 @@ onMounted(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        myLocation.value = {
-          latitude,
-          longitude,
-        };
-        mapInfo.value = myLocation.value;
+        // myLocation.value = {
+        //   latitude,
+        //   longitude,
+        // };
+        myLocation.value.latitude = latitude;
+        myLocation.value.longitude = longitude;
+        mapInfo.value.latitude = latitude;
+        mapInfo.value.longitude = longitude;
+        // mapInfo.value = {
+        //   latitude: myLocation.value.latitude,
+        //   longitude: myLocation.value.longitude,
+        // };
+        // mapInfo.value = myLocation.value;
         console.log(latitude, longitude);
         // Google Maps Geocoding API를 호출하여 위도와 경도를 주소로 변환
         fetch(

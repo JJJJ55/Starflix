@@ -52,7 +52,7 @@ const onClickMapMarker = (markerItem) => {
   <!-- <div style="color: white">erer</div>
   <div style="color: white">{{ idx }}</div> -->
   <KakaoMap
-    v-show="isSearch"
+    v-if="isSearch"
     :lat="place.placeInfo.lati"
     :lng="place.placeInfo.longj"
     :draggable="true"

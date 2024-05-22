@@ -7,8 +7,15 @@ import { onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 const mapStore = useMapStore();
-const { searchList, isSearch, isAround, isResult, isResultDetail } =
-  storeToRefs(mapStore);
+const {
+  searchList,
+  mapInfo,
+  myLocation,
+  isSearch,
+  isAround,
+  isResult,
+  isResultDetail,
+} = storeToRefs(mapStore);
 
 const route = useRoute();
 const router = useRouter();
@@ -37,15 +44,20 @@ function setActiveMenu(menu) {
     <div class="aroundDiv container-fluid">
       <h2 class="title">검 색 결 과</h2>
       <div class="wrap row">
-        <div v-if="searchList.length == 0" class="text">
-          검색 결과가 없습니다.
+        <div v-if="searchList == null" class="text">
+          지도 상단에 위치한 검색창으로 명소를 찾아보세요!
         </div>
         <template v-else>
-          <SearchItem
-            v-for="s in searchList"
-            class="col-12 col-sm-6 col-md-4"
-            :data="s"
-          />
+          <div v-if="searchList.length == 0" class="text">
+            검색 결과가 없습니다.
+          </div>
+          <template v-else>
+            <SearchItem
+              v-for="s in searchList"
+              class="col-12 col-sm-6 col-md-4"
+              :data="s"
+            />
+          </template>
         </template>
       </div>
     </div>

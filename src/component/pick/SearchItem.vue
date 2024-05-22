@@ -29,7 +29,7 @@ const movePage = async (val, lat, lon) => {
   isAround.value = false;
   isResultDetail.value = true;
   mapInfo.value.latitude = lat;
-  mapInfo.value.longtitude = lon;
+  mapInfo.value.longitude = lon;
   router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx: val } });
 };
 </script>

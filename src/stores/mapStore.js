@@ -28,9 +28,8 @@ export const useMapStore = defineStore(
     const searchList = ref([]); //검색정보 객체
     const userPlaceList = ref([]); //유저가 등록한 명소들 객체
     const place = ref(null); //상세정보
-    const myLocation = ref(null); //내 위치
-
-    const mapInfo = ref({});
+    const myLocation = ref({ latitude: '', longitude: '' }); //내 위치
+    const mapInfo = ref({ latitude: '', longitude: '' });
 
     //아래는 flag로 true값은 오로지 3개 중 하나만 가질 수 있음
     const isSearch = ref(false); //검색했을 때 리스트를 보여줄 것

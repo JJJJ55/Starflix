@@ -103,8 +103,7 @@ const isArrowSearch = (val) => {
 };
 const isArrowResult = (val) => {
   const mapStore = useMapStore();
-  const { isResult } = storeToRefs(mapStore);
-
+  const { myLocation, mapInfo, isResult } = storeToRefs(mapStore);
   if (val) {
     isResult.value = true;
   } else {
@@ -145,10 +144,15 @@ const router = createRouter({
       name: 'main',
       beforeEnter: (to, from, next) => {
         const userStore = useUserStore();
-        const { isLogin } = storeToRefs(userStore);
+        const { isLogin, isValidToken } = storeToRefs(userStore);
+        const { logout } = userStore;
 
         if (isLogin.value) {
-          next({ name: 'splash' });
+          if (isValidToken.value) {
+            next({ name: 'splash' });
+          } else {
+            logout();
+          }
         } else {
           next();
         }
