@@ -12,6 +12,7 @@ import {
   aroundPlace,
   aroundCamp,
   bestPlace,
+  userAddInfo,
 } from '@/api/map';
 
 import { httpStatusCode } from '@/util/http-status';
@@ -25,6 +26,7 @@ export const useMapStore = defineStore(
     const bestList = ref([]); //베스트 정보 객체
     const aroundList = ref([]); //주변정보 객체
     const searchList = ref([]); //검색정보 객체
+    const userPlaceList = ref([]); //유저가 등록한 명소들 객체
     const place = ref(null); //상세정보
     const myLocation = ref(null); //내 위치
 
@@ -137,7 +139,7 @@ export const useMapStore = defineStore(
         }
       );
     };
-    const delPlace = async (idx) => {
+    const delPlace = async (idx, id) => {
       await deletePlace(
         idx,
         (resp) => {
@@ -156,6 +158,7 @@ export const useMapStore = defineStore(
           console.log(error);
         }
       );
+      await addInfo(id);
     };
 
     const travel = async (idx, type) => {
@@ -258,6 +261,26 @@ export const useMapStore = defineStore(
       );
     };
 
+    const addInfo = async (id) => {
+      await userAddInfo(
+        id,
+        (resp) => {
+          if (resp.status === httpStatusCode.OK) {
+            console.log('성공');
+            userPlaceList.value = resp.data;
+          } else {
+            alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            console.log('실행 중 에러');
+          }
+        },
+        (error) => {
+          alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          console.log('실패');
+          console.log(error);
+        }
+      );
+    };
+
     return {
       placeList,
       bestList,
@@ -266,6 +289,7 @@ export const useMapStore = defineStore(
       searchList,
       myLocation,
       mapInfo,
+      userPlaceList,
       isSearch,
       isResult,
       isAround,
@@ -280,6 +304,7 @@ export const useMapStore = defineStore(
       best,
       isPublic,
       isPrivate,
+      addInfo,
     };
   },
   { persist: { storage: localStorage } }

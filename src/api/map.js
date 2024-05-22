@@ -70,6 +70,13 @@ async function bestPlace(success, fail) {
   await local.get(`/star-places/best`).then(success).catch(fail);
 }
 
+async function userAddInfo(id, success, fail) {
+  // 주변 검색(캠핑)
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local.get(`/star-places/userId?userId=${id}`).then(success).catch(fail);
+}
+
 export {
   onPublic,
   onPrivate,
@@ -81,4 +88,5 @@ export {
   aroundPlace,
   aroundCamp,
   bestPlace,
+  userAddInfo,
 };

@@ -15,7 +15,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-for="r in reviewList">{{ r.title }}</div>
+  <div v-if="reviewList.length == 0" class="text">
+    등록한 리뷰가 존재하지 않습니다.
+  </div>
+  <template v-else>
+    <div v-for="r in reviewList">{{ r.title }}</div>
+  </template>
 </template>
 
 <style scoped>
@@ -25,5 +30,8 @@ div {
   font-size: 20px;
   border-bottom: 1px solid white;
   margin: 5px auto;
+}
+.text {
+  color: white;
 }
 </style>
