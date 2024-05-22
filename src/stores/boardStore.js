@@ -10,6 +10,7 @@ import {
   unlikeBoard,
   updateBoard,
   writeBoard,
+  searchBoard,
 } from '@/api/board';
 
 import { httpStatusCode } from '@/util/http-status';
@@ -47,12 +48,17 @@ export const useBoardStore = defineStore(
         );
       } else {
         console.log('검색');
-        await listBoard(
+        await searchBoard(
           param,
           idx,
           (resp) => {
             if (resp.status === httpStatusCode.OK) {
-              console.log('성공');
+              console.log('성공22');
+              boardList.value = resp.data;
+              router.push({
+                name: 'boardList',
+                query: { type: param.type, keyword: param.keyword, pg: idx },
+              });
             } else {
               console.log('실행 중 에러');
             }

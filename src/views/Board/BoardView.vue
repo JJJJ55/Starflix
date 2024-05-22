@@ -4,14 +4,47 @@ import InputBox from '@/component/common/InputBox.vue';
 import Btn from '@/component/common/Btn.vue';
 import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
+import SelectBox from '@/component/common/SelectBox.vue';
 import List from '@/component/board/List.vue';
 import Write from '@/component/board/Write.vue';
 import Read from '@/component/board/Read.vue';
 import WriteQuill from '@/component/board/WriteQuill.vue';
 import { RouterView } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useBoardStore } from '@/stores/boardStore';
 import { ref } from 'vue';
 
-const test = 10;
+const boardStore = useBoardStore();
+const { boardList } = storeToRefs(boardStore);
+const { blist } = boardStore;
+
+const options = ref([
+  { value: '', text: '검색조건' },
+  { value: 'title', text: '제목' },
+  { value: 'writer', text: '작성자' },
+]);
+const Param1 = ref(''); //검색조건
+const Param2 = ref(''); //검색어
+const changeKey = (val) => {
+  // 검색조건 함수
+  Param1.value = val;
+  console.log(Param1.value);
+};
+
+const handleEnter = async () => {
+  if (Param1.value == '') {
+    alert('검색조건을 입력해주세요.');
+  } else {
+    const param = ref({
+      type: Param1.value,
+      keyword: Param2.value,
+    });
+    console.log(
+      '넘기는 데이터 : ' + param.value.type + ' ' + param.value.keyword
+    );
+    await blist(param.value, 1);
+  }
+};
 </script>
 
 <template>
@@ -29,7 +62,18 @@ const test = 10;
             별자리 정보 및 다양한 정보들을 공유하는 게시판입니다.
           </p>
         </div>
-        <InputBox class="col-12 col-sm-5" />
+        <div class="box">
+          <SelectBox class="sbox" :options="options" @onKeySelect="changeKey" />
+          <div class="input">
+            <input
+              type="text"
+              placeholder="검색어를 입력해주세요"
+              v-model="Param2"
+              @keydown.enter="handleEnter"
+            />
+            <img src="@/assets/img/inputSearch.png" alt="검색" />
+          </div>
+        </div>
       </div>
     </section>
     <!-- <List /> -->
@@ -112,6 +156,29 @@ section {
   height: 50px;
   display: flex;
   justify-content: space-around;
+}
+.box {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid green;
+  width: fit-content;
+  align-items: center;
+}
+.input {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding-left: 10px;
+  width: 330px;
+  height: 40px;
+  background-color: #fff;
+  border: none;
+  margin-left: 10px;
+}
+input {
+  width: 90%;
+  border: none;
+  outline: none;
 }
 
 /*  */

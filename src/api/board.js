@@ -9,6 +9,20 @@ async function listBoard(param, idx, success, fail) {
   await local.get(`/boards?page=${idx}`, param, idx).then(success).catch(fail);
 }
 
+async function searchBoard(param, idx, success, fail) {
+  // 게시글 목록
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local
+    .get(
+      `/boards?type=${param.type}&keyword=${param.keyword}&page=${idx}`,
+      param,
+      idx
+    )
+    .then(success)
+    .catch(fail);
+}
+
 async function readBoard(bno, success, fail) {
   // 게시글 읽기
   local.defaults.headers['Authorization'] =
@@ -73,4 +87,5 @@ export {
   likeBoard,
   unlikeBoard,
   writeBoard,
+  searchBoard,
 };
