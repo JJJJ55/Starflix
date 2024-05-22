@@ -29,6 +29,7 @@ export const useMapStore = defineStore(
     const userPlaceList = ref([]); //유저가 등록한 명소들 객체
     const place = ref(null); //상세정보
     const myLocation = ref({ latitude: '', longitude: '' }); //내 위치
+    const myAddress = ref(''); // 내 주소
     const mapInfo = ref({ latitude: '', longitude: '' });
 
     //아래는 flag로 true값은 오로지 3개 중 하나만 가질 수 있음
@@ -299,6 +300,7 @@ export const useMapStore = defineStore(
       aroundList,
       searchList,
       myLocation,
+      myAddress,
       mapInfo,
       userPlaceList,
       isSearch,

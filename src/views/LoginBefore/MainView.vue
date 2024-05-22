@@ -8,60 +8,70 @@ import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
 
 const mapStore = useMapStore();
-const { myLocation, mapInfo } = storeToRefs(mapStore);
+const { myAddress, myLocation, mapInfo } = storeToRefs(mapStore);
 
 const router = useRouter();
-const location = ref(null);
 onMounted(() => {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        // myLocation.value = {
-        //   latitude,
-        //   longitude,
-        // };
         myLocation.value.latitude = latitude;
         myLocation.value.longitude = longitude;
         mapInfo.value.latitude = latitude;
         mapInfo.value.longitude = longitude;
-        // mapInfo.value = {
-        //   latitude: myLocation.value.latitude,
-        //   longitude: myLocation.value.longitude,
-        // };
-        // mapInfo.value = myLocation.value;
         console.log(latitude, longitude);
-        // Google Maps Geocoding API를 호출하여 위도와 경도를 주소로 변환
-        fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_API_KEY`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.results && data.results[0]) {
-              location.value = data.results[0].formatted_address;
-              myLocation.value = {
-                //pinia에 저장
-                location: location.value,
-                latitude,
-                longitude,
-              };
-            } else {
-              console.error('주소를 가져오는 데 실패했습니다.');
-            }
-          })
-          .catch((error) => {
-            console.error('주소를 가져오는 데 실패했습니다.', error);
-          });
       },
       (error) => {
-        // 위치 정보를 가져오는 데 실패한 경우
         console.error('위치 정보를 가져오는 데 실패했습니다.', error);
       }
     );
-  } else {
-    console.error('이 브라우저는 Geolocation API를 지원하지 않습니다.');
   }
 });
+
+///////////////////////////////////////////////주소뽑기
+let map = null;
+let geocoder = null;
+const latitude = myLocation.value.latitude; // 위도 값
+const longitude = myLocation.value.longitude; // 경도 값
+const address = ref('');
+
+onMounted(() => {
+  // 카카오맵 초기화
+  initMap();
+
+  // 위도, 경도 값을 주소로 변환
+  getAddressFromCoords();
+});
+
+function initMap() {
+  // 카카오맵을 생성하고 지도를 표시하는 코드
+  const container = document.getElementById('map');
+  const options = {
+    center: new kakao.maps.LatLng(latitude, longitude),
+    level: 3,
+  };
+  map = new kakao.maps.Map(container, options);
+
+  // 카카오맵 API의 Geocoder 객체 생성
+  geocoder = new kakao.maps.services.Geocoder();
+}
+
+function getAddressFromCoords() {
+  // 주어진 위도와 경도 값을 주소로 변환
+  const coords = new kakao.maps.LatLng(latitude, longitude);
+  geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      address.value = result[0].address.address_name;
+      console.log(address.value);
+      myAddress.value = address.value;
+    } else {
+      console.error('Failed to get address from coordinates.');
+    }
+  });
+}
+
+///////////////////////////////////////////////////////
 
 const movePage = (val) => {
   if (val === 'login') {
@@ -72,6 +82,7 @@ const movePage = (val) => {
 </script>
 
 <template>
+  <div id="map" ref="map"></div>
   <div class="content">
     <header>
       <img class="logo" :src="smallLogo" alt="smallLogo" />
