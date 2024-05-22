@@ -7,6 +7,7 @@ import {
   writeReview,
   modifyReview,
   deleteReview,
+  readReview,
 } from '@/api/review';
 
 import { httpStatusCode } from '@/util/http-status';
@@ -79,14 +80,13 @@ export const useReviewStore = defineStore(
         }
       );
     };
-    const read = async (bno) => {
-      //아직 수정안함 api가 없음
-      await readBoard(
-        bno,
+    const read = async (rno) => {
+      await readReview(
+        rno,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('성공');
-            board.value = resp.data;
+            review.value = resp.data;
           } else {
             console.log('실행 중 에러');
           }
@@ -124,7 +124,6 @@ export const useReviewStore = defineStore(
           if (resp.status === httpStatusCode.OK) {
             console.log('성공');
             alert('삭제되었습니다.');
-            // router.replace({ name: 'boardList' });
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
             console.log('실행 중 에러');
@@ -144,6 +143,7 @@ export const useReviewStore = defineStore(
       placeReview,
       userReview,
       write,
+      read,
       modify,
       delReview,
     };

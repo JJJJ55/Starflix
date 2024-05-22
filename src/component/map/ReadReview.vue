@@ -2,25 +2,76 @@
 import AroundItem from '@/component/map/AroundItem.vue';
 import Btn from '@/component/common/Btn.vue';
 import { useRoute, useRouter } from 'vue-router';
+import { onMounted, ref } from 'vue';
+
+import { storeToRefs } from 'pinia';
+import { useReviewStore } from '@/stores/review';
+import { useUserStore } from '@/stores/user';
+import { useMapStore } from '@/stores/mapStore';
+const reviewStore = useReviewStore();
+const mapStore = useMapStore();
+const userStore = useUserStore();
+const { review } = storeToRefs(reviewStore);
+const { place } = storeToRefs(mapStore);
+const { userInfo } = storeToRefs(userStore);
+const { delReview } = reviewStore;
 
 const route = useRoute();
 const router = useRouter();
+
+const idx = route.query.idx;
+const reviewInfo = ref({});
+onMounted(() => {
+  reviewInfo.value = review.value;
+});
+
+const movePage = (val, rno) => {
+  if (val === 'modify') {
+    router.push({
+      name: 'ModifyReview',
+      query: { type: 'placeReview', idx, rno: rno },
+    });
+  } else {
+    router.push({ name: 'placeInfo', query: { type: 'placeInfo', idx } });
+  }
+};
+const deleteReview = async (rno) => {
+  const flag = confirm('정말로 삭제하시겠습니까?');
+  if (flag) {
+    await delReview(rno);
+    router.push({ name: 'mapInfo', query: { type: 'placeInfo', idx } });
+  }
+};
 </script>
 
 <template>
   <section class="mapContent">
-    <h1 class="title">삼성화재 유성캠퍼스</h1>
-    <h5 class="text">대전 유성구 동서대로 98-39</h5>
+    <h1 class="title">{{ place.placeInfo.title }}</h1>
+    <h5 class="text">{{ place.placeInfo.addr }}</h5>
+    <p class="text">작성시간 : {{ review.registerTime }}</p>
     <div class="textBox">
-      <input class="rTitle" type="text" placeholder="제목을 입력하세요" />
-      <div class="rContent">
-        <div class="testDiv"></div>
-      </div>
+      <input
+        class="rTitle"
+        type="text"
+        placeholder="제목을 입력하세요"
+        v-model="reviewInfo.title"
+      />
+      <div class="rContent" v-html="reviewInfo.content"></div>
     </div>
     <div class="btnArea">
-      <Btn :sty="'redBtn'" :text="'수정'" @click="addBoard" />
-      <Btn :sty="'redBtn'" :text="'삭제'" @click="addBoard" />
-      <Btn :sty="'blackBtn'" :text="'이전'" @click="addBoard" />
+      <Btn
+        v-if="userInfo.userId === reviewInfo.writer"
+        :sty="'redBtn'"
+        :text="'수정'"
+        @click="movePage('modify', review.rno)"
+      />
+      <Btn
+        v-if="userInfo.userId === reviewInfo.writer"
+        :sty="'redBtn'"
+        :text="'삭제'"
+        @click="deleteReview(review.rno)"
+      />
+      <Btn :sty="'blackBtn'" :text="'이전'" @click="movePage()" />
     </div>
   </section>
 </template>

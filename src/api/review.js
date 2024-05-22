@@ -33,7 +33,14 @@ async function deleteReview(rno, response, error) {
   //리뷰 삭제
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
-  await local.delete(`comments/${rno}`).then(response).catch(error);
+  await local.delete(`/reviews/${rno}`).then(response).catch(error);
+}
+
+async function readReview(rno, response, error) {
+  //리뷰 삭제
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local.get(`/reviews/${rno}`).then(response).catch(error);
 }
 
 export {
@@ -42,4 +49,5 @@ export {
   writeReview,
   modifyReview,
   deleteReview,
+  readReview,
 };

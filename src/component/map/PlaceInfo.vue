@@ -47,7 +47,7 @@ const placePick = async (val) => {
 };
 
 const movePage = (val) => {
-  router.push({ name: val, query: { type: val, idx } });
+  router.push({ name: val, query: { type: 'placeReview', idx } });
 };
 </script>
 

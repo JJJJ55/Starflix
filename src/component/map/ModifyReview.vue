@@ -10,12 +10,13 @@ import { useReviewStore } from '@/stores/review';
 const userStore = useUserStore();
 const reviewStore = useReviewStore();
 const mapStore = useMapStore();
-const { write } = reviewStore;
+const { modify } = reviewStore;
+const { review } = storeToRefs(reviewStore);
 const { place } = mapStore;
 const { userInfo } = storeToRefs(userStore);
 
 // 여기부터 토스트
-import { onMounted, ref, defineProps, defineEmits } from 'vue';
+import { onMounted, ref, defineProps, nextTick, defineEmits, watch } from 'vue';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
@@ -35,6 +36,13 @@ const props = defineProps({
     required: false,
     default: '',
   },
+});
+
+const reviewInfo = ref({
+  idx: place.placeInfo.idx,
+  title: '',
+  writer: userInfo.value.userId,
+  content: '',
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -78,9 +86,11 @@ const resizeImage = async (blob) => {
   });
 };
 
+let editorInstance = null;
+
 //마운트될때 Editor 생성
 onMounted(() => {
-  editorValid = new Editor({
+  editorInstance = new Editor({
     el: editorRef.value,
     height: '500px',
     //'wysiwyg', 'markdown' 택 1
@@ -123,27 +133,34 @@ onMounted(() => {
         );
       },
     },
-    events: {
-      change: () => emit('update:modelValue', editorValid.getMarkdown()),
-    },
   });
+  reviewInfo.value = review.value;
+
+  watch(
+    reviewInfo,
+    () => {
+      if (editorInstance) {
+        nextTick(() => {
+          editorInstance.setMarkdown(reviewInfo.value.content);
+        });
+      }
+    },
+    { immediate: true }
+  );
 });
-const review = ref({
-  idx: place.placeInfo.idx,
-  title: '',
-  writer: userInfo.value.userId,
-  content: '',
-});
-const ReviewWrite = async () => {
-  await write(review.value);
+
+// const reviewInfo = ref({});
+// reviewInfo.value = review.value;
+const ReviewModify = async () => {
+  await modify(reviewInfo.value);
 };
 
 const addBoard = () => {
-  review.value.content = editorValid.getHTML();
+  review.value.content = editorInstance.getHTML();
   if (review.value.title == '' || review.value.content == '<p><br></p>') {
     alert('제목 또는 내용을 입력해주세요');
   } else {
-    ReviewWrite();
+    ReviewModify();
     router.push({ name: 'placeReview', query: { type: 'placeReview', idx } });
   }
 };

@@ -16,6 +16,7 @@ import PlaceInfo from '@/component/map/PlaceInfo.vue';
 import Review from '@/component/map/Review.vue';
 import ReviewList from '@/component/map/ReviewList.vue';
 import ReadReview from '@/component/map/ReadReview.vue';
+import ModifyReview from '@/component/map/ModifyReview.vue';
 import AddPlaceView from '@/views/AddPlaceView.vue';
 
 // 커뮤니티
@@ -291,6 +292,12 @@ const router = createRouter({
               name: 'placeReview',
               beforeEnter: OnlyAuthUser,
               component: ReviewList,
+            },
+            {
+              path: 'ModifyReview',
+              name: 'ModifyReview',
+              beforeEnter: OnlyAuthUser,
+              component: ModifyReview,
             },
             {
               path: 'placeAround',

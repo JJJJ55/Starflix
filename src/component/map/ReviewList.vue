@@ -13,16 +13,21 @@ const mapStore = useMapStore();
 const { place } = storeToRefs(mapStore);
 const { userInfo } = storeToRefs(userStore);
 const { reviewList } = storeToRefs(reviewStore);
-const { placeReview } = reviewStore;
+const { placeReview, read } = reviewStore;
 const route = useRoute();
 const router = useRouter();
 
+const idx = route.query.idx;
 onMounted(async () => {
   await placeReview(place.value.placeInfo.idx);
 });
 
-const movePage = (val) => {
-  router.push({ name: 'readReview', query: { type: 'readReview', id: val } });
+const movePage = async (val) => {
+  await read(val);
+  router.push({
+    name: 'readReview',
+    query: { type: 'placeReview', idx, id: val },
+  });
 };
 
 const type = route.params.type;
