@@ -1,7 +1,7 @@
 <script setup>
 import homeImg from '@/assets/img/homeImg.png';
 import smallLogo from '@/assets/img/smallLogo.png';
-import searchIcon from '@/assets/img/searchIcon.png';
+import logoutIcon from '@/assets/img/logoutIcon.png';
 import { useRoute, useRouter } from 'vue-router';
 
 import { storeToRefs } from 'pinia';
@@ -58,7 +58,7 @@ const movePage = (val) => {
         </ul>
       </nav>
       <div class="col-sm-1 col-md-1 col-lg-2 searchBox">
-        <img :src="searchIcon" alt="검색" @click="userLogout" />
+        <img :src="logoutIcon" alt="검색" @click="userLogout" width="30px" />
       </div>
     </div>
   </header>
