@@ -2,6 +2,7 @@
 import Header from '@/component/common/Header.vue';
 import InputBox from '@/component/common/InputBox.vue';
 import Btn from '@/component/common/Btn.vue';
+import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import List from '@/component/board/List.vue';
 import Write from '@/component/board/Write.vue';
@@ -17,7 +18,10 @@ const test = 10;
   <div class="content">
     <Header />
     <section class="PageTitle container-fruid">
-      <Weather />
+      <div class="modalDiv">
+        <Meteo />
+        <Weather />
+      </div>
       <div class="titleBox row">
         <div class="col-12 col-sm-7">
           <h1 class="title">유저 커뮤니티</h1>
@@ -99,6 +103,15 @@ section {
   border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
+}
+.modalDiv {
+  position: absolute;
+  border: 3px solid blue;
+  width: 500px;
+  right: 0;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
 }
 
 /*  */
