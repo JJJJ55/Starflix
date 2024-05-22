@@ -65,7 +65,9 @@ const gptOn = async () => {
         <tr class="contentTable" v-for="r in reviewList">
           <td class="c1 clickTitle" @click="movePage(r.rno)">{{ r.title }}</td>
           <td class="c2" style="text-align: center">{{ r.writer }}</td>
-          <td class="c3" style="text-align: center">{{ r.register_time }}</td>
+          <td class="c3 dateText" style="text-align: center">
+            {{ r.registerTime }}
+          </td>
         </tr>
       </table>
     </div>
@@ -133,6 +135,9 @@ th {
 }
 .c3 {
   width: 200px;
+}
+.dateText {
+  font-size: 14px;
 }
 
 .clickTitle {
