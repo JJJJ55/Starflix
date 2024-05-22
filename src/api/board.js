@@ -61,7 +61,7 @@ async function writeBoard(board, success, fail) {
   // 게시글 작성
   local.defaults.headers['Authorization'] =
     sessionStorage.getItem('accessToken');
-  await local.post(`/boards/write`, board).then(success).catch(fail);
+  await local.post(`/boards`, board).then(success).catch(fail);
 }
 
 export {

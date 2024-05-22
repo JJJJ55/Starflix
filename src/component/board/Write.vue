@@ -119,7 +119,13 @@ onMounted(() => {
 
 const addBoard = () => {
   board.value.content = editorValid.getHTML();
-  boardWrite();
+  if (board.value.title == '' || board.value.content == '<p><br></p>') {
+    console.log(board.value);
+    alert('제목 또는 내용을 입력해주세요');
+  } else {
+    console.log(board.value);
+    boardWrite();
+  }
 };
 
 const movePage = (val) => {
