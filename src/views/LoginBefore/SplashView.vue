@@ -11,7 +11,7 @@ import { useEtcStore } from '@/stores/etcStore';
 const mapStore = useMapStore();
 const etcStore = useEtcStore();
 const userStore = useUserStore();
-const { bestList, placeList } = storeToRefs(mapStore);
+const { myAddress, bestList, placeList } = storeToRefs(mapStore);
 const { weatherList, asteList } = storeToRefs(etcStore);
 const { logout } = userStore;
 const { weather, aste } = etcStore;
@@ -21,10 +21,18 @@ const { best, maplist } = mapStore;
 
 const router = useRouter();
 
-const param = ref({
-  type: 'addr',
-  keyword: '서울',
-});
+const param = ref({});
+if (myAddress.value === '') {
+  param.value = {
+    type: 'addr',
+    keyword: '서울',
+  };
+} else {
+  param.value = {
+    type: 'addr',
+    keyword: myAddress.value.substring(0, 2),
+  };
+}
 
 onMounted(async () => {
   const today = new Date(); // 년도
@@ -34,9 +42,10 @@ onMounted(async () => {
   const date = ref(`${year}${month}${day}`);
 
   if (sessionStorage.getItem('accessToken') != null) {
+    console.log();
     await weather(date.value);
     await aste(date.value);
-    await maplist(param.value); // 기본 대전
+    await maplist(param.value); // 기본 서울
     await best();
     // setTimeout(() => {
     //   router.push({ name: 'home' });
