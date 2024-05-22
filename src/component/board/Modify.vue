@@ -216,7 +216,6 @@ const addBoard = () => {
 .titleBox {
   width: 90%;
   padding-left: 20px;
-  border: 1px solid red;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -231,7 +230,6 @@ const addBoard = () => {
   color: white;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
 }
@@ -242,13 +240,11 @@ section {
   width: 100%;
   text-align: center;
   margin: 0 auto 20px;
-  border: 5px solid red;
   height: 100%;
 }
 .boardArea + div {
   margin: 0 auto;
   width: 100%;
-  border: 1px solid yellow;
 }
 
 .bTitle {

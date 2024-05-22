@@ -7,7 +7,6 @@ import { onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useBoardStore } from '@/stores/boardStore';
 
-const test = 10;
 const router = useRouter();
 const route = useRoute();
 
@@ -67,16 +66,6 @@ const listPage = async (idx) => {
         <th class="t4"></th>
         <th class="t5"></th>
       </tr>
-      <!-- 높이 400 -->
-      <!-- <tbody>
-        <tr v-for="t in test">
-          <td class="t1">1</td>
-          <td class="t2">제목</td>
-          <td class="t3">작성자</td>
-          <td class="t4">100</td>
-          <td class="t5">100</td>
-        </tr>
-      </tbody> -->
       <ListItem :test="boardList.boardList" />
     </table>
     <div class="pgDiv">
@@ -156,14 +145,12 @@ const listPage = async (idx) => {
 .btnArea {
   width: 80%;
   margin: 20px auto 50px;
-  border: 1px solid white;
   display: flex;
   justify-content: end;
 }
 .pgDiv {
   width: 100%;
   margin: 10px 0 10px;
-  border: 1px solid red;
   display: flex;
   justify-content: center;
   align-items: center;

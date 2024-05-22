@@ -79,7 +79,6 @@ const test = 10;
 }
 .content {
   min-height: 100vh;
-  /* background-image: url('@/assets/img/homeImg.png'); */
   background-image: url('@/assets/img/pickImg.png');
   background-repeat: no-repeat;
   background-size: 100%;
@@ -87,12 +86,12 @@ const test = 10;
   overflow: auto;
 }
 .PageTitle {
+  border: 3px solid white;
   height: 350px;
 }
 .titleBox {
   width: 90%;
   padding-left: 20px;
-  border: 1px solid red;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -107,13 +106,11 @@ const test = 10;
   color: white;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
 }
 .modalDiv {
   position: absolute;
-  border: 3px solid blue;
   width: 500px;
   right: 0;
   height: 50px;
@@ -123,7 +120,6 @@ section {
 
 /*  */
 .conetntBox {
-  border: 6px solid green;
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: 40px;

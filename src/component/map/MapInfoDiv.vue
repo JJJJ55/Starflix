@@ -58,11 +58,6 @@ watch(
         명소 리뷰
       </li>
     </ul>
-    <!-- <Maphome /> -->
-    <!-- <PlaceInfo /> -->
-    <!-- <Around /> -->
-    <!-- <Review /> -->
-    <!-- <ReviewList /> -->
     <RouterView />
   </div>
 </template>
@@ -81,7 +76,6 @@ watch(
 .menuBox {
   width: 100%;
   height: 100%;
-  border: 3px solid green;
   margin-top: 30px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -95,7 +89,6 @@ watch(
   font-size: 30px;
   font-weight: bold;
   display: flex;
-  border: 1px solid red;
 }
 .myMenu > li {
   margin-right: 30px;

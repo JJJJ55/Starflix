@@ -86,12 +86,8 @@ export default {
 .btnArea {
   width: 80%;
   margin: 0 auto 50px;
-  border: 1px solid white;
   display: flex;
   justify-content: end;
   /* margin-bottom: 50px; */
-}
-.btns {
-  border: 3px solid blue;
 }
 </style>

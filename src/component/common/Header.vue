@@ -84,7 +84,6 @@ header {
   width: 100%;
   height: 100%;
   min-height: 80px;
-  border: 1px solid white;
   padding: 0;
   display: flex;
   align-items: center;
@@ -92,18 +91,12 @@ header {
 .headerDiv {
   position: relative;
   width: 100%;
-  border: 1px solid orange;
   margin: 0;
-}
-.imgBox {
-  border: 1px solid blue;
 }
 .logo {
   display: block;
-  /* margin-left: 50px; */
   width: 150px;
   min-width: 100px;
-  border: 1px solid red;
   margin: 0 auto;
   cursor: pointer;
 }

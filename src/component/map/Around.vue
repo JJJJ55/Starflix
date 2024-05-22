@@ -14,7 +14,6 @@ const contentId = ref(route.query.contentId);
 
 onBeforeRouteLeave((to, from) => {
   isAround.value = false;
-  console.log('떠납니다.');
 });
 
 onMounted(async () => {
@@ -129,7 +128,6 @@ function setActiveMenu(menu, id) {
 .mapContent {
   width: 90%;
   height: 500px;
-  border: 1px solid yellow;
   margin: 20px auto 0;
 }
 /* 아래는 주변메뉴 */
@@ -141,7 +139,6 @@ function setActiveMenu(menu, id) {
   font-size: 20px;
   font-weight: bold;
   display: flex;
-  border: 1px solid red;
 }
 .aroundMenu > li {
   margin-right: 10px;
@@ -188,7 +185,6 @@ function setActiveMenu(menu, id) {
 /* 주변 정보 */
 .aroundDiv {
   height: 470px;
-  border: 1px solid white;
   overflow: auto;
 }
 </style>

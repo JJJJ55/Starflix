@@ -142,7 +142,6 @@ onMounted(() => {
 .titleBox {
   width: 90%;
   padding-left: 20px;
-  border: 1px solid red;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -157,7 +156,6 @@ onMounted(() => {
   color: white;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
 }
@@ -168,12 +166,10 @@ section {
   width: 100%;
   text-align: center;
   margin: 0 auto 20px;
-  border: 1px solid red;
 }
 .boardArea + div {
   margin: 0 auto;
   width: 100%;
-  border: 1px solid yellow;
 }
 
 .bTitle {
@@ -211,7 +207,6 @@ section {
   color: white;
   margin: 0 auto;
   overflow: auto;
-  /* text-align: start; */
 }
 /* 토스트 UI 에디터에서 생성되는 이미지의 스타일을 수정 */
 .tui-editor-contents img {
@@ -219,13 +214,9 @@ section {
   height: auto; /* 비율 유지를 위해 height 속성을 auto로 설정 */
 }
 .btnArea {
-  width: 80%;
+  width: 80% !important;
   margin: 0 auto 50px;
-  border: 1px solid white;
   display: flex;
   justify-content: end;
-}
-.btns {
-  border: 3px solid blue;
 }
 </style>

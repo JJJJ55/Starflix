@@ -1,9 +1,7 @@
 <script setup>
 import LoginRegistForm from '../common/LoginRegistForm.vue';
 import Btn from '@/component/common/Btn.vue';
-import { ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 
 const memberStore = useUserStore();
@@ -66,7 +64,6 @@ const updateUser = () => {
 .InfoBox {
   display: flex;
   justify-content: space-between;
-  border: 1px solid blue;
 }
 .InfoDiv {
   width: 40%;

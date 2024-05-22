@@ -661,12 +661,10 @@ li {
 .contentDiv {
   width: 250px;
   height: 38px;
-  border: 1px solid red;
-  /* position: absolute; */
-  /* right: 50px; */
+  border-radius: 10px;
   cursor: pointer;
   color: white;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   text-align: center;
   overflow: hidden; /* 스크롤바를 보이지 않게 함 */
   display: flex;

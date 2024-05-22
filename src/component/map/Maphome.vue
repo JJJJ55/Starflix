@@ -1,5 +1,4 @@
 <script setup>
-import AroundItem from '@/component/map/AroundItem.vue';
 import SearchItem from '../pick/SearchItem.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
@@ -26,12 +25,6 @@ const activeMenu = ref(type); // 메뉴 클릭시 효과 변수
 onMounted(() => {
   isResultDetail.value = false;
 });
-
-function setActiveMenu(menu) {
-  // 메뉴함수
-  // router.push({ name: menu, params: { type: menu } });
-  activeMenu.value = menu;
-}
 </script>
 
 <template>
@@ -74,10 +67,8 @@ function setActiveMenu(menu) {
 .mapContent {
   width: 90%;
   height: 100%;
-  border: 1px solid yellow;
   margin: 20px auto 0;
   padding: 20px;
-  /* margin-top: 30px; */
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -86,7 +77,6 @@ function setActiveMenu(menu) {
 /* 주변 정보 */
 .aroundDiv {
   height: 470px;
-  border: 1px solid white;
   overflow: auto;
 }
 .title,

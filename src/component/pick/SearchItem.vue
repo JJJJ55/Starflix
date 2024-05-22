@@ -1,14 +1,8 @@
 <script setup>
-import Btn from '../common/Btn.vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
-import { usePickStore } from '@/stores/pickStore';
-import { useUserStore } from '@/stores/user';
-
-const pickStore = usePickStore();
-const useStore = useUserStore();
 
 const mapStore = useMapStore();
 const { place, mapInfo, isSearch, isAround, isResult, isResultDetail } =
@@ -48,9 +42,7 @@ const movePage = async (val, lat, lon) => {
 }
 .Img {
   position: relative;
-  /* width: 300px; */
   height: 300px;
-  border: 1px solid blue;
   margin-bottom: 20px;
   cursor: pointer;
   background-repeat: no-repeat;

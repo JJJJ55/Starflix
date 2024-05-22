@@ -2,9 +2,7 @@
 import Header from '@/component/common/Header.vue';
 import Btn from '@/component/common/Btn.vue';
 import SelectBox from '@/component/common/SelectBox.vue';
-import AddPlace from '@/component/map/AddPlace.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { RouterView } from 'vue-router';
 import { onMounted, ref, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user';
@@ -26,7 +24,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const route = useRoute();
 const router = useRouter();
-const mode = route.query.type;
 const lati = ref('');
 const longj = ref('');
 const addr = ref('');
@@ -395,7 +392,6 @@ img {
 .mainContent {
   width: 100%;
   height: 100%;
-  border: 3px solid red;
   margin: 0;
   padding: 0;
   display: flex;
@@ -403,13 +399,11 @@ img {
 .mapBox {
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
   position: relative;
   padding: 20px;
 }
 .seaechBox {
   width: fit-content;
-  border: 1px solid red;
   display: flex;
   margin-bottom: 20px;
 }
@@ -421,13 +415,11 @@ img {
 .map {
   width: 100%;
   min-height: 500px;
-  border: 3px solid orange;
   margin: 20px 0;
 }
 
 .Info {
   margin-top: 20px;
-  border: 1px solid yellow;
   display: flex;
   justify-content: space-between;
 }
@@ -446,7 +438,6 @@ img {
 .menuBox {
   width: 100%;
   height: 100%;
-  border: 3px solid green;
   margin-top: 30px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -460,7 +451,6 @@ img {
   font-size: 30px;
   font-weight: bold;
   display: flex;
-  border: 1px solid red;
 }
 .myMenu > li {
   margin-right: 30px;
@@ -481,7 +471,6 @@ img {
 .menuBox {
   width: 100%;
   height: 100%;
-  border: 3px solid green;
   margin-top: 30px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.4);

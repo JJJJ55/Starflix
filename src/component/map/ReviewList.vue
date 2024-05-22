@@ -1,7 +1,5 @@
 <script setup>
 import Btn from '../common/Btn.vue';
-import AroundItem from '@/component/map/AroundItem.vue';
-import PickItem from '../pick/PickItem.vue';
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
@@ -101,7 +99,6 @@ const gptOn = async () => {
 .mapContent {
   width: 90%;
   height: 100%;
-  border: 1px solid yellow;
   margin: 20px auto 0;
 }
 /* 아래는 홈 */
@@ -109,7 +106,6 @@ const gptOn = async () => {
 /* 리뮤목록 */
 .aroundDiv {
   height: 470px;
-  border: 1px solid white;
   overflow: auto;
 }
 .aroundDiv::-webkit-scrollbar {
@@ -123,7 +119,6 @@ const gptOn = async () => {
 }
 
 th {
-  border: 1px solid red;
   text-align: center;
 }
 
@@ -154,7 +149,6 @@ th {
   color: white;
 }
 .gptBox {
-  border: 1px solid red;
   width: 90%;
   margin: 20px auto;
 }

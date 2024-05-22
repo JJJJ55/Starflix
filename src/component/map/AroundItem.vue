@@ -1,12 +1,4 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-
-function getImageUrl(name) {
-  return new URL(`../../assets/img/${name}.jpg`, import.meta.url).href;
-}
-const route = useRoute();
-
 defineProps({
   data: Object,
 });
@@ -37,7 +29,6 @@ defineProps({
   position: relative;
   width: 100%;
   height: 100px;
-  border: 1px solid blue;
   margin-bottom: 20px;
   cursor: pointer;
   background-repeat: no-repeat;
@@ -65,8 +56,6 @@ defineProps({
   overflow: hidden;
 }
 .btns {
-  /* width: 300px; */
-  border: 1px solid orange;
   display: flex;
   justify-content: space-between;
 }

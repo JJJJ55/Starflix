@@ -1,25 +1,11 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
-import InputBox from '@/component/common/InputBox.vue';
 import Btn from '@/component/common/Btn.vue';
 import SelectBox from '@/component/common/SelectBox.vue';
-import Around from '@/component/map/Around.vue';
-import Review from '@/component/map/Review.vue';
-import PlaceInfo from '@/component/map/PlaceInfo.vue';
-import Maphome from '@/component/map/Maphome.vue';
-import ReviewList from '@/component/map/ReviewList.vue';
-import Weather from '@/component/common/Weather.vue';
-import List from '@/component/board/List.vue';
-import Write from '@/component/board/Write.vue';
-import Read from '@/component/board/Read.vue';
-import AddPlace from '@/component/map/AddPlace.vue';
-import MapInfoDiv from '@/component/map/MapInfoDiv.vue';
 import mapVue from '@/component/kakaoMap/mapVue.vue';
-import AddPlaceMap from '@/component/kakaoMap/AddPlaceMap.vue';
-import mapTest from '@/component/kakaoMap/mapTest.vue';
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router';
 import { RouterView } from 'vue-router';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 
 import { storeToRefs } from 'pinia';
 import { useMapStore } from '@/stores/mapStore';
@@ -45,7 +31,6 @@ const router = useRouter();
 const mode = route.query.type;
 
 onBeforeRouteLeave(() => {
-  alert('맵 나감');
   //맵을 나가면 모든 기록들 초기화
   place.value = null;
   aroundList.value = null;
@@ -69,17 +54,11 @@ const options = ref([
 ]);
 
 const Param1 = ref(''); //검색조건
-const Param2 = ref(''); //검색어
 const changeKey = (val) => {
   // 검색조건 함수
   Param1.value = val;
   console.log(Param1.value);
 };
-
-// const changeKeyWord = (val) => {
-//   Param2.value = val;
-//   console.log(Param2.value);
-// };
 const k = ref('');
 
 const search = ref([]);
@@ -97,7 +76,6 @@ const handleEnter = async () => {
       (resp) => {
         if (resp.status === 200) {
           searchList.value = resp.data;
-          alert(mode);
           if (searchList.value.length >= 1) {
             mapInfo.value.latitude = searchList.value[0].lati;
             mapInfo.value.longitude = searchList.value[0].longj;
@@ -140,19 +118,7 @@ function setActiveMenu(menu) {
             <img src="@/assets/img/inputSearch.png" alt="검색" />
           </div>
         </div>
-        <!-- <div class="seaechBox">
-          <SelectBox :options="options" @onKeySelect="changeKey" />
-          <InputBox
-            class="inputBox"
-            @onKeyWord="changeKeyWord"
-            @keydown.enter="handleEnter"
-          />
-        </div> -->
-        <!-- <div class="map"></div> -->
         <mapVue class="map" />
-        <!-- <AddPlaceMap class="map" /> -->
-        <!-- <mapTest class="map" /> -->
-        <!-- <div id="map" class="map"></div> -->
         <div class="Info">
           <div>
             <h1 class="InfoTitle">전국 별자리 명소 검색</h1>
@@ -167,38 +133,6 @@ function setActiveMenu(menu) {
         </div>
       </div>
       <RouterView />
-      <!-- <AddPlace />
-      <MapInfoDiv /> -->
-      <!-- <MapInfoDiv /> -->
-      <!-- <div class="menuBox">
-        <ul class="myMenu">
-          <li
-            :class="{ active: activeMenu === 'mapHome' }"
-            @click="setActiveMenu('mapHome')"
-          >
-            홈
-          </li>
-          <li
-            :class="{ active: activeMenu === 'placeInfo' }"
-            @click="setActiveMenu('placeInfo')"
-          >
-            명소 정보
-          </li>
-          <li
-            :class="{ active: activeMenu === 'placeAround' }"
-            @click="setActiveMenu('placeAround')"
-          >
-            주변 정보
-          </li>
-          <li
-            :class="{ active: activeMenu === 'placeReview' }"
-            @click="setActiveMenu('placeReview')"
-          >
-            명소 리뷰
-          </li>
-        </ul>
-        <RouterView />
-      </div> -->
     </section>
   </div>
 </template>
@@ -292,7 +226,6 @@ img {
 .mainContent {
   width: 100%;
   height: 100%;
-  border: 3px solid red;
   margin: 0;
   padding: 0;
   display: flex;
@@ -300,13 +233,11 @@ img {
 .mapBox {
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
   position: relative;
   padding: 20px;
 }
 .seaechBox {
   width: fit-content;
-  border: 1px solid red;
   display: flex;
   margin-bottom: 20px;
 }
@@ -318,13 +249,11 @@ img {
 .map {
   width: 100%;
   min-height: 500px;
-  border: 3px solid orange;
   margin: 20px 0;
 }
 
 .Info {
   margin-top: 20px;
-  border: 1px solid yellow;
   display: flex;
   justify-content: space-between;
 }
@@ -343,7 +272,6 @@ img {
 .menuBox {
   width: 100%;
   height: 100%;
-  border: 3px solid green;
   margin-top: 30px;
   border-radius: 15px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -357,7 +285,6 @@ img {
   font-size: 30px;
   font-weight: bold;
   display: flex;
-  border: 1px solid red;
 }
 .myMenu > li {
   margin-right: 30px;
@@ -368,11 +295,4 @@ img {
   color: white !important;
   border-bottom: 4px solid #d30000;
 }
-
-/* .mapContent {
-  width: 90%;
-  height: 100%;
-  border: 1px solid yellow;
-  margin: 20px auto 0;
-} */
 </style>

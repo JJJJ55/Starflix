@@ -36,7 +36,6 @@ const movePage = async (val) => {
 };
 
 const deleteJjim = async (val) => {
-  console.log('삭제시도');
   await delPick(val, userInfo.value.userId);
   alert('찜 목록에서 삭제되었습니다.');
 };
@@ -114,9 +113,7 @@ const togglePublic = async (idx, flag) => {
 }
 .Img {
   position: relative;
-  /* width: 300px; */
   height: 300px;
-  border: 1px solid blue;
   margin-bottom: 20px;
   cursor: pointer;
   background-repeat: no-repeat;
@@ -141,8 +138,6 @@ const togglePublic = async (idx, flag) => {
   opacity: 0; /* 초기에는 숨김 */
 }
 .btns {
-  /* width: 300px; */
-  border: 1px solid orange;
   display: flex;
   justify-content: space-between;
 }

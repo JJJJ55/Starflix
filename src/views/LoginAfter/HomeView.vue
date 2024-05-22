@@ -1,11 +1,9 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
 import MainList from '@/component/common/MainList.vue';
-import MainBanner from '@/component/common/MainBanner.vue';
 import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import { ref } from 'vue';
-import WeatherVue from '@/component/common/Weather.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { useMapStore } from '@/stores/mapStore';
@@ -52,8 +50,6 @@ const goInfo = async () => {
         <button class="titleInfo" @click="goInfo">상세정보</button>
       </div>
     </section>
-    <!-- 아래 메인배너 컴포넌트화는 나중에 하기로 -->
-    <!-- <MainBanner />  -->
     <section class="list container-fluid">
       <MainList :title="sub1" :data="bestList" />
     </section>
@@ -82,7 +78,6 @@ const goInfo = async () => {
 }
 .content {
   min-height: 100vh;
-  /* background-image: url('@/assets/img/homeImg.png'); */
   background-image: url('@/assets/img/homeImg.png');
   background-repeat: no-repeat;
   background-size: 100%;
@@ -90,12 +85,12 @@ const goInfo = async () => {
   overflow: auto;
 }
 .PageTitle {
+  border: 3px solid white;
   height: 350px;
 }
 .titleBox {
   width: 300px;
   text-align: center;
-  border: 1px solid red;
   position: relative;
   top: 230px;
   left: 60px;
@@ -114,13 +109,11 @@ const goInfo = async () => {
   margin: 10px;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 50px;
 }
 .modalDiv {
   position: absolute;
-  border: 3px solid blue;
   width: 500px;
   right: 0;
   height: 50px;

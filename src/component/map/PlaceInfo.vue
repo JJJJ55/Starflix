@@ -1,5 +1,4 @@
 <script setup>
-import AroundItem from '@/component/map/AroundItem.vue';
 import Btn from '@/component/common/Btn.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
@@ -98,14 +97,12 @@ const movePage = (val) => {
 .mapContent {
   width: 90%;
   height: 500px;
-  border: 1px solid yellow;
   margin: 20px auto 0;
 }
 /* 아래는 명소정보 */
 .img {
   width: 80%;
   height: 300px;
-  border: 1px solid red;
   margin: 10px auto;
   background-repeat: no-repeat;
   background-size: cover;
@@ -113,7 +110,6 @@ const movePage = (val) => {
 }
 .placeBox {
   width: 90%;
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
@@ -126,7 +122,6 @@ const movePage = (val) => {
   font-weight: bold;
 }
 .btnArea {
-  border: 1px solid white;
   width: fit-content;
   height: fit-content;
   margin: 0;

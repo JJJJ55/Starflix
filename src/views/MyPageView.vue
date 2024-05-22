@@ -1,8 +1,5 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
-import MyInfo from '@/component/MyPage/MyInfo.vue';
-import MyReview from '@/component/MyPage/MyReview.vue';
-import MyPlace from '@/component/MyPage/MyPlace.vue';
 import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -20,12 +17,6 @@ function setActiveMenu(menu) {
   activeMenu.value = menu;
 }
 console.log(type);
-// const activeMenu = ref('userInfo'); //라우팅은 먹지만 위 메뉴 스타일이 안변함
-
-// function setActiveMenu(menu) {
-//   router.push({ name: menu });
-//   activeMenu.value = menu;
-// }
 watch(
   //동적라우팅 화면전환 안되는 부분 watch로 해결
   () => route.query.type,
@@ -79,9 +70,6 @@ watch(
       </ul>
       <div class="hr"></div>
       <RouterView />
-      <!-- <MyInfo />
-      <MyPlace />
-      <MyReview v-for="t in test" :title="'이곳보다 좋은 곳은 없습니다.'" /> -->
     </section>
   </div>
 </template>
@@ -119,7 +107,6 @@ watch(
 }
 .content {
   min-height: 100vh;
-  /* background-image: url('@/assets/img/homeImg.png'); */
   background-image: url('@/assets/img/mypageImg.png');
   background-repeat: no-repeat;
   background-size: 100%;
@@ -127,12 +114,12 @@ watch(
   overflow: auto;
 }
 .PageTitle {
+  border: 3px solid white;
   height: 350px;
 }
 .titleBox {
   width: 90%;
   padding-left: 20px;
-  border: 1px solid red;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -147,13 +134,11 @@ watch(
   color: white;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
 }
 .modalDiv {
   position: absolute;
-  border: 3px solid blue;
   width: 500px;
   right: 0;
   height: 50px;
@@ -171,7 +156,6 @@ section {
   font-size: 30px;
   font-weight: bold;
   display: flex;
-  border: 1px solid red;
 }
 .myMenu > li {
   margin-right: 30px;
@@ -184,6 +168,5 @@ section {
 .hr {
   width: 95%;
   margin: 10px auto;
-  border: 2px solid white;
 }
 </style>

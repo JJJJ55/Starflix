@@ -1,14 +1,10 @@
 <script setup>
 import LoginRegistForm from '@/component/common/LoginRegistForm.vue';
-import { onMounted, onUpdated } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
 const type = route.params.type;
-onUpdated(() => {
-  console.log(type);
-});
 </script>
 
 <template>
@@ -35,7 +31,6 @@ onUpdated(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* border: 1px solid red; */
   width: 50%;
   min-width: 400px;
   height: 700px;

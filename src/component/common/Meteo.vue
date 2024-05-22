@@ -45,11 +45,11 @@ const closeModal = () => {
 .contentsDiv {
   width: 150px;
   height: 40px;
-  border: 1px solid red;
   font-size: 12px;
   cursor: pointer;
   color: white;
-  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
   text-align: center;
   line-height: 40px;
   display: flex;

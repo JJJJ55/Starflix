@@ -42,7 +42,6 @@ const movePage = async (idx) => {
 .Img {
   width: 250px;
   height: 200px;
-  border: 1px solid #d30000;
   margin-right: 20px;
   position: relative;
   cursor: pointer;

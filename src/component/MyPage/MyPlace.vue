@@ -35,7 +35,6 @@ onMounted(async () => {
 
 <style scoped>
 .conetntBox {
-  border: 6px solid green;
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: 40px;

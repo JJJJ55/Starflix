@@ -1,5 +1,4 @@
 <script setup>
-import AroundItem from '@/component/map/AroundItem.vue';
 import Btn from '@/component/common/Btn.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, ref } from 'vue';
@@ -79,22 +78,11 @@ const deleteReview = async (rno) => {
 <style scoped>
 @media (max-width: 1000px) {
   .textBox {
-    /* margin: 10px; */
     width: 100% !important;
     height: fit-content;
   }
   .rTitle {
     width: 100% !important;
-    /* min-width: 220px;
-    height: 45px;
-    background-color: #333333;
-    border-radius: 10px;
-    border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-bottom: 20px;
-    margin: 0 auto 20px;
-    color: white; */
   }
   .rContent {
     width: 100% !important;
@@ -103,7 +91,6 @@ const deleteReview = async (rno) => {
 .mapContent {
   width: 90%;
   height: 100%;
-  border: 1px solid yellow;
   margin: 20px auto 30px;
 }
 

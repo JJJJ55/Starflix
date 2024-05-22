@@ -1,21 +1,13 @@
 <script setup>
 import Header from '@/component/common/Header.vue';
-import InputBox from '@/component/common/InputBox.vue';
-import Btn from '@/component/common/Btn.vue';
 import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import SelectBox from '@/component/common/SelectBox.vue';
-import List from '@/component/board/List.vue';
-import Write from '@/component/board/Write.vue';
-import Read from '@/component/board/Read.vue';
-import WriteQuill from '@/component/board/WriteQuill.vue';
 import { RouterView } from 'vue-router';
-import { storeToRefs } from 'pinia';
 import { useBoardStore } from '@/stores/boardStore';
 import { ref } from 'vue';
 
 const boardStore = useBoardStore();
-const { boardList } = storeToRefs(boardStore);
 const { blist } = boardStore;
 
 const options = ref([
@@ -76,11 +68,7 @@ const handleEnter = async () => {
         </div>
       </div>
     </section>
-    <!-- <List /> -->
-    <!-- <Write /> -->
-    <!-- <Read /> -->
     <RouterView />
-    <!-- <WriteQuill /> -->
   </div>
 </template>
 
@@ -110,7 +98,6 @@ const handleEnter = async () => {
     height: 300px !important;
   }
   .titleBox {
-    /* width: 100% !important; */
     top: 155px !important;
     left: 0px !important;
   }
@@ -124,12 +111,12 @@ const handleEnter = async () => {
   overflow: auto;
 }
 .PageTitle {
+  border: 3px solid white;
   height: 350px;
 }
 .titleBox {
   width: 90%;
   padding-left: 20px;
-  border: 1px solid red;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -144,13 +131,11 @@ const handleEnter = async () => {
   color: white;
 }
 section {
-  border: 3px solid white;
   width: 100%;
   margin-bottom: 20px;
 }
 .modalDiv {
   position: absolute;
-  border: 3px solid blue;
   width: 500px;
   right: 0;
   height: 50px;
@@ -160,7 +145,6 @@ section {
 .box {
   display: flex;
   flex-direction: row;
-  border: 1px solid green;
   width: fit-content;
   align-items: center;
 }
@@ -187,12 +171,10 @@ input {
   width: 100%;
   text-align: center;
   margin: 0 auto 20px;
-  border: 1px solid red;
 }
 .boardArea > div {
   margin: 0 auto;
   width: 100%;
-  border: 1px solid yellow;
 }
 
 .bTitle {
@@ -232,11 +214,7 @@ input {
 .btnArea {
   width: 80%;
   margin: 0 auto 50px;
-  border: 1px solid white;
   display: flex;
   justify-content: end;
-}
-.btns {
-  border: 3px solid blue;
 }
 </style>

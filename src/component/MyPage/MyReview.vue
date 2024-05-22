@@ -34,12 +34,6 @@ const movePage = async (idx) => {
 </script>
 
 <template>
-  <!-- <div v-if="reviewList.length == 0" class="text">
-    등록한 리뷰가 존재하지 않습니다.
-  </div>
-  <template v-else>
-    <div v-for="r in reviewList">{{ r.title }}</div>
-  </template> -->
   <table class="boardTitle">
     <tr>
       <th class="t1">명소번호</th>
@@ -51,7 +45,6 @@ const movePage = async (idx) => {
   <div class="noList" v-if="reviewList.length == 0">작성된 글이 없습니다.</div>
   <div class="InfoDiv" v-else>
     <table class="board">
-      <!-- 높이 400 -->
       <tbody>
         <tr class="reviewTr" v-for="r in reviewList" @click="movePage(r.idx)">
           <td class="t1">{{ r.idx }}</td>
