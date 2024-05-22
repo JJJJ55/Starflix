@@ -183,6 +183,12 @@ export const useMapStore = defineStore(
           console.log(error);
         }
       );
+      for (let i = 0; i < aroundList.value.length; i++) {
+        aroundList.value[i].infoWindow = {
+          content: aroundList.value[i].title,
+          visible: false,
+        };
+      }
     };
 
     const camp = async (idx) => {
@@ -203,6 +209,12 @@ export const useMapStore = defineStore(
           console.log(error);
         }
       );
+      for (let i = 0; i < aroundList.value.length; i++) {
+        aroundList.value[i].infoWindow = {
+          content: aroundList.value[i].title,
+          visible: false,
+        };
+      }
     };
 
     const best = async () => {

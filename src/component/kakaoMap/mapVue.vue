@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { isKakaoMapApiLoaded } from 'vue3-kakao-maps/@utils';
 import { storeToRefs } from 'pinia';
@@ -31,13 +31,20 @@ const coordinate = {
   lng: myLocation.value.longitude,
 };
 
-// const panTo = () => {
-//   if (map.value) {
-//     // 지도 중심을 부드럽게 이동시킵니다
-//     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-//     map.value.panTo(new kakao.maps.LatLng(mapInfo.latitude, mapInfo.longitude));
-//   }
-// };
+// 관광지 마커 클릭시 이벤트
+/////////////////////////////////
+//마커 클릭 시 인포윈도우의 visible 값을 반전시킵니다
+const onClickMapMarker = (markerItem) => {
+  if (
+    markerItem.infoWindow?.visible !== null &&
+    markerItem.infoWindow?.visible !== undefined
+  ) {
+    markerItem.infoWindow.visible = !markerItem.infoWindow.visible;
+  } else {
+    markerItem.value.infoWindow.visible = true;
+  }
+};
+// 여기까지
 </script>
 
 <template>
@@ -67,6 +74,9 @@ const coordinate = {
           imageHeight: 32,
           imageOption: {},
         }"
+        :infoWindow="a.infoWindow"
+        :clickable="true"
+        @onClickKakaoMapMarker="onClickMapMarker(a)"
       ></KakaoMapMarker>
     </template>
   </KakaoMap>
@@ -95,6 +105,9 @@ const coordinate = {
           imageHeight: 32,
           imageOption: {},
         }"
+        :infoWindow="a.infoWindow"
+        :clickable="true"
+        @onClickKakaoMapMarker="onClickMapMarker(a)"
       ></KakaoMapMarker>
     </template>
   </KakaoMap>
@@ -122,6 +135,9 @@ const coordinate = {
           imageHeight: 32,
           imageOption: {},
         }"
+        :infoWindow="a.infoWindow"
+        :clickable="true"
+        @onClickKakaoMapMarker="onClickMapMarker(a)"
       ></KakaoMapMarker>
     </template>
   </KakaoMap>
