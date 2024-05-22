@@ -20,4 +20,10 @@ async function gptReviews(idx, response, error) {
   await local.get(`/gpt/reviews?idx=${idx}`).then(response).catch(error);
 }
 
-export { asteInfo, weatherInfo, gptReviews };
+async function meteo(year, response, error) {
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  await local.get(`/meteor?year=${year}`).then(response).catch(error);
+}
+
+export { asteInfo, weatherInfo, gptReviews, meteo };

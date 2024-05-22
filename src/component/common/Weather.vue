@@ -667,8 +667,8 @@ li {
   width: 250px;
   height: 40px;
   border: 1px solid red;
-  position: absolute;
-  right: 50px;
+  /* position: absolute; */
+  /* right: 50px; */
   cursor: pointer;
   color: white;
   background-color: rgba(0, 0, 0, 0.7);

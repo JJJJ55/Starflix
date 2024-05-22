@@ -150,9 +150,6 @@ export const useUserStore = defineStore(
           }
         },
         (error) => {
-          if (error.status === 500) {
-            alert('아이디 중복');
-          }
           alert('오류가 발생했습니다. 잠시 후 다시 이용해주세요.');
           console.log(error);
         }

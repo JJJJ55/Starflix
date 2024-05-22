@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { asteInfo, weatherInfo, gptReviews } from '@/api/etc';
+import { asteInfo, weatherInfo, gptReviews, meteo } from '@/api/etc';
 
 import { httpStatusCode } from '@/util/http-status';
 
@@ -10,6 +10,7 @@ export const useEtcStore = defineStore(
     const weatherList = ref([]);
     const asteList = ref([]);
     const gptReview = ref(null);
+    const meteoList = ref([]);
 
     const aste = async (date) => {
       await asteInfo(
@@ -53,7 +54,30 @@ export const useEtcStore = defineStore(
       );
     };
 
-    return { weatherList, asteList, gptReview, aste, weather, gpt };
+    const meteoInfo = async (year) => {
+      await meteo(
+        year,
+        (resp) => {
+          if (resp.status === httpStatusCode.OK) {
+            meteoList.value = resp.data;
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    };
+
+    return {
+      weatherList,
+      asteList,
+      gptReview,
+      meteoList,
+      aste,
+      weather,
+      gpt,
+      meteoInfo,
+    };
   },
   { persist: { storage: localStorage } }
 );

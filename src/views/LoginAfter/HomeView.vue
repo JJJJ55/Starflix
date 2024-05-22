@@ -2,6 +2,7 @@
 import Header from '@/component/common/Header.vue';
 import MainList from '@/component/common/MainList.vue';
 import MainBanner from '@/component/common/MainBanner.vue';
+import Meteo from '@/component/common/Meteo.vue';
 import Weather from '@/component/common/Weather.vue';
 import { ref } from 'vue';
 import WeatherVue from '@/component/common/Weather.vue';
@@ -35,7 +36,10 @@ const goInfo = async () => {
   <div class="content">
     <Header />
     <section class="PageTitle">
-      <Weather />
+      <div class="modalDiv">
+        <Meteo />
+        <Weather />
+      </div>
       <div class="titleBox">
         <h1 class="ImgTitle">화악산 별빛공원</h1>
         <button class="titleInfo" @click="goInfo">상세정보</button>
@@ -102,5 +106,14 @@ section {
   border: 3px solid white;
   width: 100%;
   margin-bottom: 50px;
+}
+.modalDiv {
+  position: absolute;
+  border: 3px solid blue;
+  width: 500px;
+  right: 0;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
 }
 </style>

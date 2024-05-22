@@ -194,21 +194,6 @@ const validateUserEmail = () => {
   }
 };
 
-// watch([() => user.value.userPw, () => user.value.CheckPw], () => {
-//   validatePasswordCheck();
-// });
-// watch(
-//   [
-//     () => user.value.userName,
-//     () => user.value.userEmail,
-//     () => user.value.userId,
-//     () => user.value.CheckPw,
-//   ],
-//   () => {
-//     validateInputs();
-//   }
-// );
-
 watch(
   // name
   () => user.value.userName,
@@ -259,7 +244,10 @@ watch(
       v-model="user.userName"
       @change="changeInfo()"
     />
-    <span :class="{ warning: true, none: userNameWarning }" class="warning"
+    <span
+      v-if="type === 'regist'"
+      :class="{ warning: true, none: userNameWarning }"
+      class="warning"
       >이름은 한글, 영문자, 숫자포함 10자 이내입니다.</span
     >
     <input
@@ -270,7 +258,10 @@ watch(
       v-model="user.userId"
     />
     <span v-if="type === 'userInfo'" class="inputTitle">이메일 주소</span>
-    <span :class="{ warning: true, none: userIdWarning }" class="warning"
+    <span
+      v-if="type === 'regist'"
+      :class="{ warning: true, none: userIdWarning }"
+      class="warning"
       >아이디는 영문자와 숫자를 포함한 8~12자여야 합니다.</span
     >
     <input
@@ -279,7 +270,10 @@ watch(
       placeholder="이메일 주소"
       v-model="user.userEmail"
     />
-    <span :class="{ warning: true, none: userEmailWarning }" class="warning"
+    <span
+      v-if="type === 'regist'"
+      :class="{ warning: true, none: userEmailWarning }"
+      class="warning"
       >올바른 이메일 주소를 입력하세요.</span
     >
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호</span>
@@ -289,7 +283,9 @@ watch(
       placeholder="비밀번호"
       v-model="user.userPw"
     />
-    <span :class="{ warning: true, none: userPwWarning }"
+    <span
+      v-if="type === 'regist'"
+      :class="{ warning: true, none: userPwWarning }"
       >비밀번호는 영문자, 숫자, 특수문자를 포함한 8~15자여야 합니다.</span
     >
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호 재입력</span>
@@ -299,7 +295,10 @@ watch(
       placeholder="비밀번호 재입력"
       v-model="user.CheckPw"
     />
-    <span :class="{ warning: true, none: checkPwWarning }" class="warning"
+    <span
+      v-if="type === 'regist'"
+      :class="{ warning: true, none: checkPwWarning }"
+      class="warning"
       >비밀번호가 일치하지않습니다.</span
     >
     <div></div>
