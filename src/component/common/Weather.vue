@@ -30,7 +30,7 @@
         <li @click="weather(0)">오늘날씨</li>
         <li @click="weather(1)">내일날씨</li>
         <li @click="weather(2)">모레날씨</li>
-        <li @click="asteOn">금일 천문박명</li>
+        <li @click="asteOn">별 잘보이는 시간</li>
       </ul>
       <div class="weatherContent" v-show="flag">
         <div class="box w1">
@@ -551,13 +551,13 @@ const weather = (val) => {
 <style scoped>
 .weatherBox {
   position: relative;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   height: 25px;
 }
 .weatherIcon {
   position: absolute;
-  left: 8px;
+  left: 9px;
   bottom: 0;
 }
 
@@ -567,8 +567,8 @@ ul {
 }
 li {
   font-size: 12px;
-  margin-left: 20px;
-  width: 70px;
+  margin-left: 5px;
+  width: 90px;
   text-align: center;
   height: 30px;
   line-height: 30px;
@@ -583,6 +583,7 @@ li {
   position: absolute;
   background-color: white;
   text-align: center;
+  border-radius: 10px;
 }
 .box2 {
   width: 60px;
@@ -591,6 +592,7 @@ li {
   position: absolute;
   background-color: white;
   text-align: center;
+  border-radius: 10px;
 }
 
 .w1 {
