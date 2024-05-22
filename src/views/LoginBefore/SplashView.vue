@@ -11,8 +11,7 @@ import { useEtcStore } from '@/stores/etcStore';
 const mapStore = useMapStore();
 const etcStore = useEtcStore();
 const userStore = useUserStore();
-const { myAddress, bestList, placeList } = storeToRefs(mapStore);
-const { weatherList, asteList } = storeToRefs(etcStore);
+const { myAddress } = storeToRefs(mapStore);
 const { logout } = userStore;
 const { weather, aste } = etcStore;
 const { best, maplist } = mapStore;
@@ -47,10 +46,6 @@ onMounted(async () => {
     await aste(date.value);
     await maplist(param.value); // 기본 서울
     await best();
-    // setTimeout(() => {
-    //   router.push({ name: 'home' });
-    //   console.log('이동');
-    // }, 2000);
     router.push({ name: 'home' });
   } else {
     logout();
