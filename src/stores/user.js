@@ -116,7 +116,7 @@ export const useUserStore = defineStore(
     const logout = async () => {
       console.log('로그아웃 아이디 : ' + userInfo.value.userId);
       await userlogout(
-        userInfo.value.userid,
+        userInfo.value.userId,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             isLogin.value = false;
