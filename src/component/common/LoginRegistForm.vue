@@ -75,11 +75,40 @@ const onSubmit = () => {
     // console.log(user.value);
     // console.log('로그인');
     userlogin();
-  } else if (type === 'regist') {
+  } else if (type.value === 'regist') {
     //회원가입
     // console.log(user.value);
     // console.log('회원가입');
-    userRegist();
+    if (
+      user.value.userId === '' ||
+      user.value.userEmail === '' ||
+      user.value.userName === '' ||
+      user.value.CheckPw === '' ||
+      user.value.userPw === ''
+    ) {
+      alert('입력 정보 중 누락된 정보가 있습니다.');
+    } else if (
+      !userNameWarning.value ||
+      !userIdWarning.value ||
+      !userPwWarning.value ||
+      !userEmailWarning.value ||
+      !checkPwWarning.value
+    ) {
+      console.log(
+        userNameWarning.value +
+          ' ' +
+          userIdWarning.value +
+          ' ' +
+          userPwWarning.value +
+          ' ' +
+          userEmailWarning.value +
+          ' ' +
+          checkPwWarning.value
+      );
+      alert('입력 정보가 유효하지 않습니다.');
+    } else {
+      userRegist();
+    }
   } else if (type === 'info') {
     const flag = confirm('수정하시겠습니까?');
     if (flag) {
@@ -91,6 +120,130 @@ const onSubmit = () => {
 const movePage = () => {
   router.push({ name: 'regist', query: { type: 'regist' } });
 };
+
+const userNameWarning = ref(true);
+const userIdWarning = ref(true);
+const userPwWarning = ref(true);
+const userEmailWarning = ref(true);
+const checkPwWarning = ref(true);
+
+// 이름 유효성 검사 정규식
+const userNameRegex = /^[가-힣a-zA-Z0-9]{1,10}$/;
+
+// 아이디 유효성 검사 정규식
+const userIdRegex = /^[a-zA-Z0-9]{4,12}$/;
+
+// 비밀번호 유효성 검사 정규식
+const userPwRegex =
+  /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,15}$/;
+
+// 이메일 주소 유효성 검사 정규식
+const userEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// 입력값의 유효성을 검사하는 함수
+const validateInputs = () => {
+  validateName();
+  validateUserId();
+  validateUserPw();
+  validateUserEmail();
+};
+
+// 이름 유효성 검사 함수
+const validateName = () => {
+  if (!userNameRegex.test(user.value.userName)) {
+    userNameWarning.value = false;
+  } else {
+    userNameWarning.value = true;
+  }
+};
+
+// 아이디 유효성 검사 함수
+const validateUserId = () => {
+  if (!userIdRegex.test(user.value.userId)) {
+    console.log('통과실패');
+    userIdWarning.value = false;
+  } else {
+    userIdWarning.value = true;
+  }
+};
+
+// 비밀번호 유효성 검사 함수
+const validateUserPw = () => {
+  if (!userPwRegex.test(user.value.userPw)) {
+    userPwWarning.value = false;
+  } else {
+    userPwWarning.value = true;
+  }
+};
+
+// 비밀번호 재입력 유효성 검사 함수
+const validatePasswordCheck = () => {
+  if (user.value.userPw !== user.value.CheckPw) {
+    checkPwWarning.value = false;
+  } else {
+    checkPwWarning.value = true;
+  }
+};
+
+// 이메일 주소 유효성 검사 함수
+const validateUserEmail = () => {
+  if (!userEmailRegex.test(user.value.userEmail)) {
+    userEmailWarning.value = false;
+  } else {
+    userEmailWarning.value = true;
+  }
+};
+
+// watch([() => user.value.userPw, () => user.value.CheckPw], () => {
+//   validatePasswordCheck();
+// });
+// watch(
+//   [
+//     () => user.value.userName,
+//     () => user.value.userEmail,
+//     () => user.value.userId,
+//     () => user.value.CheckPw,
+//   ],
+//   () => {
+//     validateInputs();
+//   }
+// );
+
+watch(
+  // name
+  () => user.value.userName,
+  () => {
+    validateName();
+  }
+);
+watch(
+  // id
+  () => user.value.userId,
+  () => {
+    validateUserId();
+  }
+);
+watch(
+  // email
+  () => user.value.userEmail,
+  () => {
+    validateUserEmail();
+  }
+);
+watch(
+  // pw
+  () => user.value.userPw,
+  () => {
+    validateUserPw();
+  }
+);
+watch(
+  // checkPw
+  () => user.value.CheckPw,
+  () => {
+    validatePasswordCheck();
+  }
+);
 </script>
 
 <template>
@@ -106,8 +259,8 @@ const movePage = () => {
       v-model="user.userName"
       @change="changeInfo()"
     />
-    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
-      >경고문구</span
+    <span :class="{ warning: true, none: userNameWarning }" class="warning"
+      >이름은 한글, 영문자, 숫자포함 10자 이내입니다.</span
     >
     <input
       v-if="type === 'regist' || type === 'login'"
@@ -117,15 +270,17 @@ const movePage = () => {
       v-model="user.userId"
     />
     <span v-if="type === 'userInfo'" class="inputTitle">이메일 주소</span>
-    <span v-if="type === 'regist'" class="warning">경고문구</span>
+    <span :class="{ warning: true, none: userIdWarning }" class="warning"
+      >아이디는 영문자와 숫자를 포함한 8~12자여야 합니다.</span
+    >
     <input
       v-if="type === 'regist' || type === 'userInfo'"
       type="text"
       placeholder="이메일 주소"
       v-model="user.userEmail"
     />
-    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
-      >경고문구</span
+    <span :class="{ warning: true, none: userEmailWarning }" class="warning"
+      >올바른 이메일 주소를 입력하세요.</span
     >
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호</span>
     <input
@@ -134,8 +289,8 @@ const movePage = () => {
       placeholder="비밀번호"
       v-model="user.userPw"
     />
-    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
-      >경고문구</span
+    <span :class="{ warning: true, none: userPwWarning }"
+      >비밀번호는 영문자, 숫자, 특수문자를 포함한 8~15자여야 합니다.</span
     >
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호 재입력</span>
     <input
@@ -144,8 +299,8 @@ const movePage = () => {
       placeholder="비밀번호 재입력"
       v-model="user.CheckPw"
     />
-    <span v-if="type === 'regist' || type === 'userInfo'" class="warning"
-      >경고문구</span
+    <span :class="{ warning: true, none: checkPwWarning }" class="warning"
+      >비밀번호가 일치하지않습니다.</span
     >
     <div></div>
     <button v-if="type !== 'userInfo'" @click.prevent="onSubmit">
@@ -159,6 +314,10 @@ const movePage = () => {
 </template>
 
 <style scoped>
+.none {
+  visibility: hidden;
+}
+
 form {
   /* border: 1px solid red; */
   margin: 0 auto;
