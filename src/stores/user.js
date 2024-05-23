@@ -11,6 +11,8 @@ import {
   userInsert,
   userUpdate,
   userDelete,
+  userCheck,
+  changePassword,
 } from '@/api/user';
 import { httpStatusCode } from '@/util/http-status';
 
@@ -24,6 +26,7 @@ export const useUserStore = defineStore(
     const userInfo = ref(null);
     const newInfo = ref(null);
     const isValidToken = ref(false);
+    const userEmail = ref('');
 
     const login = async (loginUser) => {
       await userLogin(
@@ -192,12 +195,43 @@ export const useUserStore = defineStore(
         }
       );
     };
+    const check = async (id) => {
+      await userCheck(
+        id,
+        (resp) => {
+          if (resp.status === httpStatusCode.OK) {
+            userEmail.value = resp.data.userEmail;
+          } else {
+            console.log('실패');
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    };
+    const passwordFind = async (id, pw) => {
+      await changePassword(
+        id,
+        pw,
+        (resp) => {
+          if (resp.status === httpStatusCode.OK) {
+          } else {
+            console.log('실패');
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    };
 
     return {
       isLogin,
       isLoginError,
       userInfo,
       isValidToken,
+      userEmail,
       newInfo,
       login,
       getUserInfo,
@@ -206,6 +240,8 @@ export const useUserStore = defineStore(
       regist,
       Update,
       Delete,
+      check,
+      passwordFind,
     };
   },
   { persist: { storage: localStorage } }

@@ -45,6 +45,19 @@ async function userDelete(userid, success, fail) {
   await local.delete(`/users/${userid}`).then(success).catch(fail);
 }
 
+async function userCheck(userid, success, fail) {
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  // 회원인지 체크
+  await local.get(`/users?userId=${userid}`).then(success).catch(fail);
+}
+async function changePassword(id, pw, success, fail) {
+  local.defaults.headers['Authorization'] =
+    sessionStorage.getItem('accessToken');
+  // 비밀번호 발급
+  await local.put(`/users?userId=${id}&userPw=${pw}`).then(success).catch(fail);
+}
+
 export {
   userLogin,
   findById,
@@ -53,4 +66,6 @@ export {
   userInsert,
   userUpdate,
   userDelete,
+  userCheck,
+  changePassword,
 };
