@@ -85,7 +85,6 @@ const goInfo = async () => {
   overflow: auto;
 }
 .PageTitle {
-  border: 3px solid white;
   height: 350px;
 }
 .titleBox {
