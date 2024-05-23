@@ -35,7 +35,7 @@ onMounted(() => {
     </div>
     <!-- <h2 class="title">원하는 정보를 검색해보세요!</h2> -->
     <div class="aroundDiv container-fluid">
-      <h2 class="title">검 색 결 과</h2>
+      <h2 class="title">Search Result</h2>
       <div class="wrap row">
         <div v-if="searchList == null" class="text">
           지도 상단에 위치한 검색창으로 명소를 찾아보세요!
@@ -78,6 +78,11 @@ onMounted(() => {
 .aroundDiv {
   height: 470px;
   overflow: auto;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+.aroundDiv::-webkit-scrollbar {
+  display: none;
 }
 .title,
 .text {
