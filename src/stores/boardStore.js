@@ -77,7 +77,7 @@ export const useBoardStore = defineStore(
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             alert('글이 등록되었습니다.');
-            router.replace({ name: 'boardList' });
+            router.replace({ name: 'list', query: { pg: 1 } });
             console.log('성공');
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
@@ -108,14 +108,14 @@ export const useBoardStore = defineStore(
         }
       );
     };
-    const modify = async (board) => {
+    const modify = async (board, pg) => {
       await updateBoard(
         board,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('성공');
             alert('수정되었습니다.');
-            router.replace({ name: 'boardList' });
+            router.replace({ name: 'boardList', query: { pg } });
           } else {
             console.log('실행 중 에러');
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
@@ -128,14 +128,14 @@ export const useBoardStore = defineStore(
         }
       );
     };
-    const delBoard = async (bno) => {
+    const delBoard = async (bno, pg) => {
       await deleteBoard(
         bno,
         (resp) => {
           if (resp.status === httpStatusCode.OK) {
             console.log('성공');
             alert('삭제되었습니다.');
-            router.replace({ name: 'boardList' });
+            router.replace({ name: 'boardList', query: { pg } });
           } else {
             alert('에러가 발생했습니다. 잠시 후 다시 시도해주세요.');
             console.log('실행 중 에러');

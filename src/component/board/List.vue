@@ -10,18 +10,19 @@ import { useBoardStore } from '@/stores/boardStore';
 const router = useRouter();
 const route = useRoute();
 
-const idx = route.query.pg;
+const pg = route.query.pg;
 
 const boardStore = useBoardStore();
 const { boardList } = storeToRefs(boardStore);
 const { blist } = boardStore;
 
 onMounted(async () => {
-  await blist('', idx);
+  console.log('나왔다');
+  await blist('', pg);
 });
 
 const movePage = (val) => {
-  router.push({ name: val });
+  router.push({ name: val, query: { pg } });
 };
 
 // 페이지네이션
