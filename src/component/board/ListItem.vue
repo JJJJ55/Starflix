@@ -5,9 +5,11 @@ defineProps({
 });
 
 const router = useRouter();
+const route = useRoute();
+const pg = route.query.pg;
 const movePage = (val) => {
   console.log(val);
-  router.push({ name: 'read', query: { bno: val } });
+  router.push({ name: 'read', query: { pg, bno: val } });
 };
 </script>
 

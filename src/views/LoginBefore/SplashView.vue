@@ -63,6 +63,7 @@ onMounted(async () => {
       height="20%"
       alt="logo"
     />
+    <p>로딩중입니다. 잠시만 기다려주세요.</p>
   </div>
 </template>
 
@@ -70,11 +71,18 @@ onMounted(async () => {
 .content {
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .logo {
   display: block;
+}
+p {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 20px;
 }
 </style>

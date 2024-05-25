@@ -114,7 +114,6 @@ watch(
   overflow: auto;
 }
 .PageTitle {
-  border: 3px solid white;
   height: 350px;
 }
 .titleBox {

@@ -187,4 +187,7 @@ function setActiveMenu(menu, id) {
   height: 470px;
   overflow: auto;
 }
+.aroundDiv::-webkit-scrollbar {
+  display: none;
+}
 </style>

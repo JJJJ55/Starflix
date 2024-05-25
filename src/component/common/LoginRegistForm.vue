@@ -71,14 +71,8 @@ const changeInfo = () => {
 
 const onSubmit = () => {
   if (type.value === 'login') {
-    //로그인
-    // console.log(user.value);
-    // console.log('로그인');
     userlogin();
   } else if (type.value === 'regist') {
-    //회원가입
-    // console.log(user.value);
-    // console.log('회원가입');
     if (
       user.value.userId === '' ||
       user.value.userEmail === '' ||
@@ -117,8 +111,12 @@ const onSubmit = () => {
   }
 };
 
-const movePage = () => {
-  router.push({ name: 'regist', query: { type: 'regist' } });
+const movePage = (val) => {
+  if (val == 'find') {
+    router.push({ name: 'find', query: { type: 'find' } });
+  } else {
+    router.push({ name: 'regist', query: { type: 'regist' } });
+  }
 };
 
 const userNameWarning = ref(true);
@@ -279,7 +277,7 @@ watch(
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호</span>
     <input
       :class="type"
-      type="text"
+      type="password"
       placeholder="비밀번호"
       v-model="user.userPw"
     />
@@ -291,7 +289,7 @@ watch(
     <span v-if="type === 'userInfo'" class="inputTitle">비밀번호 재입력</span>
     <input
       v-if="type === 'regist' || type === 'userInfo'"
-      type="text"
+      type="password"
       placeholder="비밀번호 재입력"
       v-model="user.CheckPw"
     />
@@ -305,7 +303,9 @@ watch(
     <button v-if="type !== 'userInfo'" @click.prevent="onSubmit">
       {{ type === 'login' ? '로그인' : '회원가입' }}
     </button>
-    <div v-if="type === 'login'" class="helpMsg">도움이 필요하신가요?</div>
+    <div v-if="type === 'login'" class="helpMsg" @click="movePage('find')">
+      도움이 필요하신가요?
+    </div>
     <a v-if="type === 'login'" class="registMsg" @click="movePage">
       스타플릭스 회원이 아닌가요? <b>지금 가입하세요.</b>
     </a>
@@ -394,6 +394,7 @@ button {
   min-width: 200px;
   text-align: right;
   color: #fff;
+  cursor: pointer;
 }
 .registMsg {
   margin-top: 50px;

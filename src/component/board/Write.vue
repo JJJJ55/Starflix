@@ -7,7 +7,7 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,6 +21,8 @@ const memberStore = useUserStore();
 const { userInfo } = memberStore;
 const { write } = boardStore;
 const router = useRouter();
+const route = useRoute();
+const pg = route.query.pg;
 
 const board = ref({
   title: '',
@@ -129,7 +131,7 @@ const addBoard = () => {
 };
 
 const movePage = (val) => {
-  router.push({ name: val });
+  router.push({ name: val, query: { pg } });
 };
 </script>
 

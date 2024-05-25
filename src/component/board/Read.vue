@@ -19,6 +19,7 @@ const router = useRouter();
 
 const likeText = ref('좋아요');
 
+const pg = route.query.pg;
 const bno = route.query.bno; // 내가 읽은 글의 bno
 const boardInfo = ref({});
 onMounted(async () => {
@@ -32,15 +33,15 @@ onMounted(async () => {
 });
 const movePage = (val) => {
   if (val === 'modify') {
-    router.push({ name: val, query: { bno: bno } });
+    router.push({ name: val, query: { pg, bno: bno } });
   } else {
-    router.push({ name: val });
+    router.push({ name: val, query: { pg } });
   }
 };
 const deleteBoard = () => {
   const flag = confirm('정말로 삭제하시겠습니까?');
   if (flag) {
-    delBoard(bno);
+    delBoard(bno, pg);
   }
 };
 
@@ -207,6 +208,7 @@ section {
   color: white;
   margin: 0 auto;
   overflow: auto;
+  text-align: start;
 }
 /* 토스트 UI 에디터에서 생성되는 이미지의 스타일을 수정 */
 .tui-editor-contents img {

@@ -111,7 +111,7 @@ const handleEnter = async () => {
   overflow: auto;
 }
 .PageTitle {
-  border: 3px solid white;
+  border-bottom: 5px double white;
   height: 350px;
 }
 .titleBox {

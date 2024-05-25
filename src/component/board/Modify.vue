@@ -61,13 +61,14 @@ const { userInfo } = memberStore;
 const { modify } = boardStore;
 
 const route = useRoute();
+const pg = route.query.pg;
 const bno = route.query.bno;
 
 let editorValid = null;
 const uploading = ref(false);
 
 const boardModify = async () => {
-  await modify(boardInfo.value);
+  await modify(boardInfo.value, pg);
 };
 
 // 이미지를 최대 300px로 조절하는 함수
@@ -117,7 +118,7 @@ const boardInfo = ref({
 
 const router = useRouter();
 const movePage = (val) => {
-  router.push({ name: val });
+  router.push({ name: val, query: { pg } });
 };
 
 onMounted(() => {

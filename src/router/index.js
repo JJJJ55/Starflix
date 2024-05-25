@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import FindView from '@/views/LoginBefore/FindView.vue';
 import LoginView from '@/views/LoginBefore/LoginView.vue';
 import MainView from '@/views/LoginBefore/MainView.vue';
 import SplashView from '@/views/LoginBefore/SplashView.vue';
@@ -170,6 +171,12 @@ const router = createRouter({
       name: 'regist',
       beforeEnter: loginAfter,
       component: LoginView,
+    },
+    {
+      path: '/find',
+      name: 'find',
+      beforeEnter: loginAfter,
+      component: FindView,
     },
 
     // 여기까지 로그인 전
